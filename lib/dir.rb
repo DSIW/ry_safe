@@ -11,12 +11,12 @@ module RubySafe
       end
 
       def init_with coder
-        super coder
+        super
         @children = coder['>']
       end
 
       def encode_with coder
-        super coder
+        super
         coder['>'] = @children
       end
 
