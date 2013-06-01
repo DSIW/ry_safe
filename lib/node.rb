@@ -4,6 +4,7 @@ require 'digest'
 module RubySafe
   module Safe
     module Node
+      include Comparable
 
       attr_reader :children, :parent
       attr_accessor :name
@@ -31,6 +32,10 @@ module RubySafe
         @modified = coder['modified']
         @hash = coder['hash']
         touch
+      end
+
+      def <=> other
+        @name <=> other.name        
       end
 
       def touch
@@ -87,6 +92,10 @@ module RubySafe
 
       def match query
         query === @name
+      end
+
+      def to_s
+        @name          
       end
 
       private
