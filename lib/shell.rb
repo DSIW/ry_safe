@@ -11,7 +11,12 @@ module RubySafe
       @completions = %w[cd ls mkdir rm cat touch rmdir]
       Readline.completion_append_character = " "
       Readline.completion_proc = lambda do |string|
-        @completions.grep(/^#{Regexp.escape(string)}/)
+        command = Readline.line_buffer
+        if command.split(/\s+/).size == 1
+          @completions.grep(/^#{Regexp.escape(string)}/)
+        else
+          @pwd.ls.map{|item| item.to_s}.grep(/^#{Regexp.escape(string)}/)
+        end
       end
     end
 
