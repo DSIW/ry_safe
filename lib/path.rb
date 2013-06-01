@@ -61,8 +61,10 @@ module RubySafe
       def pwd
         if @parts.last.is_a?(String) && @parts.last[-1] == "/" or @parts.last.is_a?(Dir)
           @parts.last
-        else
+        elsif @parts.size > 1
           @parts[-2]
+        else
+          @root
         end
       end
 
