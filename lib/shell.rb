@@ -21,10 +21,11 @@ module RubySafe
     end
 
     def touch path
-      binding.pry
       path = pathify path
       if path.basename.is_a? String
         Safe::Entry.new path.basename, path.pwd
+      else
+        throw :FileExists
       end
     end
 
@@ -83,6 +84,9 @@ module RubySafe
     end
 
     def pathify string
+      if string.empty?
+        throw :NoSuchFile
+      end
       if string.is_a? String
         Safe::Path.new @pwd, string
       end
