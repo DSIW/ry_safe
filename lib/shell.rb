@@ -1,4 +1,5 @@
 require 'readline'
+require 'colorize'
 require './dir'
 require './entry'
 
@@ -32,6 +33,22 @@ module RubySafe
       path.basename.rmdir
     end
 
+    def format_ls entries
+      lines = []
+      index = 0
+      entries.each do |entry|
+        if lines[index]
+          lines[index] << " " << entry
+        else
+          lines[index] = entry
+        end
+        if lines[index].size > 80
+          index += 1
+        end
+      end
+      lines.join("\n")
+    end
+
     def cat path
       path = pathify path
       unless path.basename.is_a? Entry
@@ -45,7 +62,15 @@ module RubySafe
     end
 
     def ls *args
-      @pwd.ls.each {|content| puts content.to_s}
+      colored = @pwd.ls.sort.map do |content|
+        string = content.to_s
+        if content.is_a? Safe::Dir
+          string.colorize :blue
+        else
+          string
+        end
+      end
+      puts format_ls(colored)
     end
 
     def mkdir *args
