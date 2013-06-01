@@ -36,7 +36,7 @@ module RubySafe
       def find query
         result = []
         result += @children.select {|child| child.match query}
-        @children.each {|child| result += child.find query }
+        @children.select{|child| child.is_a? Safe::Dir}.each {|dir| result += dir.find(query)}
         result
       end
 
