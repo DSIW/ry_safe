@@ -95,7 +95,7 @@ describe Safe::Node do
   end
 
   describe "#to_s" do
-    its(:to_s) { should == "NodeName" }
+    its(:to_s) { should == "/Parent/NodeName" }
   end
 
   describe "#path" do
@@ -116,6 +116,13 @@ describe Safe::Node do
 
     it "should be equals" do
       a1.should == a2
+    end
+  end
+
+  describe "#===" do
+    it "should compare name with pattern" do
+      (subject === "NodeName").should be_true
+      (subject === "Parent").should be_false
     end
   end
 end

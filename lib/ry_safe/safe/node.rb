@@ -47,7 +47,7 @@ module RySafe::Safe
     end
 
     def to_s
-      @name
+      path
     end
 
     def path
@@ -63,6 +63,10 @@ module RySafe::Safe
 
     def <=> other
       @name <=> other.name
+    end
+
+    def === pattern
+      name === pattern
     end
 
     protected
