@@ -1,96 +1,53 @@
+# encoding: utf-8
+
 module RySafe::Safe
-  class Dir
-    include Node
+  class Dir < Node
+    attr_accessor :children
 
-    def initialize name, parent=ROOT
-      super name, parent
-      @children = Array.new
-    end
-
-    def init_with coder
+    def initialize(name, parent = nil)
       super
-      @children = coder['>']
+      @children = []
     end
 
-    def encode_with coder
-      super
-      coder['>'] = @children
+    def children?
+      !empty?
     end
 
-    def set_parents
-      @children.each do |child|
-        child.parent = self
-        if child.is_a? Dir
-          child.set_parents
-        end
-      end
+    def empty?
+      @children.empty?
     end
 
     def << child
       @children << child
+      update_children_parents
     end
 
-    def find query
-      result = []
-      result += @children.select {|child| child.match query}
-      @children.select{|child| child.is_a? Safe::Dir}.each {|dir| result += dir.find(query)}
-      result
+    def size
+      @children.size
     end
 
-    def cp path, recursive=false
-      unless recursive
-        throw :DirectorySkipped, @name
-      end
+    def dirs
+      @children.select { |child| child.is_a? self.class }
+    end
+
+    def find(query)
+      results = []
+      results << @children.select { |child| child === query }
+      results << dirs.map { |dir| dir.find(query) }
+      results.flatten
     end
 
     def dup
-      copy = super.dup
-      copy.children = []
-      @children.each {|child| copy.children << child.dup}
-      copy.touch
-      copy
+      Marshal::load(Marshal.dump(self))
     end
 
+    protected
 
-    def rm recursive=false
-      unless recursive
-        throw :CannotRemoveDirectory
+    def update_children_parents
+      @children.each do |child|
+        child.parent = self
+        child.update_children_parents if child.is_a? self.class
       end
-      @children.each {|child| child.remove true}
-      super
     end
-
-    def rmdir
-      if @children.any?
-        throw :DirectoryNotEmpty
-      end
-      rm true
-    end
-
-    def get name
-      find(name).first
-    end
-
-    def cd path
-      if path.is_a? String
-        path = Path.new self, path
-      end
-      unless path.basename.is_a? Dir
-        throw :NoSuchDirectory
-      end
-      path.basename
-    end
-
-    alias :ls :children
-
-    def dump_data
-      {entries: @children}
-    end
-
-    def to_s
-      @name
-    end
-
-    ROOT = self.new "/", nil
   end
 end
