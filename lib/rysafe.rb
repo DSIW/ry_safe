@@ -1,5 +1,7 @@
-require "rysafe/version"
+require "rysafe/safe"
+require "rysafe/path"
+require "rysafe/shell"
 
-module RySafe
-  # Your code goes here...
-end
+require "rysafe/generator"
+
+require "rysafe/version"

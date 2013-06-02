@@ -1,5 +1,3 @@
-require '../dir'
-require './node'
 require 'ostruct'
 
 module RySafe::Safe

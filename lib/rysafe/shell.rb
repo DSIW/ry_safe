@@ -1,7 +1,5 @@
 require 'readline'
 require 'colorize'
-require './dir'
-require './entry'
 
 module RySafe
   class Shell
@@ -110,6 +108,3 @@ module RySafe
 
   end
 end
-
-shell = RubySafe::Shell.new
-shell.prompt

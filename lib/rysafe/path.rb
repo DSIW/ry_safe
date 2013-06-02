@@ -1,6 +1,3 @@
-require './dir'
-require './node'
-
 module RySafe
   class Path
     attr_reader :parts
