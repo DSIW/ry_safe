@@ -1,5 +1,5 @@
 require "rysafe/version"
 
-module Rysafe
+module RySafe
   # Your code goes here...
 end

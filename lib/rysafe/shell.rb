@@ -3,7 +3,7 @@ require 'colorize'
 require './dir'
 require './entry'
 
-module RubySafe
+module RySafe
   class Shell
 
     def initialize

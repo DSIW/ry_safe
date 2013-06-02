@@ -2,7 +2,7 @@ require './dir'
 require './node'
 require 'ostruct'
 
-module RubySafe
+module RySafe
 
   module Safe
     class Entry

@@ -1,6 +1,6 @@
 require 'securerandom'
 
-module RubySafe
+module RySafe
   module Generator
     
     def self.generate length=30, use_chars=CharacterClass::DEFAULT, options={}

@@ -1,7 +1,7 @@
 require './dir'
 require './node'
 
-module RubySafe
+module RySafe
   module Safe
     class Path
 

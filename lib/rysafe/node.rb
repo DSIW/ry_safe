@@ -1,7 +1,7 @@
 require './path'
 require 'digest'
 
-module RubySafe
+module RySafe
   module Safe
     module Node
       include Comparable

@@ -1,6 +1,6 @@
 require './node'
 
-module RubySafe
+module RySafe
   module Safe
     class Dir
       include Node
