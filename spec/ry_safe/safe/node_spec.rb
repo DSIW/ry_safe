@@ -109,7 +109,13 @@ describe Safe::Node do
   end
 
   describe "#<=>" do
-    let(:other) { Safe::Node.new("Parent") }
+    let(:parent) { Safe::Node.new("Parent") }
+    let(:parent2) { Safe::Node.new("Parent2") }
+    let(:a1) { Safe::Node.new("A", parent) }
+    let(:a2) { Safe::Node.new("A", parent2) }
 
+    it "should be equals" do
+      a1.should == a2
+    end
   end
 end
