@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rysafe.gemspec
+# Specify your gem's dependencies in ry_safe.gemspec
 gemspec
