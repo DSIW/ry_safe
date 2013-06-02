@@ -14,7 +14,7 @@ module RySafe
         @name = name
         unless @parent.nil?
           if @parent.get name
-            throw :NodeExistsError 
+            throw :NodeExistsError
           end
           @parent << self
         end
@@ -35,7 +35,7 @@ module RySafe
       end
 
       def <=> other
-        @name <=> other.name        
+        @name <=> other.name
       end
 
       def touch
@@ -80,7 +80,7 @@ module RySafe
         end
         path.pwd << copy
         copy.parent = path.pwd
-      end 
+      end
 
       def rm recursive=false
         if @parent
@@ -95,7 +95,7 @@ module RySafe
       end
 
       def to_s
-        @name          
+        @name
       end
 
       private
@@ -103,7 +103,6 @@ module RySafe
       def hash_data
         @name
       end
-
     end
   end
 end

@@ -3,7 +3,6 @@ require './node'
 require 'ostruct'
 
 module RySafe
-
   module Safe
     class Entry
       include Node
@@ -48,7 +47,7 @@ module RySafe
         copy.touch
         copy
       end
-      
+
       def method_missing method, *args
         method_name = method.id2name
         case method_name
@@ -70,7 +69,7 @@ module RySafe
         data = @name.dup
         instance_variables.each do |var|
           next if var == :@parent
-          data << var.to_s 
+          data << var.to_s
           data << instance_variable_get(var)
         end
         data

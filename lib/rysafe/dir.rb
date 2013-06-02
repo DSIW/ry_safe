@@ -22,11 +22,11 @@ module RySafe
 
       def set_parents
         @children.each do |child|
-          child.parent = self        
+          child.parent = self
           if child.is_a? Dir
             child.set_parents
           end
-        end        
+        end
       end
 
       def << child
@@ -53,7 +53,7 @@ module RySafe
         copy.touch
         copy
       end
-                
+
 
       def rm recursive=false
         unless recursive

@@ -5,7 +5,6 @@ require './entry'
 
 module RySafe
   class Shell
-
     def initialize
       @pwd = Safe::Dir::ROOT
       @completions = %w[cd ls mkdir rm cat touch rmdir]

@@ -2,7 +2,6 @@ require 'securerandom'
 
 module RySafe
   module Generator
-    
     def self.generate length=30, use_chars=CharacterClass::DEFAULT, options={}
       if use_chars.is_a? Hash
         chars = use_chars.keys.flatten
@@ -27,7 +26,6 @@ module RySafe
     end
 
     module CharacterClass
-
       NUM = ('0'..'9').to_a
       LOWER = ('a'..'z').to_a
       UPPER = ('A'..'Z').to_a
@@ -36,8 +34,6 @@ module RySafe
       ALNUM = NUM + LOWER + UPPER
       DEFAULT = ALNUM + SPECIAL
       ALL = DEFAULT + SPACE
-
     end
-
   end
 end
