@@ -8,6 +8,5 @@ module RySafe
   autoload :Safe, "ry_safe/safe"
   autoload :Path, "ry_safe/path"
   autoload :Shell, "ry_safe/shell"
-  autoload :Safe, "ry_safe/safe"
   autoload :Generator, "ry_safe/generator"
 end
