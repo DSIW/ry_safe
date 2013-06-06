@@ -133,4 +133,16 @@ describe Safe::Dir do
       duplicate.children.last.children.first.should_not be d1n1
     end
   end
+
+  describe "#include" do
+    let(:node1) { Safe::Node.new("N1") }
+    let(:dir1) { Safe::Dir.new("D1") }
+
+    before { subject << node1 }
+
+    it "should include node1 and dir1" do
+      subject.should include node1
+      subject.should_not include dir1
+    end
+  end
 end

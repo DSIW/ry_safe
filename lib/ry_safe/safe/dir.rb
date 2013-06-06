@@ -26,6 +26,10 @@ module RySafe::Safe
       @children.size
     end
 
+    def include?(node)
+      @children.include? node
+    end
+
     def dirs
       @children.select { |child| child.is_a? self.class }
     end
