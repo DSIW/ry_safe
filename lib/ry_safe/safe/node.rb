@@ -6,7 +6,7 @@ module RySafe::Safe
     include Util::Dates
     include Util::Hashable
 
-    SEPARATOR = '/'
+    SEPARATOR = File::SEPARATOR
 
     attr_accessor :name, :parent
 
