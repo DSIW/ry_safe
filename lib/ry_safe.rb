@@ -14,6 +14,8 @@ module RySafe
   end
   autoload :Path, "ry_safe/path"
   autoload :Shell, "ry_safe/shell"
-  autoload :Generator, "ry_safe/generator"
   autoload :Password, "ry_safe/password"
+  autoload :PasswordGenerator, "ry_safe/password_generator"
+  autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
+  autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 end
