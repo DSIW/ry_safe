@@ -3,6 +3,8 @@ module RySafe
     include Comparable
     include Util::Safeable
 
+    HIDE_CHAR = '*'
+
     attr_reader :password
 
     def initialize(password)
@@ -21,8 +23,12 @@ module RySafe
       if safe?
         @password
       else
-        '*'*@password.length
+        HIDE_CHAR*@password.length
       end
+    end
+
+    def inspect
+      @password
     end
   end
 end
