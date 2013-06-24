@@ -17,7 +17,7 @@ module RySafe::Safe
       @children.empty?
     end
 
-    def << child
+    def <<(child)
       @children << child
       update_children_parents
     end
@@ -42,7 +42,7 @@ module RySafe::Safe
     end
 
     def dup
-      Marshal::load(Marshal.dump(self))
+      Marshal.load(Marshal.dump(self))
     end
 
     protected
