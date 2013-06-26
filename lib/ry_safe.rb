@@ -11,6 +11,7 @@ module RySafe
     autoload :Dates, "ry_safe/util/dates"
     autoload :NodeHandler, "ry_safe/util/node_handler"
     autoload :Safeable, "ry_safe/util/safeable"
+    autoload :Cloneable, "ry_safe/util/cloneable"
   end
   autoload :Path, "ry_safe/path"
   autoload :Shell, "ry_safe/shell"

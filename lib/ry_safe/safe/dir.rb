@@ -2,6 +2,7 @@
 
 module RySafe::Safe
   class Dir < Node
+    include Util::Cloneable
     extend Forwardable
 
     attr_accessor :children
@@ -31,10 +32,6 @@ module RySafe::Safe
       results << @children.select { |child| child === query }
       results << dirs.map { |dir| dir.find(query) }
       results.flatten
-    end
-
-    def dup
-      Marshal.load(Marshal.dump(self))
     end
 
     protected
