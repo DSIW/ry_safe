@@ -2,6 +2,8 @@
 
 module RySafe::Safe
   class Dir < Node
+    extend Forwardable
+
     attr_accessor :children
 
     def initialize(name, parent = nil)
@@ -9,25 +11,15 @@ module RySafe::Safe
       @children = []
     end
 
+    delegate [:size, :include?, :empty?] => :@children
+
     def children?
       !empty?
-    end
-
-    def empty?
-      @children.empty?
     end
 
     def <<(child)
       @children << child
       update_children_parents
-    end
-
-    def size
-      @children.size
-    end
-
-    def include?(node)
-      @children.include? node
     end
 
     def dirs
