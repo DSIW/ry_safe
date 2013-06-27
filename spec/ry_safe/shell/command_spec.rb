@@ -34,4 +34,19 @@ describe Command do
       tree.children.first.should be_a Safe::Entry
     end
   end
+
+  describe Command::MkDir do
+    subject { Command::MkDir.new("dir") }
+
+    its(:command) { should == "mkdir" }
+    its(:arguments) { should == ["dir"] }
+
+    it "should create a new entry" do
+      tree = Safe::Tree.root
+      subject.call
+      tree.should have(1).node
+      tree.children.first.name.should == "dir"
+      tree.children.first.should be_a Safe::Dir
+    end
+  end
 end

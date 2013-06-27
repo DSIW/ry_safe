@@ -28,5 +28,6 @@ module RySafe
     autoload :Commands, "ry_safe/shell/command.rb"
     autoload :Base, "ry_safe/shell/command.rb"
     autoload :Touch, "ry_safe/shell/command.rb"
+    autoload :MkDir, "ry_safe/shell/command.rb"
   end
 end

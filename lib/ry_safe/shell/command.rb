@@ -40,4 +40,18 @@ module RySafe::Command
       Safe::Tree.root << Safe::Entry.new(arguments.first)
     end
   end
+
+  class MkDir < Base
+    def initialize(*args)
+      super "mkdir #{args.join(" ")}"
+    end
+
+    def command
+      "mkdir"
+    end
+
+    def action
+      Safe::Tree.root << Safe::Dir.new(arguments.first)
+    end
+  end
 end
