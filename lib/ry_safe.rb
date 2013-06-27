@@ -24,5 +24,9 @@ module RySafe
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 
-  autoload :Command, "ry_safe/shell/command.rb"
+  module Command
+    autoload :Commands, "ry_safe/shell/command.rb"
+    autoload :Base, "ry_safe/shell/command.rb"
+    autoload :Touch, "ry_safe/shell/command.rb"
+  end
 end

@@ -14,3 +14,17 @@ describe Command::Base do
     subject.call
   end
 end
+
+describe Command::Touch do
+  subject { Command::Touch.new("file") }
+
+  its(:command) { should == "touch" }
+  its(:arguments) { should == ["file"] }
+
+  it "should create a new entry" do
+    tree = Safe::Tree.root
+    subject.call
+    tree.should have(1).node
+    tree.children.first.name.should == "file"
+  end
+end

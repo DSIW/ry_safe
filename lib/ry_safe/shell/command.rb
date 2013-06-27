@@ -19,12 +19,25 @@ module RySafe::Command
     end
 
     def action
-      nil
+      raise "No action in Command::Base"
     end
 
     def humand_readable_command
       command[0].upcase + command[1..-1]
     end
   end
-end
 
+  class Touch < Base
+    def initialize(*args)
+      super "touch #{args.join(" ")}"
+    end
+
+    def command
+      "touch"
+    end
+
+    def action
+      Safe::Tree.root << Safe::Entry.new(arguments.first)
+    end
+  end
+end
