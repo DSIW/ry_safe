@@ -1,76 +1,31 @@
-require 'ostruct'
-
 module RySafe::Safe
-  class Entry
-    include Node
+  class Entry < Node
+    attr_accessor :website, :username, :comment, :title
+    attr_reader :password, :password_confirmation, :tags
 
-    def initialize name, parent=Dir::ROOT
-      super name, parent
+    def directory
+      @parent
     end
 
-    def delete key
-      key_sym = key.to_sym
-      if key_sym == :name || key_sym == :parent
-        throw :UndeletableAttribute
-      end
-      begin
-        instance_eval { remove_instance_variable key_sym }
-      rescue NameError
-        #key was not there
-      end
+    def directory=(dir)
+      parent = dir
+      dir << self
     end
 
-    def encode_with coder
-      instance_variables.each do |var|
-        next if var == :@parent
-        coder[var.to_s[1..-1]] = instance_variable_get(var)
-      end
+    def password=(password)
+      @password = Password.new(password)
     end
 
-    def init_with coder
-      coder.map.each do |var, val|
-        instance_variable_set "@#{var}", val
-      end
+    def password_confirmation=(password)
+      @password_confirmation = Password.new(password)
     end
 
-    def dup
-      copy = self.dup
-      instance_variables.each do |var|
-        value = instance_variable_get var
-        if value
-          copy.instance_variable_set var, value
-        end
-      end
-      copy.touch
-      copy
+    def tags=(string)
+      @tags = Tags.from_string(string)
     end
 
-    def method_missing method, *args
-      method_name = method.id2name
-      case method_name
-      when /^name(=)?/, /^parent(=)?/
-        return super
-      when /=$/
-        new_attr = method_name[0..-2].to_sym
-        touch
-      else
-        new_attr = method
-      end
-      (class << self; self; end).class_eval { attr_accessor new_attr }
-      self.send(method, *args)
+    def valid?
+      Validators::PasswordValidator.new(@password, @password_confirmation).valid?
     end
-
-    private
-
-    def hash_data
-      data = @name.dup
-      instance_variables.each do |var|
-        next if var == :@parent
-        data << var.to_s
-        data << instance_variable_get(var)
-      end
-      data
-    end
-
   end
 end

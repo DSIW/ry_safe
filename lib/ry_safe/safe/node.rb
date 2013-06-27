@@ -1,103 +1,75 @@
-require '../path'
-require 'digest'
+# encoding: utf-8
 
 module RySafe::Safe
-  module Node
+  class Node
     include Comparable
+    include Util::Dates
+    include Util::Hashable
 
-    attr_reader :children, :parent
-    attr_accessor :name
+    SEPARATOR = File::SEPARATOR
 
-    def initialize name, parent
-      @parent = parent
+    attr_accessor :name, :parent
+
+    def initialize name, parent = nil
+      raise ArgumentError if name.nil?
       @name = name
-      unless @parent.nil?
-        if @parent.get name
-          throw :NodeExistsError
-        end
-        @parent << self
+      @parent = parent
+    end
+
+    def self.from_path(path)
+      raise ArgumentError if path == "/"
+
+      elements = path.sub(/^\//, '').split(SEPARATOR)
+
+      current = elements.last
+      unless current.nil?
+        empty = elements.empty?
+        parent = empty ? nil : from_path(elements[0..-2].join(SEPARATOR))
+        new(current, parent)
       end
-      touch
     end
 
-    def encode_with coder
-      coder['name'] = @name
-      coder['modified'] = @modified
-      coder['hash'] = @hash
+    def root?
+      @parent.nil?
     end
 
-    def init_with coder
-      @name = coder['name']
-      @modified = coder['modified']
-      @hash = coder['hash']
-      touch
+    def parent?
+      !root?
+    end
+
+    def parents
+      nodes = []
+      if parent?
+        nodes << parent
+        nodes << parent.parents
+      end
+      nodes.flatten
+    end
+
+    def to_s
+      path
+    end
+
+    def path
+      nodes = []
+      if parent?
+        nodes << parent.path
+      else
+        nodes << nil # for first '/'
+      end
+      nodes << @name
+      nodes.join(SEPARATOR)
     end
 
     def <=> other
       @name <=> other.name
     end
 
-    def touch
-      new_hash = hash
-      if @hash != new_hash
-        @modified = Time.now.to_s
-        @hash = new_hash
-      end
+    def === pattern
+      name === pattern
     end
 
-    def hash
-      Digest::SHA1.hexdigest hash_data
-    end
-
-    def mv path
-      if path.is_a? String
-        path = Path.new @parent, path
-      end
-      if path.basename.is_a? String
-        if path.pwd.is_a? String
-          throw :PathDoesNotExist
-        end
-        if path.pwd != path.basename
-          @name = path.basename
-        end
-        path.pwd << self
-        @parent = path.pwd
-      end
-      touch
-    end
-
-    def cp path, recursive=false
-      if path.is_a? String
-        path = Path.new path
-      end
-      if path.pwd.is_a? String
-        throw :PathDoesNotExist
-      end
-      copy = self.dup
-      if path.pwd != path.basename
-        copy.name = path.basename
-      end
-      path.pwd << copy
-      copy.parent = path.pwd
-    end
-
-    def rm recursive=false
-      if @parent
-        @parent.children.delete(self)
-      else
-        throw :CannotRemoveRoot
-      end
-    end
-
-    def match query
-      query === @name
-    end
-
-    def to_s
-      @name
-    end
-
-    private
+    protected
 
     def hash_data
       @name
