@@ -23,4 +23,6 @@ module RySafe
   autoload :PasswordGenerator, "ry_safe/password_generator"
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
+
+  autoload :Command, "ry_safe/shell/command.rb"
 end
