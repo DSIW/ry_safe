@@ -66,7 +66,8 @@ describe Safe::Entry do
 
     it "should set and get tag" do
       subject.tags = "one,two, three four-five a_b"
-      subject.tags.should == %w(one two three four-five a_b)
+      subject.should have(5).tags
+      subject.tags.should == %w(one two three four-five a_b).map { |t| Safe::Tag.new(t) }
     end
   end
 end

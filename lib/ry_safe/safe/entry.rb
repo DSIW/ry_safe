@@ -20,8 +20,8 @@ module RySafe::Safe
       @password_confirmation = Password.new(password)
     end
 
-    def tags=(tags)
-      @tags = tags.split(/,\s*|\s+/)
+    def tags=(string)
+      @tags = Tags.from_string(string)
     end
 
     def valid?
