@@ -18,6 +18,7 @@ module RySafe
   autoload :Password, "ry_safe/password"
   autoload :PasswordGenerator, "ry_safe/password_generator"
   autoload :Validator, "ry_safe/validator"
+  autoload :PasswordValidator, "ry_safe/password_validator"
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 end
