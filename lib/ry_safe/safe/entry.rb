@@ -25,7 +25,7 @@ module RySafe::Safe
     end
 
     def valid?
-      password == password_confirmation
+      PasswordValidator.new(@password, @password_confirmation).valid?
     end
   end
 end
