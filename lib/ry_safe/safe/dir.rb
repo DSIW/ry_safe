@@ -12,7 +12,7 @@ module RySafe::Safe
       @children = []
     end
 
-    delegate [:size, :include?, :empty?] => :@children
+    delegate [:size, :include?, :empty?, :clear] => :@children
 
     def children?
       !empty?

@@ -145,4 +145,21 @@ describe Safe::Dir do
       subject.should_not include dir1
     end
   end
+
+  describe "#clear" do
+    let(:node1) { Safe::Node.new("N1") }
+    let(:dir1) { Safe::Dir.new("D1") }
+
+    before do
+      subject << node1
+      subject << dir1
+      subject.should include node1
+      subject.should include dir1
+    end
+
+    it "should remove all children" do
+      subject.clear
+      subject.should have(0).chilren
+    end
+  end
 end
