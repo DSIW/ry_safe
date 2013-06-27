@@ -8,7 +8,8 @@ module RySafe::Safe
     end
 
     def directory=(dir)
-      @parent = dir
+      parent = dir
+      dir << self
     end
 
     def password=(password)

@@ -23,6 +23,7 @@ describe Safe::Entry do
     dir = Safe::Dir.new("dir")
     subject.directory = dir
     subject.directory.should == dir
+    dir.children.should include(subject)
   end
 
   describe "default data" do
