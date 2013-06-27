@@ -13,12 +13,14 @@ module RySafe
     autoload :Safeable, "ry_safe/util/safeable"
     autoload :Cloneable, "ry_safe/util/cloneable"
   end
+  module Validators
+    autoload :Validator, "ry_safe/validators/validator"
+    autoload :PasswordValidator, "ry_safe/validators/password_validator"
+  end
   autoload :Path, "ry_safe/path"
   autoload :Shell, "ry_safe/shell"
   autoload :Password, "ry_safe/password"
   autoload :PasswordGenerator, "ry_safe/password_generator"
-  autoload :Validator, "ry_safe/validator"
-  autoload :PasswordValidator, "ry_safe/password_validator"
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 end

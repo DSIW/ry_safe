@@ -1,4 +1,4 @@
-module RySafe
+module RySafe::Validators
   class PasswordValidator < Validator
     def initialize(password, password_confirmation)
       @password = Password.new(password)

@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-describe PasswordValidator do
-  subject { PasswordValidator.new(password, password_confirmation) }
+describe Validators::PasswordValidator do
+  subject { Validators::PasswordValidator.new(password, password_confirmation) }
   let(:password) { "123456" }
   let(:password_confirmation) { "123456" }
 
