@@ -3,7 +3,7 @@
 require 'digest'
 
 module RySafe::Util::Hashable
-  def hash
+  def sha1_hash
     Digest::SHA1.hexdigest hash_data.to_s
   end
 
