@@ -24,9 +24,13 @@ module RySafe::Safe
     end
 
     def siblings
-      siblings = parent.children
-      siblings.delete(self)
-      siblings
+      if parent?
+        siblings = parent.children
+        siblings.delete(self)
+        siblings
+      else
+        []
+      end
     end
 
     def dirs

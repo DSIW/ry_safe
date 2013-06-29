@@ -72,7 +72,7 @@ describe Safe::Dir do
     let(:dir2) { Safe::Dir.new("D2") }
     let(:node1) { Safe::Node.new("N1") }
     let(:dir2node1) { Safe::Node.new("D2N1") }
-    subject(:dir3) { Safe::Dir.new("D3") }
+    subject(:dir3) { Safe::Dir.new("me") }
     # D1 < D2
     # D1 < D2 < D2N1
     # D1 < D3
@@ -86,6 +86,12 @@ describe Safe::Dir do
     end
 
     its(:siblings) { should == [dir2, node1] }
+
+    context "should return empty array if no parent is set" do
+      subject { Safe::Dir.new("no_parent") }
+
+      its(:siblings) { should == [] }
+    end
   end
 
   describe "#dirs" do
