@@ -197,4 +197,19 @@ describe Safe::Dir do
       subject.should have(0).children
     end
   end
+
+  describe "#delete" do
+    let(:node1) { Safe::Node.new("N1") }
+
+    before do
+      subject << node1
+      subject.should include node1
+    end
+
+    it "should delete node from children" do
+      subject.delete(node1)
+      subject.should_not include node1
+      subject.should have(0).children
+    end
+  end
 end
