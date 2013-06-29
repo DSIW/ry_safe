@@ -49,4 +49,24 @@ describe Command do
       tree.children.first.should be_a Safe::Dir
     end
   end
+
+  describe Command::ChangeDirectory do
+    subject { Command::ChangeDirectory.new("/root/dir") }
+
+    its(:command) { should == "cd" }
+    its(:arguments) { should == ["/root/dir"] }
+
+    it "should change current working dir to specified directory" do
+      tree = Safe::Tree.root
+      # prepare tree
+      tree << Safe::Dir.new("dir")
+      tree.should have(1).node
+      tree.children.first.name.should == "dir"
+      tree.children.first.should be_a Safe::Dir
+      subject.call
+      current = Safe::Tree.current
+      current.name.should == "dir"
+      current.parents.should == [tree]
+    end
+  end
 end

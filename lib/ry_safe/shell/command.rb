@@ -54,4 +54,18 @@ module RySafe::Command
       Safe::Tree.root << Safe::Dir.new(arguments.first)
     end
   end
+
+  class ChangeDirectory < Base
+    def initialize(*args)
+      super "cd #{args.join(" ")}"
+    end
+
+    def command
+      "cd"
+    end
+
+    def action
+      Safe::Tree.current = Safe::Node.from_path(arguments.first)
+    end
+  end
 end
