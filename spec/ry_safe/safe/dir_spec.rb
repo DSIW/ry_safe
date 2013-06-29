@@ -8,12 +8,12 @@ describe Safe::Dir do
   let(:name) { "NodeName" }
   let(:parent) { nil }
 
-  let(:node) { Safe::Node.new("Node") }
-  let(:dir) { Safe::Dir.new("Dir") }
-  before { dir << dir_node }
-  let(:dir_node) { Safe::Node.new("DirNode") }
   # Node
   # Dir < DirNode
+  let(:node) { Safe::Node.new("Node") }
+  before { dir << dir_node }
+  let(:dir) { Safe::Dir.new("Dir") }
+  let(:dir_node) { Safe::Node.new("DirNode") }
 
   its(:children) { should == [] }
 
@@ -21,7 +21,7 @@ describe Safe::Dir do
     its(:children?) { should be_false }
 
     context "with children" do
-      before { subject.children << node }
+      before { subject << node }
 
       its(:children?) { should be_true }
     end
@@ -31,7 +31,7 @@ describe Safe::Dir do
     its(:empty?) { should be_true }
 
     context "with children" do
-      before { subject.children << node }
+      before { subject << node }
 
       its(:empty?) { should be_false }
     end
@@ -186,7 +186,7 @@ describe Safe::Dir do
 
     it "should remove all children" do
       subject.clear
-      subject.should have(0).chilren
+      subject.should have(0).children
     end
   end
 end
