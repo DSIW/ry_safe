@@ -3,6 +3,7 @@ module RySafe::Error
   class SourceNotNode < NotNode; end
   class DestinationNotNode < NotNode; end
   class NotInTree < ArgumentError; end
+  class AlreadyExist < ArgumentError; end
 
   class NotMovable < StandardError; end
   class NotCopyable < StandardError; end

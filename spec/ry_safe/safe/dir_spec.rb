@@ -50,6 +50,14 @@ describe Safe::Dir do
       subject.children[1].children.first.name.should == "DirNode"
     end
 
+    it "should not add already existing child" do
+      subject.should include Safe::Dir.new("Dir")
+      new_dir = Safe::Dir.new("Dir")
+      new_dir.parent.should_not == subject
+      expect { subject << new_dir }.to raise_error Error::AlreadyExist
+      new_dir.parent.should_not == subject
+    end
+
     it "should update parents" do
       subject.children.first.parent.should == subject
       subject.children[1].parent.should == subject

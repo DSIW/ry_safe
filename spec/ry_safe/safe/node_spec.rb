@@ -125,4 +125,24 @@ describe Safe::Node do
       (subject === "Parent").should be_false
     end
   end
+
+  describe "#hash" do
+    it "should be an fixnum" do
+      subject.hash.should be_a Fixnum
+    end
+
+    it "should be the hash of name" do
+      subject.hash.should == name.hash
+    end
+  end
+
+  describe "#eql?" do
+    it "should be true if names are equals" do
+      subject.should be_eql Safe::Node.new(name)
+    end
+
+    it "should not be false if names aren't equals" do
+      subject.should_not be_eql Safe::Node.new("different")
+    end
+  end
 end

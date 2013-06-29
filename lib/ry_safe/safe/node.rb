@@ -69,6 +69,16 @@ module RySafe::Safe
       name === pattern
     end
 
+    # required for Set in Safe::Dir
+    def eql?(other)
+      @name == other.name
+    end
+
+    # required for Set in Safe::Dir
+    def hash
+      @name.hash
+    end
+
     protected
 
     def hash_data

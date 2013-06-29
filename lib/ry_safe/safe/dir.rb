@@ -1,26 +1,36 @@
 # encoding: utf-8
 
+require "set"
+
 module RySafe::Safe
   class Dir < Node
     include Util::Cloneable
     extend Forwardable
 
-    attr_accessor :children
-
     def initialize(name, parent = nil)
       super
-      @children = []
+      @children = Set.new
     end
 
-    delegate [:size, :include?, :empty?, :clear] => :@children
+    delegate [:clear] => :@children
+    delegate [:size, :include?, :empty?] => :children
+
+    def children=(children)
+      @children = children.to_set
+    end
+
+    def children
+      @children.to_a
+    end
 
     def children?
       !empty?
     end
 
     def <<(child)
-      @children << child
-      update_children_parents
+      not_added = @children.add?(child).nil?
+      raise Error::AlreadyExist if not_added
+      child.parent = self
     end
 
     def siblings
@@ -42,15 +52,6 @@ module RySafe::Safe
       results << @children.select { |child| child === query }
       results << dirs.map { |dir| dir.find(query) }
       results.flatten
-    end
-
-    protected
-
-    def update_children_parents
-      @children.each do |child|
-        child.parent = self
-        child.update_children_parents if child.is_a? self.class
-      end
     end
   end
 end
