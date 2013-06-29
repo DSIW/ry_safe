@@ -7,11 +7,32 @@ module RySafe::Safe
     include Singleton
 
     def initialize
-      super ""
+      super "root"
     end
 
-    def self.root
-      instance
+    def current=(dir)
+      raise Error::NotInTree unless dir.parents.include? self
+      @current = dir
+    end
+
+    def current
+      #current or root
+      @current || self
+    end
+
+    def clear
+      super
+      @current = nil
+    end
+
+    class << self
+      extend Forwardable
+
+      def root
+        instance
+      end
+
+      delegate [:current=, :current, :clear] => :instance
     end
   end
 end
