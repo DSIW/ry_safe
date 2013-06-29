@@ -35,25 +35,34 @@ describe Util::NodeHandler do
     end
 
     it "should copy node1" do
-      copied_node = Util::NodeHandler.copy(node1, root)
-      root.should have(4).children
+      root.should have(3).children
+      root.should include node1
+
+      dir1.should have(0).children
+      dir1.should_not include node1
+
+      copied_node = Util::NodeHandler.copy(node1, dir1)
+
+      root.should have(3).children
       root.should include copied_node
+
+      dir1.should have(1).children
+      dir1.should include copied_node
+
       node1.should == copied_node
       node1.should_not be copied_node
     end
 
-    it "should copy dir without children" do
-      copied_dir = Util::NodeHandler.copy(dir1, root)
-      root.should have(4).children
-      root.should include copied_dir
-      dir1.should == copied_dir
-      dir1.should_not be copied_dir
+    it "should raise if source and destination are equals" do
+      expect { Util::NodeHandler.copy(dir2, dir2) }.to raise_error Error::SameSourceAndDestination
     end
 
     it "should copy dir with children" do
-      copied_dir = Util::NodeHandler.copy(dir2, root)
-      root.should have(4).children
+      copied_dir = Util::NodeHandler.copy(dir2, dir1)
+      root.should have(3).children
       root.should include copied_dir
+      dir1.should have(1).children
+      dir1.should include copied_dir
       dir2.should == copied_dir
       dir2.should_not be copied_dir
 
@@ -78,6 +87,8 @@ describe Util::NodeHandler do
       root << node1
       dir1 << node2
       root << dir1
+      # N1
+      # D1 < N2
     end
 
     it "should not be possible to remove root node" do
@@ -118,10 +129,17 @@ describe Util::NodeHandler do
       root << dir1
       dir2 << d2n1
       root << dir2
+      # N1
+      # D1
+      # D2 < D2N1
     end
 
     it "should not be possible to move root node" do
       expect { Util::NodeHandler.move(root, Safe::Dir.new("new_dir")) }.to raise_error Error::NotMovable
+    end
+
+    it "should raise if source and destination are equals" do
+      expect { Util::NodeHandler.move(dir1, dir1) }.to raise_error Error::SameSourceAndDestination
     end
 
     it "should move dir2 from root to dir1" do
