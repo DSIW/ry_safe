@@ -23,6 +23,12 @@ module RySafe::Safe
       update_children_parents
     end
 
+    def siblings
+      siblings = parent.children
+      siblings.delete(self)
+      siblings
+    end
+
     def dirs
       @children.select { |child| child.is_a? self.class }
     end

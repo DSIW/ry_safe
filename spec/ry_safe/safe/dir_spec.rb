@@ -67,6 +67,27 @@ describe Safe::Dir do
     end
   end
 
+  describe "#siblings" do
+    let(:dir1) { Safe::Dir.new("D1") }
+    let(:dir2) { Safe::Dir.new("D2") }
+    let(:node1) { Safe::Node.new("N1") }
+    let(:dir2node1) { Safe::Node.new("D2N1") }
+    subject(:dir3) { Safe::Dir.new("D3") }
+    # D1 < D2
+    # D1 < D2 < D2N1
+    # D1 < D3
+    # D1 < N1
+
+    before :each do
+      dir1 << dir2
+      dir2 << dir2node1
+      dir1 << dir3
+      dir1 << node1
+    end
+
+    its(:siblings) { should == [dir2, node1] }
+  end
+
   describe "#dirs" do
     let(:node1) { Safe::Node.new("N1") }
     let(:node2) { Safe::Node.new("N2") }
