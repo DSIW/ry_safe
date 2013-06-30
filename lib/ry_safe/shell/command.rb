@@ -126,4 +126,22 @@ module RySafe::Command
       relative_path_to_existing_node(arguments[1])
     end
   end
+
+  class Remove < Base
+    def initialize(*args)
+      super "rm #{args.join(" ")}"
+    end
+
+    def command
+      "rm"
+    end
+
+    def action
+      Util::NodeHandler.remove(node)
+    end
+
+    def node
+      relative_path_to_existing_node(arguments[0])
+    end
+  end
 end

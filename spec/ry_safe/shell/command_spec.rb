@@ -122,4 +122,30 @@ describe Command do
       to.children.should == [from]
     end
   end
+
+  describe Command::Remove do
+    let(:tree) { Safe::Tree.root }
+    let(:node) { Safe::Node.new("node") }
+    let(:dir) { Safe::Dir.new("dir") }
+
+    before do
+      tree << node
+      tree << dir
+    end
+
+    subject { Command::Remove.new("/root/node") }
+
+    its(:command) { should == "rm" }
+    its(:arguments) { should == ["/root/node"] }
+
+    its(:node) { should be node }
+
+    it "should remove node" do
+      removed_node = subject.call
+
+      tree.children.should == [dir]
+      removed_node.should be_frozen
+      removed_node.parent.should be_nil
+    end
+  end
 end
