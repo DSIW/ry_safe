@@ -5,4 +5,5 @@ module RySafe::Safe
   autoload :Tags, "ry_safe/safe/tags"
   autoload :Tag, "ry_safe/safe/tags"
   autoload :Tree, "ry_safe/safe/tree.rb"
+  autoload :NodeFinder, "ry_safe/safe/node_finder.rb"
 end
