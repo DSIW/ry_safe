@@ -96,6 +96,7 @@ module RySafe::Command
     def action
       Util::NodeHandler.move(source, destination)
     end
+  end
 
   class Remove < Base
     def command
@@ -108,6 +109,48 @@ module RySafe::Command
 
     def node
       relative_path_to_existing_node(arguments[0])
+    end
+  end
+
+  class Dispatcher
+    COMMANDS = [
+      Command::Touch,
+      Command::MkDir,
+      Command::ChangeDirectory,
+      Command::Copy,
+      Command::Move,
+      Command::Remove,
+    ]
+
+    COMMANDS_HASH = COMMANDS.reduce({}) do |hash, command_class|
+      key = command_class.new.command
+      hash.merge(key => command_class)
+    end
+
+    INPUT_SEPARATOR = /\s+/
+
+    attr_reader :key, :arguments
+
+    def initialize(line)
+      @key, *@arguments = line.strip.split(INPUT_SEPARATOR)
+    end
+
+    def self.commands
+      COMMANDS_HASH.keys
+    end
+
+    def command_class
+      klass = COMMANDS_HASH[@key]
+      raise Error::NoCommand if klass.nil?
+      klass
+    end
+
+    def command
+      command_class.new(*@arguments)
+    end
+
+    def call
+      command.call
     end
   end
 end

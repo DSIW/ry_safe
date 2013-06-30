@@ -8,7 +8,7 @@ describe Command do
   end
 
   describe Command::Base do
-    subject { Command::Base.new("touch file") }
+    subject { Command::Base.new("touch", "file") }
 
     its(:command) { should == "touch" }
     its(:arguments) { should == ["file"] }
@@ -146,6 +146,38 @@ describe Command do
       tree.children.should == [dir]
       removed_node.should be_frozen
       removed_node.parent.should be_nil
+    end
+  end
+
+  describe Command::Dispatcher do
+    subject { Command::Dispatcher.new("mv /from /to") }
+
+    its(:key) { should == "mv" }
+    its(:arguments) { should == ["/from", "/to"] }
+    its(:command_class) { should == Command::Move }
+    its(:command) { should be_a Command::Move }
+    its("command.arguments") { should == ["/from", "/to"] }
+
+    it "should get the right commands" do
+      Command::Dispatcher.commands.should == %w(touch mkdir cd cp mv rm)
+    end
+
+    context "without arguments" do
+      subject { Command::Dispatcher.new("mv") }
+
+      its(:key) { should == "mv" }
+      its(:arguments) { should == [] }
+    end
+
+    context "command class key does not exist" do
+      subject { Command::Dispatcher.new("no") }
+
+      its(:key) { should == "no" }
+      it "should raise" do
+        expect { subject.command_class }.to raise_error Error::NoCommand
+        expect { subject.command }.to raise_error Error::NoCommand
+        expect { subject.call }.to raise_error Error::NoCommand
+      end
     end
   end
 end

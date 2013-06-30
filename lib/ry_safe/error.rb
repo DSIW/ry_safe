@@ -5,6 +5,7 @@ module RySafe::Error
   class NotInTree < ArgumentError; end
   class AlreadyExist < ArgumentError; end
   class SameSourceAndDestination < ArgumentError; end
+  class NoCommand < ArgumentError; end
 
   class NotMovable < StandardError; end
   class NotCopyable < StandardError; end
