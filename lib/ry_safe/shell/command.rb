@@ -25,6 +25,20 @@ module RySafe::Command
     def humand_readable_command
       command[0].upcase + command[1..-1]
     end
+
+    protected
+
+    def absolute_path(relative_path)
+      RelativePath.new(relative_path).to_absolute
+    end
+
+    def relative_path_to_node(relative_path)
+      absolute_path(relative_path).to_node
+    end
+
+    def relative_path_to_existing_node(relative_path, root = Safe::Tree.root)
+      absolute_path(relative_path).to_existing_node_in(root)
+    end
   end
 
   class Touch < Base
@@ -65,7 +79,7 @@ module RySafe::Command
     end
 
     def action
-      Safe::Tree.current = Safe::Node.from_path(arguments.first)
+      Safe::Tree.current = relative_path_to_existing_node(arguments.first)
     end
   end
 end
