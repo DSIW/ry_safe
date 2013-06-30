@@ -86,6 +86,50 @@ describe Safe::Node do
     end
   end
 
+  describe "#from_path" do
+    let(:root) { Safe::Dir.new("root") }
+    let(:dir1) { Safe::Dir.new("dir1") }
+    let(:dir1node2) { Safe::Dir.new("node2") }
+    let(:node1) { Safe::Dir.new("node1") }
+
+    before do
+      root << node1
+      root << dir1
+      dir1 << dir1node2
+      # root < node1
+      # root < dir1 < node2
+    end
+
+    context "object does exist in tree" do
+      it "should get root for path /root" do
+        found_node = Safe::Node.from_path("/root", in: root)
+        found_node.should be root
+      end
+
+      it "should get node1 for path /root/node1" do
+        found_node = Safe::Node.from_path("/root/node1", in: root)
+        found_node.should be node1
+      end
+
+      it "should get dir1 for path /root/dir1" do
+        found_node = Safe::Node.from_path("/root/dir1", in: root)
+        found_node.should be dir1
+      end
+
+      it "should get dir1node2 for path /root/dir1/node2" do
+        found_node = Safe::Node.from_path("/root/dir1/node2", in: root)
+        found_node.should be dir1node2
+      end
+    end
+
+    context "object doesn't exist in tree" do
+      it "should return nil" do
+        found_node = Safe::Node.from_path("/does_not_exist", in: root)
+        found_node.should be_nil
+      end
+    end
+  end
+
   describe "#root?" do
     its(:root?) { should be_false }
 

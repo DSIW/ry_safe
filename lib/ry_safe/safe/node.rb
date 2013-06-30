@@ -16,6 +16,32 @@ module RySafe::Safe
       @parent = parent
     end
 
+    def self.from_path(path, options = {})
+      tree = options[:in]
+      return tree if path == "/root"
+      elements = path.sub(/^\/root\//, '').split(SEPARATOR)
+
+      current_name = elements.first
+      unless current_name.nil? # root
+        last_element = elements.length == 1
+        if last_element && current_name == tree.name
+          return tree
+        else
+          tree.children.each do |child|
+            if current_name == child.name
+              if last_element
+                return child
+              else
+                rest_path = elements[1..-1].join(SEPARATOR)
+                return from_path(rest_path, in: child)
+              end
+            end
+          end
+          nil
+        end
+      end
+    end
+
     def self.create_from_path(path, options = {})
       raise ArgumentError if path == "/"
 
