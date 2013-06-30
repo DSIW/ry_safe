@@ -6,12 +6,9 @@ module RySafe::Command
   class Base
     attr_reader :command, :arguments
 
-    INPUT_SEPARATOR = /\s+/
-
-    def initialize(string)
-      splitted = string.strip.split(INPUT_SEPARATOR)
-      @command = splitted.shift
-      @arguments = splitted
+    def initialize(*args)
+      @command = command || args.shift
+      @arguments = args
     end
 
     def call
@@ -42,10 +39,6 @@ module RySafe::Command
   end
 
   class Touch < Base
-    def initialize(*args)
-      super "touch #{args.join(" ")}"
-    end
-
     def command
       "touch"
     end
@@ -56,10 +49,6 @@ module RySafe::Command
   end
 
   class MkDir < Base
-    def initialize(*args)
-      super "mkdir #{args.join(" ")}"
-    end
-
     def command
       "mkdir"
     end
@@ -70,10 +59,6 @@ module RySafe::Command
   end
 
   class ChangeDirectory < Base
-    def initialize(*args)
-      super "cd #{args.join(" ")}"
-    end
-
     def command
       "cd"
     end
@@ -83,11 +68,27 @@ module RySafe::Command
     end
   end
 
-  class Move < Base
-    def initialize(*args)
-      super "mv #{args.join(" ")}"
+  class Movement < Base
+    def source
+      relative_path_to_existing_node(arguments[0])
     end
 
+    def destination
+      relative_path_to_existing_node(arguments[1])
+    end
+  end
+
+  class Copy < Movement
+    def command
+      "cp"
+    end
+
+    def action
+      Util::NodeHandler.copy(source, destination)
+    end
+  end
+
+  class Move < Movement
     def command
       "mv"
     end
@@ -96,42 +97,7 @@ module RySafe::Command
       Util::NodeHandler.move(source, destination)
     end
 
-    def source
-      relative_path_to_existing_node(arguments[0])
-    end
-
-    def destination
-      relative_path_to_existing_node(arguments[1])
-    end
-  end
-
-  class Copy < Base
-    def initialize(*args)
-      super "cp #{args.join(" ")}"
-    end
-
-    def command
-      "cp"
-    end
-
-    def action
-      Util::NodeHandler.copy(source, destination)
-    end
-
-    def source
-      relative_path_to_existing_node(arguments[0])
-    end
-
-    def destination
-      relative_path_to_existing_node(arguments[1])
-    end
-  end
-
   class Remove < Base
-    def initialize(*args)
-      super "rm #{args.join(" ")}"
-    end
-
     def command
       "rm"
     end
