@@ -70,6 +70,30 @@ describe Command do
       current.should be dir
     end
   end
+
+  describe Command::Move do
+    let(:tree) { Safe::Tree.root }
+    let(:from) { Safe::Node.new("from") }
+    let(:to) { Safe::Dir.new("to") }
+
+    before do
+      tree << from
+      tree << to
+    end
+
+    subject { Command::Move.new("/root/from", "/root/to") }
+
+    its(:command) { should == "mv" }
+    its(:arguments) { should == ["/root/from", "/root/to"] }
+
+    its(:source) { should be from }
+    its(:destination) { should be to }
+
+    it "should move node to specified directory" do
+      subject.call
+
+      tree.children.should == [to]
+      to.children.should == [from]
     end
   end
 end

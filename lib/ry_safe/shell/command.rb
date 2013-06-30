@@ -82,4 +82,26 @@ module RySafe::Command
       Safe::Tree.current = relative_path_to_existing_node(arguments.first)
     end
   end
+
+  class Move < Base
+    def initialize(*args)
+      super "mv #{args.join(" ")}"
+    end
+
+    def command
+      "mv"
+    end
+
+    def action
+      Util::NodeHandler.move(source, destination)
+    end
+
+    def source
+      relative_path_to_existing_node(arguments[0])
+    end
+
+    def destination
+      relative_path_to_existing_node(arguments[1])
+    end
+  end
 end
