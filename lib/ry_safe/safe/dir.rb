@@ -53,5 +53,10 @@ module RySafe::Safe
       results << dirs.map { |dir| dir.find(query) }
       results.flatten
     end
+
+    def [](node_name)
+      children.each { |node| return node if node.name == node_name }
+      nil
+    end
   end
 end

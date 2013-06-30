@@ -212,4 +212,21 @@ describe Safe::Dir do
       subject.should have(0).children
     end
   end
+
+  describe "#[]" do
+    let(:node1) { Safe::Node.new("N1") }
+
+    before do
+      subject << node1
+      subject.should include node1
+    end
+
+    it "should get node node1" do
+      subject["N1"].should be node1
+    end
+
+    it "should return nil if node is not a child" do
+      subject["node_does_not_exist"].should be_nil
+    end
+  end
 end
