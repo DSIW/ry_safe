@@ -119,11 +119,6 @@ module RySafe::Command
   end
 
   class Dispatcher
-    COMMANDS_HASH = Command::Base.register.reduce({}) do |hash, command_class|
-      key = command_class.new.command
-      hash.merge(key => command_class)
-    end
-
     INPUT_SEPARATOR = /\s+/
 
     attr_reader :key, :arguments
@@ -132,12 +127,24 @@ module RySafe::Command
       @key, *@arguments = line.strip.split(INPUT_SEPARATOR)
     end
 
+    def self.commands_hash
+      registered_commands = Command::Base.register
+      registered_commands.reduce({}) do |hash, command_class|
+        key = command_class.new.command
+        hash.merge(key => command_class)
+      end
+    end
+
+    def commands_hash
+      self.class.commands_hash
+    end
+
     def self.commands
-      COMMANDS_HASH.keys
+      commands_hash.keys
     end
 
     def command_class
-      klass = COMMANDS_HASH[@key]
+      klass = commands_hash[@key]
       raise Error::NoCommand if klass.nil?
       klass
     end
