@@ -12,6 +12,7 @@ module RySafe
     autoload :NodeHandler, "ry_safe/util/node_handler"
     autoload :Safeable, "ry_safe/util/safeable"
     autoload :Cloneable, "ry_safe/util/cloneable"
+    autoload :Register, "ry_safe/util/register"
   end
   module Validators
     autoload :Validator, "ry_safe/validators/validator"

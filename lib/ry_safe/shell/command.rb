@@ -4,6 +4,8 @@ class Commands < Array; end
 
 module RySafe::Command
   class Base
+    extend Util::Register
+
     attr_reader :command, :arguments
 
     def initialize(*args)
@@ -68,7 +70,7 @@ module RySafe::Command
     end
   end
 
-  class Movement < Base
+  module Movement
     def source
       relative_path_to_existing_node(arguments[0])
     end
@@ -78,7 +80,9 @@ module RySafe::Command
     end
   end
 
-  class Copy < Movement
+  class Copy < Base
+    include Movement
+
     def command
       "cp"
     end
@@ -88,7 +92,9 @@ module RySafe::Command
     end
   end
 
-  class Move < Movement
+  class Move < Base
+    include Movement
+
     def command
       "mv"
     end
@@ -113,16 +119,7 @@ module RySafe::Command
   end
 
   class Dispatcher
-    COMMANDS = [
-      Command::Touch,
-      Command::MkDir,
-      Command::ChangeDirectory,
-      Command::Copy,
-      Command::Move,
-      Command::Remove,
-    ]
-
-    COMMANDS_HASH = COMMANDS.reduce({}) do |hash, command_class|
+    COMMANDS_HASH = Command::Base.register.reduce({}) do |hash, command_class|
       key = command_class.new.command
       hash.merge(key => command_class)
     end
