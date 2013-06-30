@@ -100,33 +100,35 @@ describe Safe::Node do
       # root < dir1 < node2
     end
 
+    subject { Safe::Node.from_path(path, options) }
+    let(:path) { "" }
+    let(:options) { {in: root} }
+
     context "object does exist in tree" do
-      it "should get root for path /root" do
-        found_node = Safe::Node.from_path("/root", in: root)
-        found_node.should be root
+      context "path == /root" do
+        let(:path) { "/root" }
+        it { should be root }
       end
 
-      it "should get node1 for path /root/node1" do
-        found_node = Safe::Node.from_path("/root/node1", in: root)
-        found_node.should be node1
+      context "path == /root/node1" do
+        let(:path) { "/root/node1" }
+        it { should be node1 }
       end
 
-      it "should get dir1 for path /root/dir1" do
-        found_node = Safe::Node.from_path("/root/dir1", in: root)
-        found_node.should be dir1
+      context "path == /root/dir1" do
+        let(:path) { "/root/dir1" }
+        it { should be dir1 }
       end
 
-      it "should get dir1node2 for path /root/dir1/node2" do
-        found_node = Safe::Node.from_path("/root/dir1/node2", in: root)
-        found_node.should be dir1node2
+      context "path == /root/dir1/node2" do
+        let(:path) { "/root/dir1/node2" }
+        it { should be dir1node2 }
       end
     end
 
     context "object doesn't exist in tree" do
-      it "should return nil" do
-        found_node = Safe::Node.from_path("/does_not_exist", in: root)
-        found_node.should be_nil
-      end
+      let(:path) { "/does_not_exist" }
+      it { should be_nil }
     end
   end
 
