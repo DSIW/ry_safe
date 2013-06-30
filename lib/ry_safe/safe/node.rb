@@ -24,7 +24,12 @@ module RySafe::Safe
       current = elements.last
       unless current.nil?
         top_node = elements.length == 1
-        parent = top_node ? options[:in] : create_from_path(elements[0..-2].join(SEPARATOR))
+        parent = if top_node
+                   options[:in]
+                 else
+                   rest_path = elements[0..-2].join(SEPARATOR)
+                   create_from_path(rest_path)
+                 end
         Safe::Dir.new(current, parent)
       end
     end
