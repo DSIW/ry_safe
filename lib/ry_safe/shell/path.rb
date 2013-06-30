@@ -9,7 +9,7 @@ module RySafe
     end
 
     def to_node
-      Safe::Node.from_path(path)
+      Safe::Node.create_from_path(path)
     end
 
     def absolute?

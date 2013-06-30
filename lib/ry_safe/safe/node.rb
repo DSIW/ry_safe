@@ -16,16 +16,16 @@ module RySafe::Safe
       @parent = parent
     end
 
-    def self.from_path(path)
+    def self.create_from_path(path, options = {})
       raise ArgumentError if path == "/"
 
       elements = path.sub(/^\//, '').split(SEPARATOR)
 
       current = elements.last
       unless current.nil?
-        empty = elements.empty?
-        parent = empty ? nil : from_path(elements[0..-2].join(SEPARATOR))
-        new(current, parent)
+        top_node = elements.length == 1
+        parent = top_node ? options[:in] : create_from_path(elements[0..-2].join(SEPARATOR))
+        Safe::Dir.new(current, parent)
       end
     end
 

@@ -48,9 +48,14 @@ describe Safe::Node do
     end
   end
 
-  describe "::from_path" do
+  describe "::create_from_path" do
+    let(:tree) { Safe::Node.new("/root") }
+
+    subject { Safe::Node.create_from_path(path, options) }
+    let(:options) { {} }
+
     context "path == /" do
-      subject { Safe::Node.from_path("/") }
+      let(:path) { "/" }
 
       it "should raise an error" do
         expect { subject }.to raise_error ArgumentError
@@ -58,14 +63,21 @@ describe Safe::Node do
     end
 
     context "path == /NodeName" do
-      subject { Safe::Node.from_path("/NodeName") }
+      let(:path) { "/NodeName" }
 
       its(:name) { should == "NodeName" }
       its(:root?) { should be_true }
+
+      context "with option in" do
+        let(:options) { {in: tree} }
+
+        its(:root?) { should be_false }
+        its(:parent) { should == tree }
+      end
     end
 
     context "path == /Parent/NodeName" do
-      subject { Safe::Node.from_path("/Parent/NodeName") }
+      let(:path) { "/Parent/NodeName" }
 
       its(:name) { should == "NodeName" }
       its(:parent?) { should be_true }
