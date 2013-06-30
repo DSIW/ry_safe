@@ -12,6 +12,10 @@ module RySafe
       Safe::Node.create_from_path(path)
     end
 
+    def to_existing_node_in(root = Safe::Tree.current)
+      Safe::Node.from_path(path, in: root)
+    end
+
     def absolute?
       raise "Not implemented by Path."
     end

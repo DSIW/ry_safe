@@ -20,6 +20,17 @@ describe Path do
     its(:name) { should == "name" }
     its("parent.name") { should == "parent" }
   end
+
+  describe "#to_existing_node_in" do
+    let(:root) { Safe::Dir.new("root") }
+    let(:dir) { Safe::Dir.new("dir") }
+
+    before { root << dir }
+
+    subject { Path.new("/root/dir").to_existing_node_in(root) }
+
+    it { should be dir }
+  end
 end
 
 describe RelativePath do
