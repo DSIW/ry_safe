@@ -130,6 +130,13 @@ describe Safe::Node do
       let(:path) { "/does_not_exist" }
       it { should be_nil }
     end
+
+    context "no tree is specified" do
+      let(:options) { {} }
+      it "should raise" do
+        expect { subject }.to raise_error ArgumentError
+      end
+    end
   end
 
   describe "#root?" do

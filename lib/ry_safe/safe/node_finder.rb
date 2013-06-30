@@ -7,6 +7,8 @@ module RySafe::Safe
     attr_reader :tree, :path
 
     def initialize(path, tree)
+      raise ArgumentError, "Tree has to be set" unless tree.is_a? Safe::Node
+
       @path = path
       @tree = tree
     end
