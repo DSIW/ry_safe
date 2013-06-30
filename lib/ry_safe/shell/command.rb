@@ -104,4 +104,26 @@ module RySafe::Command
       relative_path_to_existing_node(arguments[1])
     end
   end
+
+  class Copy < Base
+    def initialize(*args)
+      super "cp #{args.join(" ")}"
+    end
+
+    def command
+      "cp"
+    end
+
+    def action
+      Util::NodeHandler.copy(source, destination)
+    end
+
+    def source
+      relative_path_to_existing_node(arguments[0])
+    end
+
+    def destination
+      relative_path_to_existing_node(arguments[1])
+    end
+  end
 end

@@ -96,4 +96,30 @@ describe Command do
       to.children.should == [from]
     end
   end
+
+  describe Command::Copy do
+    let(:tree) { Safe::Tree.root }
+    let(:from) { Safe::Node.new("from") }
+    let(:to) { Safe::Dir.new("to") }
+
+    before do
+      tree << from
+      tree << to
+    end
+
+    subject { Command::Copy.new("/root/from", "/root/to") }
+
+    its(:command) { should == "cp" }
+    its(:arguments) { should == ["/root/from", "/root/to"] }
+
+    its(:source) { should be from }
+    its(:destination) { should be to }
+
+    it "should copy node to specified directory" do
+      subject.call
+
+      tree.children.should == [from, to]
+      to.children.should == [from]
+    end
+  end
 end
