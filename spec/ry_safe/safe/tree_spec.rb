@@ -48,6 +48,20 @@ describe Safe::Tree do
     end
 
     describe "#clear" do
+      before { subject.clear }
+
+      it "should clear children" do
+        subject.children.should be_empty
+      end
+
+      it "should reset current" do
+        subject.current.should == Safe::Tree.root
+      end
+    end
+
+    describe "#reset_current" do
+      before { subject.reset_current }
+
       it "should reset current" do
         subject.current.should == Safe::Tree.root
       end

@@ -20,9 +20,13 @@ module RySafe::Safe
       @current || self
     end
 
+    def reset_current
+      @current = nil
+    end
+
     def clear
       super
-      @current = nil
+      reset_current
     end
 
     class << self
@@ -32,7 +36,7 @@ module RySafe::Safe
         instance
       end
 
-      delegate [:current=, :current, :clear] => :instance
+      delegate [:current=, :current, :clear, :reset_current] => :instance
     end
   end
 end
