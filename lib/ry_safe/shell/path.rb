@@ -38,8 +38,12 @@ module RySafe
     end
 
     def cleanpath
-      absolute_path = File.join(@pwd, path)
-      Pathname.new(absolute_path).cleanpath.to_s
+      if path.start_with?("/")
+        path
+      else
+        absolute_path = File.join(@pwd, path)
+        Pathname.new(absolute_path).cleanpath.to_s
+      end
     end
 
     def absolute?

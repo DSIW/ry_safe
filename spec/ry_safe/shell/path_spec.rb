@@ -51,19 +51,24 @@ describe RelativePath do
 
     its(:path) { should == "/pwd/path/to" }
 
-    context "with ../" do
+    context "starting with ../" do
       let(:relative_path) { "../path/to" }
       its('path') { should == "/path/to" }
     end
 
-    context "with ../../" do
+    context "starting with ../../" do
       let(:relative_path) { "../../path/to" }
       its(:path) { should == "/path/to" }
     end
 
-    context "with ./" do
+    context "starting with ./" do
       let(:relative_path) { "./path/to" }
       its(:path) { should == "/pwd/path/to" }
+    end
+
+    context "starting with /" do
+      let(:relative_path) { "/path/to" }
+      its(:path) { should == "/path/to" }
     end
   end
 
