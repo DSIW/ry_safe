@@ -31,7 +31,7 @@ describe Util::NodeHandler do
     end
 
     it "should raise if destination is no Dir" do
-      expect { Util::NodeHandler.copy(node1, Safe::Node.new("new_node")) }.to raise_error Error::DestinationNotNode
+      expect { Util::NodeHandler.copy(node1, Safe::Node.new("new_node")) }.to raise_error Error::DestinationNotDir
     end
 
     it "should copy node1" do

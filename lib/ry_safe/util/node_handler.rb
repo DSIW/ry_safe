@@ -5,7 +5,7 @@ module RySafe::Util::NodeHandler
     def copy(source, destination)
       raise Error::SourceNotNode unless source.kind_of? Safe::Node
       raise Error::NotCopyable if source.root?
-      raise Error::DestinationNotNode unless destination.is_a? Safe::Dir
+      raise Error::DestinationNotDir unless destination.is_a? Safe::Dir
       raise Error::SameSourceAndDestination if source == destination
 
       cloned_source = source.dup
@@ -29,7 +29,7 @@ module RySafe::Util::NodeHandler
 
     def move(source, destination)
       raise Error::SourceNotNode unless source.kind_of? Safe::Node
-      raise Error::DestinationNotNode unless destination.is_a? Safe::Dir
+      raise Error::DestinationNotDir unless destination.is_a? Safe::Dir
       raise Error::NotMovable if source.root?
       raise Error::SameSourceAndDestination if source == destination
 
