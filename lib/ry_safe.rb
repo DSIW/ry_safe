@@ -30,4 +30,8 @@ module RySafe
     autoload :Touch, "ry_safe/shell/command.rb"
     autoload :MkDir, "ry_safe/shell/command.rb"
   end
+
+  autoload :Path, "ry_safe/shell/path.rb"
+  autoload :RelativePath, "ry_safe/shell/path.rb"
+  autoload :AbsolutePath, "ry_safe/shell/path.rb"
 end

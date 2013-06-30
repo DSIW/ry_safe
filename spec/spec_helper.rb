@@ -5,6 +5,7 @@ end
 
 require 'rspec'
 require 'ry_safe'
+require 'ostruct'
 
 RSpec.configure do |config|
   include RySafe
