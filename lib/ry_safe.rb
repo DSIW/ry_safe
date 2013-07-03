@@ -6,6 +6,7 @@ module RySafe
   autoload :Error, "ry_safe/error"
 
   autoload :Safe, "ry_safe/safe"
+
   module Util
     autoload :Hashable, "ry_safe/util/hashable"
     autoload :Dates, "ry_safe/util/dates"
@@ -14,12 +15,14 @@ module RySafe
     autoload :Cloneable, "ry_safe/util/cloneable"
     autoload :Register, "ry_safe/util/register"
   end
+
   module Validators
     autoload :Validator, "ry_safe/validators/validator"
     autoload :PasswordValidator, "ry_safe/validators/password_validator"
   end
+
   autoload :Path, "ry_safe/path"
-  autoload :Shell, "ry_safe/shell"
+  autoload :Shell, "ry_safe/shell/shell"
   autoload :Password, "ry_safe/password"
   autoload :PasswordGenerator, "ry_safe/password_generator"
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
@@ -30,6 +33,13 @@ module RySafe
     autoload :Base, "ry_safe/shell/command.rb"
     autoload :Touch, "ry_safe/shell/command.rb"
     autoload :MkDir, "ry_safe/shell/command.rb"
+    autoload :ChangeDirectory, "ry_safe/shell/command.rb"
+    autoload :Copy, "ry_safe/shell/command.rb"
+    autoload :Move, "ry_safe/shell/command.rb"
+    autoload :Remove, "ry_safe/shell/command.rb"
+    autoload :List, "ry_safe/shell/command.rb"
+    autoload :ShowEntry, "ry_safe/shell/command.rb"
+    autoload :Dispatcher, "ry_safe/shell/command.rb"
   end
 
   autoload :Path, "ry_safe/shell/path.rb"
