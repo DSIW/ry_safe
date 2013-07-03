@@ -49,4 +49,10 @@ describe Util::PresenterHelper do
       align("left_abcd", "__right", 15, "||").should == "lef...||__right"
     end
   end
+
+  describe "#format_time" do
+    it "should format YYYY-MM-DD HH:MM:SS" do
+      format_time(Time.new(2013,01,01,12,00,00)).should == "2013-01-01 12:00:00"
+    end
+  end
 end

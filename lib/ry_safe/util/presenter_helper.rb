@@ -39,5 +39,9 @@ module RySafe::Util
 
       [aligned_left, aligned_right].reject(&:empty?).join(separator)
     end
+
+    def format_time(time)
+      time.strftime("%F %H:%M:%S")
+    end
   end
 end
