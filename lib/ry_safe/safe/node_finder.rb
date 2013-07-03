@@ -42,7 +42,7 @@ module RySafe::Safe
     end
 
     def elements
-      path.sub(/^\/root\//, '').split(Node::SEPARATOR)
+      path.sub(/^#{Regexp.escape(ROOT_PATH)}\//, '').split(Node::SEPARATOR)
     end
 
     def last_element?
