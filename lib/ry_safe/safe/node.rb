@@ -5,6 +5,7 @@ module RySafe::Safe
     include Comparable
     include Util::Dates
     include Util::Hashable
+    include Util::Presentable
 
     SEPARATOR = File::SEPARATOR
 

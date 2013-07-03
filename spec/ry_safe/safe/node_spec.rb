@@ -231,4 +231,10 @@ describe Safe::Node do
   describe "#destroy" do
     pending "No implemented"
   end
+
+  describe "#presenter" do
+    it "should get the right presenter" do
+      subject.presenter.should be_a NodePresenter
+    end
+  end
 end
