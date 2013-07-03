@@ -43,5 +43,9 @@ module RySafe::Util
     def format_time(time)
       time.strftime("%F %H:%M:%S")
     end
+
+    def remove_root(string)
+      string.sub("/root", "/").sub("//", "/")
+    end
   end
 end

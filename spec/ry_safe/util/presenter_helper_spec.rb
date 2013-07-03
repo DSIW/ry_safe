@@ -55,4 +55,14 @@ describe Util::PresenterHelper do
       format_time(Time.new(2013,01,01,12,00,00)).should == "2013-01-01 12:00:00"
     end
   end
+
+  describe "#remove_root" do
+    it "should remove /root/ from path" do
+      remove_root("/").should == "/"
+      remove_root("root").should == "root"
+      remove_root("/root").should == "/"
+      remove_root("/root/").should == "/"
+      remove_root("/root/dir").should == "/dir"
+    end
+  end
 end
