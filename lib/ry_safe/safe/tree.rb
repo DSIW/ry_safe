@@ -24,6 +24,10 @@ module RySafe::Safe
       @current = nil
     end
 
+    def go_up
+      @current = @current.parent if @current.parent?
+    end
+
     def clear
       super
       reset_current
@@ -36,7 +40,7 @@ module RySafe::Safe
         instance
       end
 
-      delegate [:current=, :current, :clear, :reset_current] => :instance
+      delegate [:current=, :current, :clear, :reset_current, :go_up] => :instance
     end
   end
 end

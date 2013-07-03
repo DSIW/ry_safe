@@ -36,11 +36,11 @@ describe Safe::Tree do
 
     it "should set and get working directory" do
       subject.current = new_pwd
-      subject.current.should == new_pwd
+      subject.current.should be new_pwd
     end
 
     it "should get root if no current is specified" do
-      subject.current.should == Safe::Tree.root
+      subject.current.should be Safe::Tree.root
     end
 
     it "should not set current if dir isn't included in tree" do
@@ -55,7 +55,7 @@ describe Safe::Tree do
       end
 
       it "should reset current" do
-        subject.current.should == Safe::Tree.root
+        subject.current.should be Safe::Tree.root
       end
     end
 
@@ -63,7 +63,15 @@ describe Safe::Tree do
       before { subject.reset_current }
 
       it "should reset current" do
-        subject.current.should == Safe::Tree.root
+        subject.current.should be Safe::Tree.root
+      end
+    end
+
+    describe "#go_up" do
+      it "should set root (parent of current) as current" do
+        subject.current = new_pwd
+        subject.go_up
+        subject.current.should be Safe::Tree.root
       end
     end
 
