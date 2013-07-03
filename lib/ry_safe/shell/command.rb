@@ -48,7 +48,7 @@ module RySafe::Command
     end
 
     def action
-      Safe::Tree.root << Safe::Entry.new(arguments.first)
+      Safe::Tree.current << Safe::Entry.new(arguments.first)
     end
   end
 
@@ -58,7 +58,7 @@ module RySafe::Command
     end
 
     def action
-      Safe::Tree.root << Safe::Dir.new(arguments.first)
+      Safe::Tree.current << Safe::Dir.new(arguments.first)
     end
   end
 

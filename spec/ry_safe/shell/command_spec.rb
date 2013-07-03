@@ -33,6 +33,10 @@ describe Command do
       tree.children.first.name.should == "file"
       tree.children.first.should be_a Safe::Entry
     end
+
+    context "with relative paths and pwd" do
+      pending "Not tested"
+    end
   end
 
   describe Command::MkDir do
@@ -47,6 +51,10 @@ describe Command do
       tree.should have(1).node
       tree.children.first.name.should == "dir"
       tree.children.first.should be_a Safe::Dir
+    end
+
+    context "with relative paths and pwd" do
+      pending "Not tested"
     end
   end
 
