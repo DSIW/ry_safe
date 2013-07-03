@@ -51,7 +51,7 @@ module RySafe::Safe
     end
 
     def dirs
-      @children.select { |child| child.is_a? self.class }
+      @children.select { |child| child.is_a? Safe::Dir }
     end
 
     def entries
