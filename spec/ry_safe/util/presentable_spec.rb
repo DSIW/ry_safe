@@ -9,7 +9,7 @@ describe Util::Presentable do
     end
   end
 
-  class FakeModel
+  class Safe::FakeModel
     include Util::Presentable
 
     attr_reader :name
@@ -20,7 +20,7 @@ describe Util::Presentable do
   end
 
   subject { model.presenter }
-  let(:model) { FakeModel.new }
+  let(:model) { Safe::FakeModel.new }
 
   it { should be_a FakeModelPresenter }
   its(:name) { should == "FakeModelPresenter" }

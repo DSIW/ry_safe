@@ -18,7 +18,7 @@ module RySafe::Util
       end
 
       def class_name
-        object.class.name
+        object.class.name.split('::').last
       end
 
       def presenter_name
@@ -26,7 +26,7 @@ module RySafe::Util
       end
 
       def presenter_class
-        Object.const_get(presenter_name)
+        RySafe.const_get(presenter_name)
       rescue NameError => e
         raise Error::NoPresenterFound, "Presenter #{presenter_name} not found."
       end
