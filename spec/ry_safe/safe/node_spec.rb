@@ -30,6 +30,15 @@ describe Safe::Node do
         subject.parent.should be_nil
       end
     end
+
+    it "should set created_at and modified_at" do
+      subject.created_at.should be_a Time
+      subject.modified_at.should be_a Time
+    end
+
+    it "should not set destroyed_at" do
+      subject.destroyed_at.should be_nil
+    end
   end
 
   describe "#parents" do
