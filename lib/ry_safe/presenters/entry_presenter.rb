@@ -1,6 +1,6 @@
 module RySafe
-  class EntryPresenter < Presenter
-    def to_s
+  class EntryPresenter < NodePresenter
+    def content
       <<-HEREDOC
 dir:                   #{model.directory || "--"}
 title:                 #{model.name || "--"}
@@ -13,6 +13,10 @@ website:               #{model.website || "--"}
 tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment || "--"}
       HEREDOC
+    end
+
+    def recursive_size
+      "".rjust(2)
     end
   end
 end

@@ -13,7 +13,7 @@ describe EntryPresenter do
     entry.comment = "Comment"
   end
 
-  its(:to_s) do
+  its(:content) do
     should == <<-STRING
 dir:                   /parent
 title:                 Title
@@ -27,4 +27,6 @@ tags:                  Tag1, Tag2, Tag3
 comment:               Comment
     STRING
   end
+
+  its(:recursive_size) { should == "  " }
 end
