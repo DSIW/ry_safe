@@ -75,6 +75,24 @@ describe Safe::Dir do
     end
   end
 
+  describe "#resursive_size" do
+    let(:new_dir) { Safe::Dir.new("new_dir") }
+    its(:recursive_size) { should == 0 }
+
+    context "with one child" do
+      before { subject << new_dir }
+
+      its(:recursive_size) { should == 1 }
+
+      context "with one children which has one child" do
+        before { new_dir << Safe::Node.new("childchild") }
+        before { new_dir << Safe::Node.new("childchild2") }
+
+        its(:recursive_size) { should == 3 }
+      end
+    end
+  end
+
   describe "#siblings" do
     let(:dir1) { Safe::Dir.new("D1") }
     let(:dir2) { Safe::Dir.new("D2") }

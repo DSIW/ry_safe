@@ -23,6 +23,13 @@ module RySafe::Safe
       @children.to_a
     end
 
+    def recursive_size
+      sum = 0
+      sum += size
+      dirs.each { |dir| sum += dir.recursive_size }
+      sum
+    end
+
     def children?
       !empty?
     end
