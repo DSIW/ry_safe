@@ -149,6 +149,34 @@ describe Command do
     end
   end
 
+  describe Command::List do
+    pending "NotTested"
+  end
+
+  describe Command::ShowEntry do
+    pending "NotTested"
+  end
+
+  describe Command::Set do
+    pending "NotTested"
+  end
+
+  describe Command::Get do
+    pending "NotTested"
+  end
+
+  describe Command::WorkingDirectory do
+    pending "NotTested"
+  end
+
+  describe Command::Clear do
+    pending "NotTested"
+  end
+
+  describe Command::Rename do
+    pending "NotTested"
+  end
+
   describe Command::Dispatcher do
     subject { Command::Dispatcher.new("mv /from \"/to/other path\" ") }
 

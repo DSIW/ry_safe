@@ -128,6 +128,118 @@ module RySafe::Command
     end
   end
 
+  class List < Base
+    def command
+      "ls"
+    end
+
+    def action
+      puts node.presenter.children
+    end
+
+    def node
+      relative_path_to_existing_node(arguments[0] || ".")
+    end
+  end
+
+  class ShowEntry < Base
+    def command
+      "cat"
+    end
+
+    def action
+      puts entry.presenter.content
+    end
+
+    def entry
+      relative_path_to_existing_node(arguments[0])
+    end
+  end
+
+  class Set < Base
+    def command
+      "set"
+    end
+
+    def action
+      node.send("#{attribute}=", value)
+      puts "Saved"
+    end
+
+    def node
+      relative_path_to_existing_node(arguments[0])
+    end
+
+    def attribute
+      setting.first
+    end
+
+    def value
+      setting.last
+    end
+
+    def setting
+      arguments[1].split('=')
+    end
+  end
+
+  class Get < Base
+    def command
+      "get"
+    end
+
+    def action
+      puts node.send(attribute)
+    end
+
+    def node
+      relative_path_to_existing_node(arguments[0])
+    end
+
+    def attribute
+      arguments[1]
+    end
+  end
+
+  class WorkingDirectory < Base
+    def command
+      "pwd"
+    end
+
+    def action
+      puts Safe::Tree.current.presenter.path
+    end
+  end
+
+  class Clear < Base
+    def command
+      "clear"
+    end
+
+    def action
+      puts "\n"*40
+    end
+  end
+
+  class Rename < Base
+    def command
+      "rename"
+    end
+
+    def action
+      node.name = new_name
+      puts "Renamed to #{new_name}"
+    end
+
+    def node
+      relative_path_to_existing_node(arguments[0])
+    end
+
+    def new_name
+      arguments[1]
+    end
+  end
+
   class Dispatcher
     attr_reader :key, :arguments
 
