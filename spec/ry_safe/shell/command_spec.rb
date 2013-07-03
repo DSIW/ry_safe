@@ -150,16 +150,16 @@ describe Command do
   end
 
   describe Command::Dispatcher do
-    subject { Command::Dispatcher.new("mv /from /to") }
+    subject { Command::Dispatcher.new("mv /from \"/to/other path\" ") }
 
     its(:key) { should == "mv" }
-    its(:arguments) { should == ["/from", "/to"] }
+    its(:arguments) { should == ["/from", "/to/other path"] }
     its(:command_class) { should == Command::Move }
     its(:command) { should be_a Command::Move }
-    its("command.arguments") { should == ["/from", "/to"] }
+    its("command.arguments") { should == ["/from", "/to/other path"] }
 
     it "should get the right commands" do
-      Command::Dispatcher.commands.should == %w(touch mkdir cd cp mv rm)
+      Command::Dispatcher.commands.should == %w(touch mkdir cd cp mv rm ls cat set get pwd clear rename)
     end
 
     context "without arguments" do

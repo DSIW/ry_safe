@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'shellwords'
+
 class Commands < Array; end
 
 module RySafe::Command
@@ -127,12 +129,10 @@ module RySafe::Command
   end
 
   class Dispatcher
-    INPUT_SEPARATOR = /\s+/
-
     attr_reader :key, :arguments
 
     def initialize(line)
-      @key, *@arguments = line.strip.split(INPUT_SEPARATOR)
+      @key, *@arguments = Shellwords.split(line.strip)
     end
 
     def self.commands_hash
