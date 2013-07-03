@@ -69,8 +69,12 @@ module RySafe::Command
       Safe::Tree.current = node
     end
 
+    def path
+      arguments[0]
+    end
+
     def node
-      relative_path_to_existing_node(arguments[0])
+      relative_path_to_existing_node(path)
     end
   end
 
