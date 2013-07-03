@@ -18,6 +18,18 @@ describe Command do
       subject.should_receive(:action)
       subject.call
     end
+
+    describe "#absolute_path" do
+      pending "Not tested"
+    end
+
+    describe "#relative_path_to_node" do
+      pending "Not tested"
+    end
+
+    describe "#relative_path_to_existing_node" do
+      pending "Not tested"
+    end
   end
 
   describe Command::Touch do
