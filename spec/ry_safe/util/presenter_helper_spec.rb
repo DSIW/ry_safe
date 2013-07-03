@@ -21,10 +21,32 @@ describe Util::PresenterHelper do
   end
 
   describe "#truncate" do
-    pending "Not implemented"
+    it "should truncate with specified number and max length" do
+      truncate("abc", 10).should == "abc"
+      truncate("abcdefghij", 10).should == "abcdefghij"
+      truncate("abcdefghi", 10).should == "abcdefghi"
+      truncate("abcdefgh", 10).should == "abcdefgh"
+      truncate("abcdefg", 10).should == "abcdefg"
+      truncate("abcdefghijk", 10).should == "abcdefg..."
+      truncate("abcdefghijkl", 10).should == "abcdefg..."
+      truncate("abcdefghijklm", 10).should == "abcdefg..."
+      truncate("abcdefghijklm", 10, "..").should == "abcdefgh.."
+      truncate("abcdefghijklm", 10, ".").should == "abcdefghi."
+    end
   end
 
   describe "#align" do
-    pending "Not implemented"
+    it "should truncate on left side and rjust on right side" do
+      align("left", "right", 15).should        == "left      right"
+      align("left_abcdefghij", nil, 15).should  == "left_abcdefghij"
+      align("", "left_abcdefghij", 15).should  == "left_abcdefghij"
+      align("left_abcdefghij", "", 15).should  == "left_abcdefghij"
+      align("left_abcdefgh", ".", 15).should   == "left_abcdefgh ."
+      align("left_abcd", "right", 15).should   == "left_abcd right"
+      align("left_abcd_", "right", 15).should  == "left_a... right"
+      align("left_abcd", "_right", 15).should  == "left_... _right"
+      align("left_abcd", "__right", 15).should == "left... __right"
+      align("left_abcd", "__right", 15, "||").should == "lef...||__right"
+    end
   end
 end
