@@ -54,6 +54,10 @@ module RySafe::Safe
       @children.select { |child| child.is_a? self.class }
     end
 
+    def entries
+      @children.select { |child| child.is_a? Safe::Entry }
+    end
+
     def find(query)
       results = []
       results << @children.select { |child| child === query }

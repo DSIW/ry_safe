@@ -141,6 +141,27 @@ describe Safe::Dir do
     its(:dirs) { should == [dir1, dir2] }
   end
 
+  describe "#entries" do
+    let(:node1) { Safe::Entry.new("N1") }
+    let(:node2) { Safe::Entry.new("N2") }
+    let(:dir1) { Safe::Dir.new("D1") }
+    let(:dir2) { Safe::Dir.new("D2") }
+    let(:d2n1) { Safe::Entry.new("D2N1", dir2) }
+    # N1
+    # N2
+    # D1
+    # D2 < D2N1
+
+    before :each do
+      subject << node1
+      subject << node2
+      subject << dir1
+      subject << dir2
+    end
+
+    its(:entries) { should == [node1, node2] }
+  end
+
   describe "#find" do
     let(:node1) { Safe::Node.new("N1") }
     let(:node2) { Safe::Node.new("N2") }
