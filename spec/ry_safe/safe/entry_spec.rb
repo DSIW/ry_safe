@@ -64,5 +64,9 @@ describe Safe::Entry do
       subject.should have(5).tags
       subject.tags.should == %w(one two three four-five a_b).map { |t| Safe::Tag.new(t) }
     end
+
+    it "should be presentable by EntryPresenter" do
+      subject.presenter.should be_a EntryPresenter
+    end
   end
 end
