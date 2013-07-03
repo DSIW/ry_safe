@@ -1,10 +1,11 @@
 module RySafe
   class Presenter
 
-    attr_reader :model
+    attr_reader :model, :helper
 
     def initialize(model)
       @model = model
+      @helper = Class.new { include Util::PresenterHelper }.new
     end
 
     def to_s
