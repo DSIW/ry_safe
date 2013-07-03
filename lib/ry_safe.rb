@@ -51,4 +51,6 @@ module RySafe
   autoload :Presenter, "ry_safe/presenters/presenter.rb"
   autoload :EntryPresenter, "ry_safe/presenters/entry_presenter.rb"
   autoload :NodePresenter, "ry_safe/presenters/node_presenter.rb"
+  autoload :DirPresenter, "ry_safe/presenters/dir_presenter.rb"
+  autoload :TreePresenter, "ry_safe/presenters/tree_presenter.rb"
 end
