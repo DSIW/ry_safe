@@ -227,4 +227,8 @@ describe Safe::Node do
       subject.should_not be_eql Safe::Node.new("different")
     end
   end
+
+  describe "#destroy" do
+    pending "No implemented"
+  end
 end
