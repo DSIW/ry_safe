@@ -1,5 +1,9 @@
 # RySafe
 
+## Start shell under development
+
+    $ ruby -e 'require "ry_safe"; include RySafe; Shell.new.prompt'
+
 TODO: Write a gem description
 
 ## Installation
