@@ -15,7 +15,7 @@ module RySafe::Util::NodeHandler
 
     # TODO: Remove complete (with children) instead of only removing link to parent
     def remove(node)
-      raise Error::NotNode unless node.is_a? Safe::Node
+      raise Error::NotNode unless node.kind_of? Safe::Node
       raise Error::NotRemovable if node.root?
 
       if node.parent.is_a? Safe::Dir

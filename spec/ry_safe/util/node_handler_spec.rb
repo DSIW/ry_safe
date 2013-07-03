@@ -123,15 +123,33 @@ describe Util::NodeHandler do
     let(:dir1) { Safe::Dir.new("D1") }
     let(:dir2) { Safe::Dir.new("D2") }
     let(:d2n1) { Safe::Node.new("N1") }
+    let(:entry) { Safe::Entry.new("E1") }
 
     before do
       root << node1
       root << dir1
       dir2 << d2n1
       root << dir2
+      root << entry
       # N1
       # D1
       # D2 < D2N1
+    end
+
+    it "should be possible to move node" do
+      expect { Util::NodeHandler.move(node1, Safe::Dir.new("new_dir")) }.not_to raise_error Error::SourceNotNode
+    end
+
+    it "should be possible to move dir" do
+      expect { Util::NodeHandler.move(dir1, Safe::Dir.new("new_dir")) }.not_to raise_error Error::SourceNotNode
+    end
+
+    it "should be possible to move entry" do
+      expect { Util::NodeHandler.move(entry, Safe::Dir.new("new_dir")) }.not_to raise_error Error::SourceNotNode
+    end
+
+    it "should not be possible to move string" do
+      expect { Util::NodeHandler.move("entry", Safe::Dir.new("new_dir")) }.to raise_error Error::SourceNotNode
     end
 
     it "should not be possible to move root node" do
@@ -144,7 +162,7 @@ describe Util::NodeHandler do
 
     it "should move dir2 from root to dir1" do
       Util::NodeHandler.move(dir2, dir1)
-      root.should have(2).children
+      root.should have(3).children
       root.should_not include dir2
       dir2.parent.should be dir1
     end
