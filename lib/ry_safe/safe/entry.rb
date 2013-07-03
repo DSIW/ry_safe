@@ -1,7 +1,14 @@
 module RySafe::Safe
   class Entry < Node
-    attr_accessor :website, :username, :comment, :title
+    attr_accessor :website, :username, :comment
     attr_reader :password, :password_confirmation, :tags
+
+    def initialize(name, parent = nil)
+      raise ArgumentError, "name can't be blank." if name.nil? || name.to_s.strip.empty?
+      super
+
+      @tags = []
+    end
 
     def directory
       @parent

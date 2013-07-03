@@ -10,11 +10,6 @@ describe Safe::Entry do
 
   its(:to_s) { should == "/title" }
 
-  it "should set and get title" do
-    subject.title = "title"
-    subject.title.should == "title"
-  end
-
   it "should be in root by default" do
     subject.directory.should == nil
   end

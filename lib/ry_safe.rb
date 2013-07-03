@@ -37,4 +37,5 @@ module RySafe
   autoload :AbsolutePath, "ry_safe/shell/path.rb"
 
   autoload :Presenter, "ry_safe/presenters/presenter.rb"
+  autoload :EntryPresenter, "ry_safe/presenters/entry_presenter.rb"
 end
