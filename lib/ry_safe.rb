@@ -14,6 +14,7 @@ module RySafe
     autoload :Safeable, "ry_safe/util/safeable"
     autoload :Cloneable, "ry_safe/util/cloneable"
     autoload :Register, "ry_safe/util/register"
+    autoload :Presentable, "ry_safe/util/presentable"
   end
 
   module Validators

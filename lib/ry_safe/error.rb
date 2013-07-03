@@ -7,6 +7,8 @@ module RySafe::Error
   class SameSourceAndDestination < ArgumentError; end
   class NoCommand < ArgumentError; end
 
+  class NoPresenterFound < StandardError; end
+
   class NotMovable < StandardError; end
   class NotCopyable < StandardError; end
   class NotRemovable < StandardError; end
