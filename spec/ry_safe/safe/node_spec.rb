@@ -89,6 +89,7 @@ describe Safe::Node do
   describe "#from_path" do
     let(:root) { Safe::Dir.new("root") }
     let(:dir1) { Safe::Dir.new("dir1") }
+    let(:dir11) { Safe::Dir.new("dir1") }
     let(:dir1node2) { Safe::Dir.new("node2") }
     let(:node1) { Safe::Dir.new("node1") }
 
@@ -96,8 +97,10 @@ describe Safe::Node do
       root << node1
       root << dir1
       dir1 << dir1node2
+      dir1 << dir11
       # root < node1
       # root < dir1 < node2
+      # root < dir1 < dir11
     end
 
     subject { Safe::Node.from_path(path, options) }
@@ -118,6 +121,11 @@ describe Safe::Node do
       context "path == /root/dir1" do
         let(:path) { "/root/dir1" }
         it { should be dir1 }
+      end
+
+      context "path == /root/dir1/dir1" do
+        let(:path) { "/root/dir1/dir1" }
+        it { should be dir11 }
       end
 
       context "path == /root/dir1/node2" do

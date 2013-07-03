@@ -16,8 +16,10 @@ module RySafe::Safe
     def search
       return tree if path == ROOT_PATH
 
-      unless root?
+      if root?
         found_top? ? tree : search_in_children
+      else
+        search_in_children
       end
     end
 
