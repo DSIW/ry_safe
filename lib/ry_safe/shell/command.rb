@@ -27,6 +27,10 @@ module RySafe::Command
       command[0].upcase + command[1..-1]
     end
 
+    def self.help_summary
+      nil
+    end
+
     protected
 
     def absolute_path(relative_path, pwd = Safe::Tree.current.path)
@@ -50,6 +54,10 @@ module RySafe::Command
     def action
       Safe::Tree.current << Safe::Entry.new(arguments.first)
     end
+
+    def self.help_summary
+      "Create an new entry in current directory"
+    end
   end
 
   class MkDir < Base
@@ -59,6 +67,10 @@ module RySafe::Command
 
     def action
       Safe::Tree.current << Safe::Dir.new(arguments.first)
+    end
+
+    def self.help_summary
+      "Create an new directory in current directory"
     end
   end
 
@@ -77,6 +89,10 @@ module RySafe::Command
 
     def node
       relative_path_to_existing_node(path)
+    end
+
+    def self.help_summary
+      "Change current directory to the specified directory"
     end
   end
 
@@ -100,6 +116,10 @@ module RySafe::Command
     def action
       Util::NodeHandler.copy(source, destination)
     end
+
+    def self.help_summary
+      "Copy item to another directory"
+    end
   end
 
   class Move < Base
@@ -111,6 +131,10 @@ module RySafe::Command
 
     def action
       Util::NodeHandler.move(source, destination)
+    end
+
+    def self.help_summary
+      "Move item to another directory"
     end
   end
 
@@ -126,6 +150,10 @@ module RySafe::Command
     def node
       relative_path_to_existing_node(arguments[0])
     end
+
+    def self.help_summary
+      "Remove directory or entry"
+    end
   end
 
   class List < Base
@@ -140,6 +168,10 @@ module RySafe::Command
     def node
       relative_path_to_existing_node(arguments[0] || ".")
     end
+
+    def self.help_summary
+      "List all items in current directory"
+    end
   end
 
   class ShowEntry < Base
@@ -153,6 +185,10 @@ module RySafe::Command
 
     def entry
       relative_path_to_existing_node(arguments[0])
+    end
+
+    def self.help_summary
+      "Show specified entry"
     end
   end
 
@@ -181,6 +217,10 @@ module RySafe::Command
     def setting
       arguments[1].split('=')
     end
+
+    def self.help_summary
+      "Set option to specified entry"
+    end
   end
 
   class Get < Base
@@ -199,6 +239,10 @@ module RySafe::Command
     def attribute
       arguments[1]
     end
+
+    def self.help_summary
+      "Read option from specified entry"
+    end
   end
 
   class WorkingDirectory < Base
@@ -209,6 +253,10 @@ module RySafe::Command
     def action
       puts Safe::Tree.current.presenter.path
     end
+
+    def self.help_summary
+      "Print the current directory path"
+    end
   end
 
   class Clear < Base
@@ -218,6 +266,10 @@ module RySafe::Command
 
     def action
       puts "\n"*40
+    end
+
+    def self.help_summary
+      "Clear console"
     end
   end
 
@@ -238,6 +290,10 @@ module RySafe::Command
     def new_name
       arguments[1]
     end
+
+    def self.help_summary
+      "Rename current entry oder directory"
+    end
   end
 
   class Exit < Base
@@ -247,6 +303,31 @@ module RySafe::Command
 
     def action
       exit
+    end
+
+    def self.help_summary
+      "Exit RySafe console"
+    end
+  end
+
+  class Help < Base
+    def command
+      "help"
+    end
+
+    def action
+      puts "All available commands are:\n"
+      puts commands
+    end
+
+    def commands
+      Dispatcher.commands_hash.map do |name, command|
+        "#{name}: #{command.help_summary}"
+      end.join("\n")
+    end
+
+    def self.help_summary
+      "Show this help message"
     end
   end
 
