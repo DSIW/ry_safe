@@ -240,6 +240,16 @@ module RySafe::Command
     end
   end
 
+  class Exit < Base
+    def command
+      "exit"
+    end
+
+    def action
+      exit
+    end
+  end
+
   class Dispatcher
     attr_reader :key, :arguments
 

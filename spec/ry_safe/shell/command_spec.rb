@@ -197,6 +197,10 @@ describe Command do
     pending "NotTested"
   end
 
+  describe Command::Exit do
+    pending "NotTested"
+  end
+
   describe Command::Dispatcher do
     subject { Command::Dispatcher.new("mv /from \"/to/other path\" ") }
 
