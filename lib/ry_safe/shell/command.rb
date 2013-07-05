@@ -331,6 +331,20 @@ module RySafe::Command
     end
   end
 
+  class Version < Base
+    def command
+      "version"
+    end
+
+    def action
+      puts "Version: #{RySafe::VERSION}"
+    end
+
+    def self.help_summary
+      "Show version of RySafe"
+    end
+  end
+
   class Dispatcher
     attr_reader :key, :arguments
 
