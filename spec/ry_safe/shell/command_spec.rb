@@ -194,7 +194,19 @@ describe Command do
   end
 
   describe Command::Get do
-    pending "NotTested"
+    subject { Command::Get.new("entry", "password") }
+    let(:entry) { stub(Safe::Entry) }
+
+    its(:command) { should == "get" }
+
+    it "should set password in entry" do
+      subject.should_receive(:relative_path_to_existing_node).with("entry").and_return(entry)
+
+      entry.should_receive("password").and_return("123 456")
+      STDOUT.should_receive(:puts).with("123 456")
+
+      subject.action
+    end
   end
 
   describe Command::WorkingDirectory do
