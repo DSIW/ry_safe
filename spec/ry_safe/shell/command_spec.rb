@@ -178,7 +178,19 @@ describe Command do
   end
 
   describe Command::Set do
-    pending "NotTested"
+    subject { Command::Set.new("entry", "password=123 456") }
+    let(:entry) { stub(Safe::Entry) }
+
+    its(:command) { should == "set" }
+
+    it "should set password in entry" do
+      subject.should_receive(:relative_path_to_existing_node).with("entry").and_return(entry)
+
+      entry.should_receive("password=").with("123 456").and_return(true)
+      STDOUT.should_receive(:puts).with("Saved")
+
+      subject.action
+    end
   end
 
   describe Command::Get do

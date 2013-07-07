@@ -310,6 +310,57 @@ module RySafe::Command
     end
   end
 
+  #class Alias < Base
+    #def command
+      #"alias"
+    #end
+
+    #def action
+      #Command::AliasSave.aliases << ""
+    #end
+
+    #def setting
+      #arguments[0].split('=')
+    #end
+
+    #def new
+      #setting[0]
+    #end
+
+    #def old
+      #setting[1]
+    #end
+  #end
+
+  #class Aliases < Hash
+    #def <<(new, old)
+      #self.add new, Dispatcher.new(old).command
+    #end
+
+    #def call(new)
+      #self[new].call
+    #end
+  #end
+
+  class Reload < Base
+    def command
+      "reload!"
+    end
+
+    def action
+      begin
+        Dir["#{File.dirname(__FILE__)}/../../**/*.rb"].each { |f| load f }
+        puts "Reloaded!"
+      rescue Exception => e
+        puts "Error/Warning"
+      end
+    end
+
+    def self.help_summary
+      "Reload RySafe for debugging"
+    end
+  end
+
   class Help < Base
     def command
       "help"
