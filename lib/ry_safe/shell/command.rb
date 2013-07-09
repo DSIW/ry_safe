@@ -251,7 +251,11 @@ module RySafe::Command
     end
 
     def action
-      puts Safe::Tree.current.presenter.path
+      puts current_path
+    end
+
+    def current_path
+      Safe::Tree.current.presenter.path
     end
 
     def self.help_summary

@@ -210,7 +210,21 @@ describe Command do
   end
 
   describe Command::WorkingDirectory do
-    pending "NotTested"
+    subject { Command::WorkingDirectory.new }
+
+    its(:command) { should == "pwd" }
+
+    it "should print current directory" do
+      subject.should_receive(:current_path).and_return("/current/pwd")
+      STDOUT.should_receive(:puts).with("/current/pwd")
+
+      subject.action
+    end
+
+    it "should get current path of tree" do
+      NodePresenter.any_instance.should_receive(:path).and_return("/current/pwd")
+      subject.current_path.should == "/current/pwd"
+    end
   end
 
   describe Command::Clear do
