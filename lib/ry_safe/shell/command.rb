@@ -264,12 +264,14 @@ module RySafe::Command
   end
 
   class Clear < Base
+    TERMINAL_HEIGHT = 40
+
     def command
       "clear"
     end
 
     def action
-      puts "\n"*40
+      puts "\n"*TERMINAL_HEIGHT
     end
 
     def self.help_summary

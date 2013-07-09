@@ -228,7 +228,14 @@ describe Command do
   end
 
   describe Command::Clear do
-    pending "NotTested"
+    subject { Command::Clear.new }
+
+    its(:command) { should == "clear" }
+
+    it "should print as many new lines as terminal window is height" do
+      STDOUT.should_receive(:puts).with("\n"*40)
+      subject.action
+    end
   end
 
   describe Command::Rename do
