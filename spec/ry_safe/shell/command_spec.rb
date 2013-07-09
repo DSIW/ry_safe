@@ -199,7 +199,7 @@ describe Command do
 
     its(:command) { should == "get" }
 
-    it "should set password in entry" do
+    it "should get password of entry" do
       subject.should_receive(:relative_path_to_existing_node).with("entry").and_return(entry)
 
       entry.should_receive("password").and_return("123 456")
