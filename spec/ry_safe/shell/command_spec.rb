@@ -243,7 +243,13 @@ describe Command do
   end
 
   describe Command::Exit do
-    pending "NotTested"
+    subject { Command::Exit.new }
+
+    its(:command) { should == "exit" }
+
+    it "should exit RySafe" do
+      expect { subject.action }.to raise_error SystemExit
+    end
   end
 
   describe Command::Help do
