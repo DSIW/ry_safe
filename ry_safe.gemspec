@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('guard')
   gem.add_development_dependency('guard-rspec')
   gem.add_development_dependency('rb-inotify')
+  gem.add_development_dependency('fake_home')
   gem.add_dependency('rspec')
   gem.add_dependency('yard')
   gem.add_dependency('redcarpet')

@@ -6,6 +6,7 @@ end
 require 'rspec'
 require 'ry_safe'
 require 'ostruct'
+require 'fake_home'
 
 RSpec.configure do |config|
   include RySafe
@@ -26,5 +27,9 @@ RSpec.configure do |config|
 
   def default_alphabet
     AlphabetGenerator.new.add(:default).chars
+  end
+
+  def fake_home
+    @@fake_home ||= FakeHome::Home.new(prefix: "rysafe", suffix: "home")
   end
 end
