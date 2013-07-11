@@ -53,4 +53,12 @@ module RySafe
   autoload :NodePresenter, "ry_safe/presenters/node_presenter.rb"
   autoload :DirPresenter, "ry_safe/presenters/dir_presenter.rb"
   autoload :TreePresenter, "ry_safe/presenters/tree_presenter.rb"
+
+  module Persistence
+    autoload :Base, "ry_safe/persistence/base.rb"
+    autoload :File, "ry_safe/persistence/file.rb"
+    autoload :Tree, "ry_safe/persistence/tree.rb"
+    autoload :History, "ry_safe/persistence/history.rb"
+    autoload :Config, "ry_safe/persistence/config.rb"
+  end
 end
