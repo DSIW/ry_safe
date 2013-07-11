@@ -1,7 +1,7 @@
 module RySafe::Persistence
   class File < Base
     def prepare
-      super
+      Base.new.prepare
       FileUtils.touch location
     end
   end
