@@ -251,7 +251,15 @@ describe Command do
   end
 
   describe Command::Version do
-    pending "NotTested"
+    subject { Command::Version.new }
+
+    its(:command) { should == "version" }
+
+    it "should print current version number" do
+      STDOUT.should_receive(:puts).with("Version: #{RySafe::VERSION}")
+
+      subject.action
+    end
   end
 
   describe Command::Dispatcher do
