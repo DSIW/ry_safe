@@ -9,7 +9,7 @@ module RySafe
     end
 
     def prompt
-      while line = Readline.readline("#{Safe::Tree.current.presenter.path} > ", true) do
+      while line = Readline.readline(prompt_string, true) do
         begin
           eval_command(line)
         rescue StandardError => e
@@ -17,6 +17,10 @@ module RySafe
           puts e.backtrace.inspect
         end
       end
+    end
+
+    def prompt_string
+      "#{Safe::Tree.current.presenter.path} > "
     end
 
     def eval_command line
