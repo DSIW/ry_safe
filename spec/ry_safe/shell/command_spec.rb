@@ -239,7 +239,19 @@ describe Command do
   end
 
   describe Command::Rename do
-    pending "NotTested"
+    subject { Command::Rename.new("entry", "new_name") }
+    let(:node) { Struct.new(:name).new }
+
+    its(:command) { should == "rename" }
+    its(:new_name) { should == "new_name" }
+
+    it "should set new name to node" do
+      subject.should_receive(:relative_path_to_existing_node).with("entry").and_return(node)
+      node.should_receive(:name=).with("new_name").and_return(true)
+      STDOUT.should_receive(:puts).with("Renamed to new_name")
+
+      subject.action
+    end
   end
 
   describe Command::Exit do
