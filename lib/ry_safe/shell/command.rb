@@ -354,12 +354,17 @@ module RySafe::Command
     end
 
     def action
-      begin
-        Dir["#{File.dirname(__FILE__)}/../../**/*.rb"].each { |f| load f }
-        puts "Reloaded!"
-      rescue Exception => e
-        puts "Error/Warning"
+      files.each do |file|
+        begin
+          load file
+        rescue Exception => e
+        end
       end
+      puts "Reloaded!"
+    end
+
+    def files
+      Dir["#{File.dirname(__FILE__)}/../../**/*.rb"]
     end
 
     def self.help_summary
