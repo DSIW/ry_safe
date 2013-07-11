@@ -38,6 +38,7 @@ module RySafe
 
     def convert_argument(arg)
       case arg
+      when String then self.class.const_get(arg.upcase.to_sym)
       when Symbol then self.class.const_get(arg.upcase)
       else arg
       end

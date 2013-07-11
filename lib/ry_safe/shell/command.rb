@@ -407,6 +407,40 @@ module RySafe::Command
     end
   end
 
+  class PasswordGenerator < Base
+    def command
+      "gen_passwords"
+    end
+
+    def action
+      puts passwords.map(&:inspect).join("\n")
+    end
+
+    def length
+      arguments[0].to_i
+    end
+
+    def count
+      arguments[1].to_i
+    end
+
+    def options
+      arguments[2..-1]
+        .map { |option| option.split('=') }
+        .reduce({}) do |hash, (option, value)|
+          hash.merge(option.to_sym => value)
+        end
+    end
+
+    def self.help_summary
+      "Generate new passwords"
+    end
+
+    def passwords
+      RySafe::PasswordGenerator.new(length, options).generate(count)
+    end
+  end
+
   class Dispatcher
     attr_reader :key, :arguments
 
