@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-# encoding: utf-8
-
 module RySafe
   # Autoloadings
   autoload :Error, "ry_safe/error"
