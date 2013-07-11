@@ -61,4 +61,6 @@ module RySafe
     autoload :History, "ry_safe/persistence/history.rb"
     autoload :Config, "ry_safe/persistence/config.rb"
   end
+
+  autoload :Main, "ry_safe/main.rb"
 end
