@@ -289,7 +289,7 @@ describe Command do
     its(:options) { should == {char_class: 'alnum'} }
 
     it "should generate passwords" do
-      # TODO: Add parameter checks for PasswordGenerator.new and #generate
+      # TODO: Add parameter checks for PasswordGenerator.new and #genrate
       subject.stub(passwords: [Password.new("12345678"), Password.new("12345679")])
       STDOUT.should_receive(:puts).with("12345678\n12345679")
 
