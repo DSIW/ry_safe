@@ -267,17 +267,17 @@ describe Command do
   describe Command::Help do
     subject { Command::Help.new }
 
-    let(:hash) do
-      {
-        command_one: stub(help_summary: "Description of command one"),
-        command_two: stub(help_summary: "Description of command two")
-      }
+    let(:commands) do
+      [
+        stub(command: 'command_one', help_summary: "Description of command one"),
+        stub(command: 'command_two', help_summary: "Description of command two")
+      ]
     end
 
     its(:command) { should == "help" }
 
     it "should print each command with help summary" do
-      Command::Dispatcher.stub(commands_hash: hash)
+      Command::Commands.should_receive(:all).and_return(commands)
       message = <<-MESSAGE
 All available commands are:
 
@@ -366,6 +366,30 @@ command_two: Description of command two
         expect { subject.command_class }.to raise_error Error::NoCommand
         expect { subject.command }.to raise_error Error::NoCommand
         expect { subject.call }.to raise_error Error::NoCommand
+      end
+    end
+  end
+
+  describe Command::Commands do
+    describe "::all" do
+      it "should get all commands from register" do
+        commands = [stub(command: "command_one")]
+        Command::Base.should_receive(:register).and_return(commands)
+
+        Command::Commands.all.should == commands
+      end
+    end
+
+    describe "#to_hash" do
+      it "should convert commands to hash with key command" do
+        one = stub(command: 'command_one', help_summary: "Description of command one")
+        two = stub(command: 'command_two', help_summary: "Description of command two")
+        commands = [one, two]
+
+        Command::Commands.new(commands).to_hash.should == {
+          "command_one" => one,
+          "command_two" => two,
+        }
       end
     end
   end

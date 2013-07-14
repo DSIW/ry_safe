@@ -2,8 +2,6 @@
 
 require 'shellwords'
 
-class Commands < Array; end
-
 module RySafe::Command
   class Base
     extend Util::Register
@@ -29,6 +27,10 @@ module RySafe::Command
 
     def self.help_summary
       nil
+    end
+
+    def self.command
+      new.command
     end
 
     protected
@@ -382,8 +384,8 @@ module RySafe::Command
     end
 
     def commands
-      Dispatcher.commands_hash.map do |name, command|
-        "#{name}: #{command.help_summary}"
+      Commands.all.map do |command|
+        "#{command.command}: #{command.help_summary}"
       end.join("\n")
     end
 
@@ -447,34 +449,40 @@ module RySafe::Command
       @key, *@arguments = Shellwords.split(line.strip)
     end
 
-    def self.commands_hash
-      registered_commands = Command::Base.register
-      registered_commands.reduce({}) do |hash, command_class|
-        key = command_class.new.command
-        hash.merge(key => command_class)
-      end
-    end
-
-    def commands_hash
-      self.class.commands_hash
-    end
-
     def self.commands
       commands_hash.keys
     end
 
-    def command_class
-      klass = commands_hash[@key]
-      raise Error::NoCommand if klass.nil?
-      klass
+    def call
+      command.call
     end
 
     def command
       command_class.new(*@arguments)
     end
 
-    def call
-      command.call
+    def command_class
+      commands_hash.fetch(@key) { raise Error::NoCommand }
+    end
+
+    def self.commands_hash
+      Commands.all.to_hash
+    end
+
+    def commands_hash
+      self.class.commands_hash
+    end
+  end
+
+  class Commands < Array
+    def self.all
+      new(Command::Base.register)
+    end
+
+    def to_hash
+      reduce({}) do |hash, command_class|
+        hash.merge(command_class.command => command_class)
+      end
     end
   end
 end
