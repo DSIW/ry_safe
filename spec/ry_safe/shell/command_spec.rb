@@ -2,17 +2,17 @@
 
 require "spec_helper"
 
-describe Command do
+describe Commands do
   before do
     Safe::Tree.root.clear
   end
 
-  describe Command::Base do
-    subject { Command::Base.new("touch", "file") }
+  describe Commands::Base do
+    subject { Commands::Base.new("touch", "file") }
 
     its(:command) { should == "touch" }
     its(:arguments) { should == ["file"] }
-    its(:humand_readable_command) { should == "Touch" }
+    its(:human_readable_command) { should == "Touch" }
 
     it "should call method action if " do
       subject.should_receive(:action)
@@ -32,8 +32,8 @@ describe Command do
     end
   end
 
-  describe Command::Touch do
-    subject { Command::Touch.new("file") }
+  describe Commands::Touch do
+    subject { Commands::Touch.new("file") }
 
     its(:command) { should == "touch" }
     its(:arguments) { should == ["file"] }
@@ -51,8 +51,8 @@ describe Command do
     end
   end
 
-  describe Command::MkDir do
-    subject { Command::MkDir.new("dir") }
+  describe Commands::MkDir do
+    subject { Commands::MkDir.new("dir") }
 
     its(:command) { should == "mkdir" }
     its(:arguments) { should == ["dir"] }
@@ -70,7 +70,7 @@ describe Command do
     end
   end
 
-  describe Command::ChangeDirectory do
+  describe Commands::ChangeDirectory do
     let(:tree) { Safe::Tree.root }
     let(:dir) { Safe::Dir.new("dir") }
     let(:current) { Safe::Tree.current }
@@ -80,7 +80,7 @@ describe Command do
       tree << dir
     end
 
-    subject { Command::ChangeDirectory.new("/root/dir") }
+    subject { Commands::ChangeDirectory.new("/root/dir") }
 
     its(:command) { should == "cd" }
     its(:arguments) { should == ["/root/dir"] }
@@ -91,7 +91,7 @@ describe Command do
     end
   end
 
-  describe Command::Move do
+  describe Commands::Move do
     let(:tree) { Safe::Tree.root }
     let(:from) { Safe::Node.new("from") }
     let(:to) { Safe::Dir.new("to") }
@@ -101,7 +101,7 @@ describe Command do
       tree << to
     end
 
-    subject { Command::Move.new("/root/from", "/root/to") }
+    subject { Commands::Move.new("/root/from", "/root/to") }
 
     its(:command) { should == "mv" }
     its(:arguments) { should == ["/root/from", "/root/to"] }
@@ -117,7 +117,7 @@ describe Command do
     end
   end
 
-  describe Command::Copy do
+  describe Commands::Copy do
     let(:tree) { Safe::Tree.root }
     let(:from) { Safe::Node.new("from") }
     let(:to) { Safe::Dir.new("to") }
@@ -127,7 +127,7 @@ describe Command do
       tree << to
     end
 
-    subject { Command::Copy.new("/root/from", "/root/to") }
+    subject { Commands::Copy.new("/root/from", "/root/to") }
 
     its(:command) { should == "cp" }
     its(:arguments) { should == ["/root/from", "/root/to"] }
@@ -143,7 +143,7 @@ describe Command do
     end
   end
 
-  describe Command::Remove do
+  describe Commands::Remove do
     let(:tree) { Safe::Tree.root }
     let(:node) { Safe::Node.new("node") }
     let(:dir) { Safe::Dir.new("dir") }
@@ -153,7 +153,7 @@ describe Command do
       tree << dir
     end
 
-    subject { Command::Remove.new("/root/node") }
+    subject { Commands::Remove.new("/root/node") }
 
     its(:command) { should == "rm" }
     its(:arguments) { should == ["/root/node"] }
@@ -169,16 +169,16 @@ describe Command do
     end
   end
 
-  describe Command::List do
+  describe Commands::List do
     pending "NotTested"
   end
 
-  describe Command::ShowEntry do
+  describe Commands::ShowEntry do
     pending "NotTested"
   end
 
-  describe Command::Set do
-    subject { Command::Set.new("entry", "password=123 456") }
+  describe Commands::Set do
+    subject { Commands::Set.new("entry", "password=123 456") }
     let(:entry) { stub(Safe::Entry) }
 
     its(:command) { should == "set" }
@@ -193,8 +193,8 @@ describe Command do
     end
   end
 
-  describe Command::Get do
-    subject { Command::Get.new("entry", "password") }
+  describe Commands::Get do
+    subject { Commands::Get.new("entry", "password") }
     let(:entry) { stub(Safe::Entry) }
 
     its(:command) { should == "get" }
@@ -209,8 +209,8 @@ describe Command do
     end
   end
 
-  describe Command::WorkingDirectory do
-    subject { Command::WorkingDirectory.new }
+  describe Commands::WorkingDirectory do
+    subject { Commands::WorkingDirectory.new }
 
     its(:command) { should == "pwd" }
 
@@ -227,8 +227,8 @@ describe Command do
     end
   end
 
-  describe Command::Clear do
-    subject { Command::Clear.new }
+  describe Commands::Clear do
+    subject { Commands::Clear.new }
 
     its(:command) { should == "clear" }
 
@@ -238,8 +238,8 @@ describe Command do
     end
   end
 
-  describe Command::Rename do
-    subject { Command::Rename.new("entry", "new_name") }
+  describe Commands::Rename do
+    subject { Commands::Rename.new("entry", "new_name") }
     let(:node) { Struct.new(:name).new }
 
     its(:command) { should == "rename" }
@@ -254,8 +254,8 @@ describe Command do
     end
   end
 
-  describe Command::Exit do
-    subject { Command::Exit.new }
+  describe Commands::Exit do
+    subject { Commands::Exit.new }
 
     its(:command) { should == "exit" }
 
@@ -264,8 +264,8 @@ describe Command do
     end
   end
 
-  describe Command::Help do
-    subject { Command::Help.new }
+  describe Commands::Help do
+    subject { Commands::Help.new }
 
     let(:commands) do
       [
@@ -277,7 +277,7 @@ describe Command do
     its(:command) { should == "help" }
 
     it "should print each command with help summary" do
-      Command::Commands.should_receive(:all).and_return(commands)
+      Commands::Commands.should_receive(:all).and_return(commands)
       message = <<-MESSAGE
 All available commands are:
 
@@ -290,8 +290,8 @@ command_two: Description of command two
     end
   end
 
-  describe Command::Version do
-    subject { Command::Version.new }
+  describe Commands::Version do
+    subject { Commands::Version.new }
 
     its(:command) { should == "version" }
 
@@ -302,8 +302,8 @@ command_two: Description of command two
     end
   end
 
-  describe Command::PasswordGenerator do
-    subject { Command::PasswordGenerator.new("8", "2" , "char_class=alnum") }
+  describe Commands::PasswordGenerator do
+    subject { Commands::PasswordGenerator.new("8", "2" , "char_class=alnum") }
 
     its(:command) { should == "gen_passwords" }
     its(:length) { should == 8 }
@@ -319,17 +319,17 @@ command_two: Description of command two
     end
   end
 
-  describe Command::Dispatcher do
-    subject { Command::Dispatcher.new("mv /from \"/to/other path\" ") }
+  describe Commands::Dispatcher do
+    subject { Commands::Dispatcher.new("mv /from \"/to/other path\" ") }
 
     its(:key) { should == "mv" }
     its(:arguments) { should == ["/from", "/to/other path"] }
-    its(:command_class) { should == Command::Move }
-    its(:command) { should be_a Command::Move }
+    its(:command_class) { should == Commands::Move }
+    its(:command) { should be_a Commands::Move }
     its("command.arguments") { should == ["/from", "/to/other path"] }
 
     it "should get the right commands" do
-      commands = Command::Dispatcher.commands
+      commands = Commands::Dispatcher.commands
       commands.should have(18).commands
       commands.should include "touch"
       commands.should include "mkdir"
@@ -352,14 +352,14 @@ command_two: Description of command two
     end
 
     context "without arguments" do
-      subject { Command::Dispatcher.new("mv") }
+      subject { Commands::Dispatcher.new("mv") }
 
       its(:key) { should == "mv" }
       its(:arguments) { should == [] }
     end
 
     context "command class key does not exist" do
-      subject { Command::Dispatcher.new("no") }
+      subject { Commands::Dispatcher.new("no") }
 
       its(:key) { should == "no" }
       it "should raise" do
@@ -370,13 +370,13 @@ command_two: Description of command two
     end
   end
 
-  describe Command::Commands do
+  describe Commands::Commands do
     describe "::all" do
       it "should get all commands from register" do
         commands = [stub(command: "command_one")]
-        Command::Base.should_receive(:register).and_return(commands)
+        Commands::Base.should_receive(:register).and_return(commands)
 
-        Command::Commands.all.should == commands
+        Commands::Commands.all.should == commands
       end
     end
 
@@ -386,7 +386,7 @@ command_two: Description of command two
         two = stub(command: 'command_two', help_summary: "Description of command two")
         commands = [one, two]
 
-        Command::Commands.new(commands).to_hash.should == {
+        Commands::Commands.new(commands).to_hash.should == {
           "command_one" => one,
           "command_two" => two,
         }

@@ -2,7 +2,10 @@
 
 require 'shellwords'
 
-module RySafe::Command
+module RySafe::Commands
+  class Command < Struct.new(:command, :arguments, :action, :help_summary)
+  end
+
   class Base
     extend Util::Register
 
@@ -21,7 +24,7 @@ module RySafe::Command
       raise "No action in Command::Base"
     end
 
-    def humand_readable_command
+    def human_readable_command
       command[0].upcase + command[1..-1]
     end
 
@@ -476,7 +479,7 @@ module RySafe::Command
 
   class Commands < Array
     def self.all
-      new(Command::Base.register)
+      new(Base.register)
     end
 
     def to_hash

@@ -27,18 +27,18 @@ module RySafe
   autoload :AlphabetGenerator, "ry_safe/alphabet_generator.rb"
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 
-  module Command
-    autoload :Commands, "ry_safe/shell/command.rb"
-    autoload :Base, "ry_safe/shell/command.rb"
-    autoload :Touch, "ry_safe/shell/command.rb"
-    autoload :MkDir, "ry_safe/shell/command.rb"
-    autoload :ChangeDirectory, "ry_safe/shell/command.rb"
-    autoload :Copy, "ry_safe/shell/command.rb"
-    autoload :Move, "ry_safe/shell/command.rb"
-    autoload :Remove, "ry_safe/shell/command.rb"
-    autoload :List, "ry_safe/shell/command.rb"
-    autoload :ShowEntry, "ry_safe/shell/command.rb"
-    autoload :Dispatcher, "ry_safe/shell/command.rb"
+  module Commands
+    autoload :Commands, "ry_safe/shell/commands.rb"
+    autoload :Base, "ry_safe/shell/commands.rb"
+    autoload :Touch, "ry_safe/shell/commands.rb"
+    autoload :MkDir, "ry_safe/shell/commands.rb"
+    autoload :ChangeDirectory, "ry_safe/shell/commands.rb"
+    autoload :Copy, "ry_safe/shell/commands.rb"
+    autoload :Move, "ry_safe/shell/commands.rb"
+    autoload :Remove, "ry_safe/shell/commands.rb"
+    autoload :List, "ry_safe/shell/commands.rb"
+    autoload :ShowEntry, "ry_safe/shell/commands.rb"
+    autoload :Dispatcher, "ry_safe/shell/commands.rb"
   end
 
   autoload :Path, "ry_safe/shell/path.rb"
