@@ -329,7 +329,26 @@ command_two: Description of command two
     its("command.arguments") { should == ["/from", "/to/other path"] }
 
     it "should get the right commands" do
-      Command::Dispatcher.commands.should == %w(touch mkdir cd cp mv rm ls cat set get pwd clear rename)
+      commands = Command::Dispatcher.commands
+      commands.should have(18).commands
+      commands.should include "touch"
+      commands.should include "mkdir"
+      commands.should include "cd"
+      commands.should include "cp"
+      commands.should include "mv"
+      commands.should include "rm"
+      commands.should include "ls"
+      commands.should include "cat"
+      commands.should include "set"
+      commands.should include "get"
+      commands.should include "pwd"
+      commands.should include "clear"
+      commands.should include "rename"
+      commands.should include "exit"
+      commands.should include "reload!"
+      commands.should include "help"
+      commands.should include "version"
+      commands.should include "gen_passwords"
     end
 
     context "without arguments" do
