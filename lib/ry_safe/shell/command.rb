@@ -378,8 +378,7 @@ module RySafe::Command
     end
 
     def action
-      puts "All available commands are:\n"
-      puts commands
+      puts "All available commands are:\n\n#{commands}"
     end
 
     def commands

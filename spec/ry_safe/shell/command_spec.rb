@@ -265,7 +265,29 @@ describe Command do
   end
 
   describe Command::Help do
-    pending "NotTested"
+    subject { Command::Help.new }
+
+    let(:hash) do
+      {
+        command_one: stub(help_summary: "Description of command one"),
+        command_two: stub(help_summary: "Description of command two")
+      }
+    end
+
+    its(:command) { should == "help" }
+
+    it "should print each command with help summary" do
+      Command::Dispatcher.stub(commands_hash: hash)
+      message = <<-MESSAGE
+All available commands are:
+
+command_one: Description of command one
+command_two: Description of command two
+      MESSAGE
+      STDOUT.should_receive(:puts).with message.chomp
+
+      subject.action
+    end
   end
 
   describe Command::Version do
