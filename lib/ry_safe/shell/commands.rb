@@ -479,6 +479,10 @@ module RySafe::Commands
 
   class Commands < Array
     def self.all
+      all_registered
+    end
+
+    def all_registered
       new(Base.register)
     end
 
