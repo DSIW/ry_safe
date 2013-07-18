@@ -3,9 +3,6 @@
 require 'shellwords'
 
 module RySafe::Commands
-  class Command < Struct.new(:command, :arguments, :action, :help_summary)
-  end
-
   class Base
     extend Util::Register
 
