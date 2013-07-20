@@ -30,21 +30,29 @@ module RySafe::Commands::DSL
     end
 
     def call(*arguments)
-      arguments.each_with_index do |arg, index|
-        argument_to_save = @arguments[index]
-        argument_to_save.value = arg
-        @arguments[index] = argument_to_save
-      end
+      arguments.each_with_index { |arg, index| set_argument_value(index, arg) }
       args = @arguments.map { |index, arg| arg.value }
       @action.call(*args)
     end
 
     def argument(index)
-      if block_given?
-        argument_to_save = @arguments[index]
-        argument_to_save.manipulations << yield
-        @arguments[index] = argument_to_save
-      end
+      add_argument_manipulation(index) { yield } if block_given?
+    end
+
+    private
+
+    def set_argument(index)
+      argument_to_save = @arguments[index]
+      yield argument_to_save
+      @arguments[index] = argument_to_save
+    end
+
+    def set_argument_value(index, value)
+      set_argument(index) { |arg| arg.value = value }
+    end
+
+    def add_argument_manipulation(index)
+      set_argument(index) { |arg| arg.manipulations << yield }
     end
   end
 
