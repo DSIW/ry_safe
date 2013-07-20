@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # encoding: utf-8
 
 require "spec_helper"
@@ -24,6 +23,12 @@ describe Commands::DSL do
       c.argument(1) { lambda { |arg| arg.to_i } }
       c.action { |a, b| puts a + b }
     end
+
+    command :multi_string do |c|
+      c.argument(0) { lambda { |arg| arg.to_s } }
+      c.argument(1) { lambda { |arg| arg.to_i } }
+      c.action { |a, b| puts a * b }
+    end
   end
 
   def touch
@@ -42,10 +47,14 @@ describe Commands::DSL do
     AllCommands.commands[:add]
   end
 
+  def multi_string
+    AllCommands.commands[:multi_string]
+  end
+
   it "should add command to collection commands" do
-    AllCommands.should have(4).commands
+    AllCommands.should have(5).commands
     touch.should be_a Commands::DSL::CommandBuilder
-    AllCommands.commands.map(&:name).should == ["touch", "echo", "cp", "add"]
+    AllCommands.commands.map(&:name).should == ["touch", "echo", "cp", "add", "multi_string"]
   end
 
   it "should get name of command in yield variable" do
@@ -83,7 +92,12 @@ describe Commands::DSL do
 
   it "should convert specified arguments with a specified function" do
     STDOUT.should_receive(:puts).with(3)
-    add.call(1, 2)
+    add.call("1", "2")
+  end
+
+  it "should convert specified arguments with a specified function" do
+    STDOUT.should_receive(:puts).with("111")
+    multi_string.call("1", "3")
   end
 
   #it "should convert builder to command" do

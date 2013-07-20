@@ -6,7 +6,7 @@ module RySafe::Commands::DSL
       @name = name.to_s
       @action = lambda { |*arguments| puts "Default" }
       @help_summary = "Default summary"
-      @arguments = Arguments.new
+      @arguments = Hash.new { Argument.new }
     end
 
     def name
@@ -30,23 +30,21 @@ module RySafe::Commands::DSL
     end
 
     def call(*arguments)
-      arguments.each_with_index { |arg, index| @arguments[index].value = arg }
-      args = @arguments.map { |arg| arg.value }
+      arguments.each_with_index do |arg, index|
+        argument_to_save = @arguments[index]
+        argument_to_save.value = arg
+        @arguments[index] = argument_to_save
+      end
+      args = @arguments.map { |index, arg| arg.value }
       @action.call(*args)
     end
 
     def argument(index)
-      @arguments[index].manipulations << yield if block_given?
-    end
-
-    #def to_command
-      #Commands::Base.new()
-    #end
-  end
-
-  class Arguments < Array
-    def [](index)
-      self[index] ||= Argument.new
+      if block_given?
+        argument_to_save = @arguments[index]
+        argument_to_save.manipulations << yield
+        @arguments[index] = argument_to_save
+      end
     end
   end
 
@@ -65,7 +63,7 @@ module RySafe::Commands::DSL
 
     def value
       @_value ||= begin
-        apply_manipulations if @value
+        apply_manipulations
         @value
       end
     end
