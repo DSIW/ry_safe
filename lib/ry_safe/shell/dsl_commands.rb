@@ -14,8 +14,5 @@ class RySafe::Commands::DSLCommands
       puts node.presenter.children
     end
     c.help_summary { "List all items in current directory"}
-
-    def node(path)
-    end
   end
 end
