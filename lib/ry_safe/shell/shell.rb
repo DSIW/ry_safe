@@ -4,7 +4,7 @@ require 'shellwords'
 module RySafe
   class Shell
     def initialize
-      @completions = Command::Dispatcher.commands
+      @completions = Commands::Dispatcher.commands
       init_readline
     end
 
@@ -24,7 +24,7 @@ module RySafe
     end
 
     def eval_command line
-      Command::Dispatcher.new(line).call
+      Commands::Dispatcher.new(line).call
     end
 
     protected
