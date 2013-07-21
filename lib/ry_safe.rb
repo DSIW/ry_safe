@@ -28,9 +28,7 @@ module RySafe
   autoload :UnsimilarAlphabetGenerator, "ry_safe/alphabet_generator.rb"
 
   module Commands
-    autoload :Commands, "ry_safe/shell/commands.rb"
     autoload :Base, "ry_safe/shell/commands.rb"
-    autoload :Touch, "ry_safe/shell/commands.rb"
     autoload :MkDir, "ry_safe/shell/commands.rb"
     autoload :ChangeDirectory, "ry_safe/shell/commands.rb"
     autoload :Copy, "ry_safe/shell/commands.rb"
@@ -39,8 +37,10 @@ module RySafe
     autoload :List, "ry_safe/shell/commands.rb"
     autoload :ShowEntry, "ry_safe/shell/commands.rb"
     autoload :Dispatcher, "ry_safe/shell/commands.rb"
+    autoload :Commands, "ry_safe/shell/commands.rb"
 
     autoload :DSL, "ry_safe/shell/command_dsl.rb"
+    autoload :DSLCommands, "ry_safe/shell/dsl_commands.rb"
   end
 
   autoload :Path, "ry_safe/shell/path.rb"

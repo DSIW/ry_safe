@@ -476,11 +476,15 @@ module RySafe::Commands
 
   class Commands < Array
     def self.all
-      all_registered
+      new(all_registered + all_from_dsl)
     end
 
-    def all_registered
+    def self.all_registered
       new(Base.register)
+    end
+
+    def self.all_from_dsl
+      new(::RySafe::Commands::DSLCommands.commands)
     end
 
     def to_hash

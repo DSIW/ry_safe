@@ -32,15 +32,14 @@ describe Commands do
     end
   end
 
-  describe Commands::Touch do
-    subject { Commands::Touch.new("file") }
+  describe "Commands::Touch" do
+    subject { Commands::Commands.all.to_hash['touch'] }
 
     its(:command) { should == "touch" }
-    its(:arguments) { should == ["file"] }
 
     it "should create a new entry" do
       tree = Safe::Tree.root
-      subject.call
+      subject.call("file")
       tree.should have(1).node
       tree.children.first.name.should == "file"
       tree.children.first.should be_a Safe::Entry
@@ -374,9 +373,29 @@ command_two: Description of command two
     describe "::all" do
       it "should get all commands from register" do
         commands = [stub(command: "command_one")]
+        dsl_commands = [stub(command: "command_two")]
+        Commands::Base.should_receive(:register).and_return(commands)
+        Commands::DSLCommands.should_receive(:commands).and_return(dsl_commands)
+
+        Commands::Commands.all.should == [commands, dsl_commands].flatten
+      end
+    end
+
+    describe "::all_registered" do
+      it "should get all commands from register" do
+        commands = [stub(command: "command_one")]
         Commands::Base.should_receive(:register).and_return(commands)
 
-        Commands::Commands.all.should == commands
+        Commands::Commands.all_registered.should == commands
+      end
+    end
+
+    describe "::all_from_dsl" do
+      it "should get all commands from DSL" do
+        commands = [stub(command: "command_one")]
+        Commands::DSLCommands.should_receive(:commands).and_return(commands)
+
+        Commands::Commands.all_from_dsl.should == commands
       end
     end
 
