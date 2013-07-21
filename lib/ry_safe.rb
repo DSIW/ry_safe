@@ -13,6 +13,7 @@ module RySafe
     autoload :Register, "ry_safe/util/register"
     autoload :Presentable, "ry_safe/util/presentable"
     autoload :PresenterHelper, "ry_safe/util/presenter_helper"
+    autoload :CommandHelper, "ry_safe/util/command_helper"
   end
 
   module Validators

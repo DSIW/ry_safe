@@ -5,6 +5,7 @@ require 'shellwords'
 module RySafe::Commands
   class Base
     extend Util::Register
+    include Util::CommandHelper
 
     attr_reader :command, :arguments
 
@@ -31,34 +32,6 @@ module RySafe::Commands
 
     def self.command
       new.command
-    end
-
-    protected
-
-    def absolute_path(relative_path, pwd = Safe::Tree.current.path)
-      RelativePath.new(relative_path, pwd).to_absolute
-    end
-
-    def relative_path_to_node(relative_path, pwd = Safe::Tree.current.path)
-      absolute_path(relative_path, pwd).to_node
-    end
-
-    def relative_path_to_existing_node(relative_path, pwd = Safe::Tree.current)
-      absolute_path(relative_path, pwd.path).to_existing_node_in(Safe::Tree.root)
-    end
-  end
-
-  class Touch < Base
-    def command
-      "touch"
-    end
-
-    def action
-      Safe::Tree.current << Safe::Entry.new(arguments.first)
-    end
-
-    def self.help_summary
-      "Create an new entry in current directory"
     end
   end
 
