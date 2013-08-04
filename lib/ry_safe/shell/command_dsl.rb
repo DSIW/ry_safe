@@ -12,6 +12,7 @@ module RySafe::Commands::DSL
     def name
       @name
     end
+    alias_method :command, :name
 
     def help_summary
       if block_given?

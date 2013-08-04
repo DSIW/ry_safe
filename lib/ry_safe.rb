@@ -30,13 +30,6 @@ module RySafe
 
   module Commands
     autoload :Base, "ry_safe/shell/commands.rb"
-    autoload :MkDir, "ry_safe/shell/commands.rb"
-    autoload :ChangeDirectory, "ry_safe/shell/commands.rb"
-    autoload :Copy, "ry_safe/shell/commands.rb"
-    autoload :Move, "ry_safe/shell/commands.rb"
-    autoload :Remove, "ry_safe/shell/commands.rb"
-    autoload :List, "ry_safe/shell/commands.rb"
-    autoload :ShowEntry, "ry_safe/shell/commands.rb"
     autoload :Dispatcher, "ry_safe/shell/commands.rb"
     autoload :Commands, "ry_safe/shell/commands.rb"
 
