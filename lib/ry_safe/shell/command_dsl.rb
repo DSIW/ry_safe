@@ -35,8 +35,13 @@ module RySafe::Commands::DSL
       @action.call(*args)
     end
 
-    def argument(index)
-      add_argument_manipulation(index) { lambda { |arg| yield(arg) } } if block_given?
+    def argument(index, helper_function = nil)
+      if block_given?
+        convert_function = lambda { |arg| yield(arg) }
+      else
+        convert_function = lambda { |arg| helper_function && Util::CommandHelper.send(helper_function, arg) || arg }
+      end
+      add_argument_manipulation(index) { convert_function }
     end
 
     private

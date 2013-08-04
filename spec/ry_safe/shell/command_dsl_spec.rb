@@ -3,6 +3,14 @@
 require "spec_helper"
 
 describe Commands::DSL do
+  module Util::CommandHelper
+    module_function
+
+    def to_i(arg)
+      arg.to_i
+    end
+  end
+
   module AllCommands
     extend Commands::DSL
 
@@ -15,12 +23,19 @@ describe Commands::DSL do
     end
 
     command :cp do |c|
+      c.argument(0)
       c.action { |from, to| puts "cp #{from} #{to}" }
     end
 
     command :add do |c|
       c.argument(0) { |arg| arg.to_i }
       c.argument(1) { |arg| arg.to_i }
+      c.action { |a, b| puts a + b }
+    end
+
+    command :add_with_helper do |c|
+      c.argument(0, :to_i)
+      c.argument(1, :to_i)
       c.action { |a, b| puts a + b }
     end
 
@@ -47,14 +62,18 @@ describe Commands::DSL do
     AllCommands.commands[:add]
   end
 
+  def add_with_helper
+    AllCommands.commands[:add_with_helper]
+  end
+
   def multi_string
     AllCommands.commands[:multi_string]
   end
 
   it "should add command to collection commands" do
-    AllCommands.should have(5).commands
+    AllCommands.should have(6).commands
     touch.should be_a Commands::DSL::CommandBuilder
-    AllCommands.commands.map(&:name).should == ["touch", "echo", "cp", "add", "multi_string"]
+    AllCommands.commands.map(&:name).should == ["touch", "echo", "cp", "add", "add_with_helper", "multi_string"]
   end
 
   it "should get name of command in yield variable" do
@@ -93,6 +112,11 @@ describe Commands::DSL do
   it "should convert specified arguments with a specified function" do
     STDOUT.should_receive(:puts).with(3)
     add.call("1", "2")
+  end
+
+  it "should convert specified arguments with a specified function" do
+    STDOUT.should_receive(:puts).with(3)
+    add_with_helper.call("1", "2")
   end
 
   it "should convert specified arguments with a specified function" do
