@@ -19,14 +19,14 @@ describe Commands::DSL do
     end
 
     command :add do |c|
-      c.argument(0) { lambda { |arg| arg.to_i } }
-      c.argument(1) { lambda { |arg| arg.to_i } }
+      c.argument(0) { |arg| arg.to_i }
+      c.argument(1) { |arg| arg.to_i }
       c.action { |a, b| puts a + b }
     end
 
     command :multi_string do |c|
-      c.argument(0) { lambda { |arg| arg.to_s } }
-      c.argument(1) { lambda { |arg| arg.to_i } }
+      c.argument(0) { |arg| arg.to_s }
+      c.argument(1) { |arg| arg.to_i }
       c.action { |a, b| puts a * b }
     end
   end

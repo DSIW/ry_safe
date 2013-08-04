@@ -36,7 +36,7 @@ module RySafe::Commands::DSL
     end
 
     def argument(index)
-      add_argument_manipulation(index) { yield } if block_given?
+      add_argument_manipulation(index) { lambda { |arg| yield(arg) } } if block_given?
     end
 
     private
