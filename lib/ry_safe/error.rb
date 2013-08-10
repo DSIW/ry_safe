@@ -5,7 +5,11 @@ module RySafe::Error
   class NotInTree < ArgumentError; end
   class AlreadyExist < ArgumentError; end
   class SameSourceAndDestination < ArgumentError; end
-  class NoCommand < ArgumentError; end
+  class NoCommand < ArgumentError
+    def message
+      "Command not found."
+    end
+  end
 
   class NoPresenterFound < StandardError; end
 
