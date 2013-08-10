@@ -69,6 +69,16 @@ children:
     end
   end
 
+  describe "#serialize and deserialize" do
+    it "should get the old object" do
+      serialized = subject.serialize
+      object = PersistanceStub.new
+      new_obj = object.deserialize(serialized)
+      new_obj.name.should == subject.name
+      new_obj.children.should == subject.children
+    end
+  end
+
   after do
     fake_home.restore
   end
