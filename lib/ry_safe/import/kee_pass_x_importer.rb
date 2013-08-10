@@ -68,7 +68,6 @@ module RySafe::Import
       dir = Safe::Dir.new(title && title.to_s || '--')
       parent << dir if parent
       puts "#{"  "*dir.parents.length}#{dir.name}"
-      dir.save
       Safe::Tree.root << dir
       dir
     end
