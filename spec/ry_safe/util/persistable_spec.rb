@@ -25,6 +25,24 @@ describe Util::Persistable do
     fake_home.prepare
   end
 
+  describe "#serialize" do
+    it "should serialize object" do
+      subject.name = "ABC"
+      subject.children = [1, 2, 3]
+
+      content = <<-EOC
+--- !ruby/object:PersistanceStub
+name: ABC
+children:
+- 1
+- 2
+- 3
+      EOC
+
+      subject.serialize.should == content
+    end
+  end
+
   describe "#save" do
     it "should serialize object and persist it" do
       subject.name = "ABC"
