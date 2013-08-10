@@ -110,7 +110,7 @@ module RySafe::Commands
 
     def to_hash
       reduce({}) do |hash, command_class|
-        hash.merge(command_class.command => command_class)
+        hash.merge(command_class.name => command_class)
       end
     end
   end

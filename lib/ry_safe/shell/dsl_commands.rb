@@ -107,7 +107,7 @@ class RySafe::Commands::DSLCommands
   command :help do |c|
     c.action do
       commands = Commands::Commands.all.map { |command|
-        "#{command.command}: #{command.help_summary}"
+        "#{command.name}: #{command.help_summary}"
       }.join("\n")
       puts "All available commands are:\n\n#{commands}"
     end
