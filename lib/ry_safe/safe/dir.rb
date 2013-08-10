@@ -5,6 +5,7 @@ require "set"
 module RySafe::Safe
   class Dir < Node
     include Util::Cloneable
+    include Util::Persistable
     extend Forwardable
 
     def initialize(name, parent = nil)
@@ -68,6 +69,36 @@ module RySafe::Safe
     def [](node_name)
       children.each { |node| return node if node.name == node_name }
       nil
+    end
+
+    def save
+      super
+      children.each { |child| child.save }
+    end
+
+    def encode_with coder
+      super
+      coder["children"] = @children.to_a
+    end
+
+    def init_with coder
+      super
+      @children = coder["children"]
+    end
+
+    def deserialize(content)
+      deserialized = super
+      deserialized.refresh_parents
+      deserialized
+    end
+
+    protected
+
+    def refresh_parents
+      @children.each do |child|
+        child.parent = self
+        child.refresh_parents if child.respond_to? :refresh_parents
+      end
     end
   end
 end
