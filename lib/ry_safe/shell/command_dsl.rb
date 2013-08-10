@@ -2,7 +2,7 @@
 
 module RySafe::Commands::DSL
   class CommandBuilder
-    DEFAULT_ACTION = lambda { |*arguments| puts "Default" }
+    DEFAULT_ACTION = lambda {}
     DEFAULT_SUMMARY = "Default summary"
 
     attr_reader :name
