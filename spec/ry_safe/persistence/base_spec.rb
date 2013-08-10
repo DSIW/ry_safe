@@ -47,6 +47,34 @@ describe Persistence::Base do
     end
   end
 
+  describe "#write" do
+    it "should write content to location" do
+      location = "~/.config/rysafe/file.yml"
+      FileUtils.mkdir_p("~/.config/rysafe")
+      FileUtils.touch(location)
+
+      subject.stub(location: location)
+      subject.write("FILE CONTENT")
+
+      File.read(location).should == "FILE CONTENT"
+    end
+  end
+
+  describe "#read" do
+    it "should read file content" do
+      location = "~/.config/rysafe/file.yml"
+      FileUtils.mkdir_p("~/.config/rysafe")
+      FileUtils.touch(location)
+      File.open(location, 'w') { |file| file.write("FILE CONTENT") }
+
+      subject.stub(location: location)
+      subject.write("FILE CONTENT")
+
+      File.read(location).should == "FILE CONTENT"
+      subject.read.should == "FILE CONTENT"
+    end
+  end
+
   after do
     fake_home.restore
   end

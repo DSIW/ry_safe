@@ -23,5 +23,13 @@ module RySafe::Persistence
     def prepare_all
       register.each { |klass| klass.new.prepare }
     end
+
+    def write(content)
+      ::File.open(location, 'w') { |file| file.write(content) }
+    end
+
+    def read
+      ::File.read(location)
+    end
   end
 end
