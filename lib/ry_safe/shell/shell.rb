@@ -34,10 +34,10 @@ module RySafe
 
       Readline.completion_proc = lambda do |string|
         line = Readline.line_buffer
-        if Shellwords.split(line).size == 1
+        if Shellwords.split(line).size == 1 && !line.end_with?(' ')
           @completions.grep(/^#{Regexp.escape(string)}/)
         else
-          Safe::Tree.current.children.map{ |item| item.name }.grep(/^#{Regexp.escape(string)}/)
+          Safe::Tree.current.children.map{ |item| item.name.gsub(" ", '\ ') }.grep(/^#{Regexp.escape(string)}/)
         end
       end
     end
