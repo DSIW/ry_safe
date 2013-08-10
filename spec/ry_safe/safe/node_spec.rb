@@ -237,4 +237,26 @@ describe Safe::Node do
       subject.presenter.should be_a NodePresenter
     end
   end
+
+  describe "serialize" do
+    it "should serialize the right attributes" do
+      subject.serialize.should == <<-EOC
+--- !ruby/object:RySafe::Safe::Node
+name: NodeName
+      EOC
+    end
+  end
+
+  describe "#deserialize" do
+    subject { Safe::Node.new("") }
+
+    it "should deserialize the right attributes" do
+      content = <<-EOC
+--- !ruby/object:RySafe::Safe::Node
+name: NodeName
+      EOC
+      deserialized = subject.deserialize(content)
+      deserialized.name.should == "NodeName"
+    end
+  end
 end

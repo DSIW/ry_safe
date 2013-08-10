@@ -6,6 +6,7 @@ module RySafe::Safe
     include Util::Dates
     include Util::Hashable
     include Util::Presentable
+    include Util::Persistable
 
     SEPARATOR = File::SEPARATOR
 
@@ -88,6 +89,14 @@ module RySafe::Safe
     # required for Set in Safe::Dir
     def hash
       @name.hash
+    end
+
+    def encode_with coder
+      coder["name"] = @name
+    end
+
+    def init_with coder
+      @name = coder["name"]
     end
 
     protected
