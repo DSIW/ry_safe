@@ -1,7 +1,10 @@
 module RySafe
   class Password
     include Comparable
-    include Util::Visible
+
+    class << self
+      include Util::Visible
+    end
 
     HIDE_CHAR = '*'
 
@@ -20,7 +23,7 @@ module RySafe
     end
 
     def to_s
-      if visible?
+      if self.class.visible?
         @password
       else
         HIDE_CHAR*@password.length
