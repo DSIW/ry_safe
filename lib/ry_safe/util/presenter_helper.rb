@@ -41,7 +41,7 @@ module RySafe::Util
     end
 
     def format_time(time)
-      time.strftime("%F %H:%M:%S")
+      time && time.strftime("%F %H:%M:%S")
     end
 
     def remove_root(string)
