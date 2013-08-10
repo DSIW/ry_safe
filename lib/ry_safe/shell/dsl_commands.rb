@@ -133,6 +133,14 @@ class RySafe::Commands::DSLCommands
     c.help_summary { "Generate new passwords" }
   end
 
+  command :import_keepassx! do |c|
+    c.action do |path|
+      RySafe::Import::KeePassXImporter.new(path).import
+      puts "Importiert!"
+    end
+    c.help_summary { "Import from KeePassX XML file" }
+  end
+
   command :safe_passwords! do |c|
     c.action do
       Password.hidden!
