@@ -49,8 +49,8 @@ describe Persistence::Base do
 
   describe "#write" do
     it "should write content to location" do
-      location = "~/.config/rysafe/file.yml"
-      FileUtils.mkdir_p("~/.config/rysafe")
+      location = "#{ENV['HOME']}/.config/rysafe/file.yml"
+      FileUtils.mkdir_p("#{ENV['HOME']}/.config/rysafe")
       FileUtils.touch(location)
 
       subject.stub(location: location)
@@ -62,8 +62,8 @@ describe Persistence::Base do
 
   describe "#read" do
     it "should read file content" do
-      location = "~/.config/rysafe/file.yml"
-      FileUtils.mkdir_p("~/.config/rysafe")
+      location = "#{ENV['HOME']}/.config/rysafe/file.yml"
+      FileUtils.mkdir_p("#{ENV['HOME']}/.config/rysafe")
       FileUtils.touch(location)
       File.open(location, 'w') { |file| file.write("FILE CONTENT") }
 
