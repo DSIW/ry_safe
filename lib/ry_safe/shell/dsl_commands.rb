@@ -54,7 +54,7 @@ class RySafe::Commands::DSLCommands
 
   command :cat do |c|
     c.argument(0, :relative_path_to_existing_node)
-    c.action { |path| puts path.presenter.content }
+    c.action { |node| puts node.presenter.content }
     c.help_summary { "Show specified entry" }
   end
 
