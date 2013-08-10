@@ -3,34 +3,22 @@
 require "singleton"
 
 module RySafe::Safe
-  class Tree < Dir
+  class Tree < RootDir
     include Singleton
 
-    def initialize
-      super "root"
+    def to_root_dir
+      Safe::RootDir.new.from_other(self)
     end
 
-    def current=(dir)
-      raise Error::NotInTree if Safe::Tree.root != dir && !dir.parents.include?(self)
-      @current = dir
+    def serialize
+      to_root_dir.serialize
     end
 
-    def current
-      #current or root
-      @current || self
-    end
-
-    def reset_current
-      @current = nil
-    end
-
-    def go_up
-      @current = @current.parent if @current.parent?
-    end
-
-    def clear
-      super
-      reset_current
+    def from_other(other)
+      @name = other.name
+      @current = other.current
+      @children = other.children
+      self
     end
 
     class << self
