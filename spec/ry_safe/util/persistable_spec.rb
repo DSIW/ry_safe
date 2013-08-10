@@ -20,6 +20,16 @@ describe Util::Persistable do
   end
 
   subject { PersistanceStub.new }
+  let(:content) do
+    <<-EOC
+--- !ruby/object:PersistanceStub
+name: ABC
+children:
+- 1
+- 2
+- 3
+    EOC
+  end
 
   before do
     fake_home.prepare
@@ -30,15 +40,6 @@ describe Util::Persistable do
       subject.name = "ABC"
       subject.children = [1, 2, 3]
 
-      content = <<-EOC
---- !ruby/object:PersistanceStub
-name: ABC
-children:
-- 1
-- 2
-- 3
-      EOC
-
       subject.serialize.should == content
     end
   end
@@ -48,14 +49,6 @@ children:
       subject.name = "ABC"
       subject.children = [1, 2, 3]
 
-      content = <<-EOC
---- !ruby/object:PersistanceStub
-name: ABC
-children:
-- 1
-- 2
-- 3
-      EOC
       Persistence::Tree.any_instance.should_receive(:write).with(content)
 
       subject.save
@@ -64,15 +57,6 @@ children:
 
   describe "#deserialize" do
     it "should deserialize string to object" do
-      content = <<-EOC
---- !ruby/object:PersistanceStub
-name: ABC
-children:
-- 1
-- 2
-- 3
-      EOC
-
       new_obj = subject.deserialize(content)
 
       new_obj.name.should == "ABC"
@@ -84,15 +68,6 @@ children:
     it "should deserialize object and convert it into a normal ruby object" do
       subject.name = "ABC"
       subject.children = [1, 2, 3]
-
-      content = <<-EOC
---- !ruby/object:PersistanceStub
-name: ABC
-children:
-- 1
-- 2
-- 3
-      EOC
       Persistence::Tree.any_instance.should_receive(:read).and_return(content)
 
       subject.load
