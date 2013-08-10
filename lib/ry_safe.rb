@@ -8,7 +8,7 @@ module RySafe
     autoload :Hashable, "ry_safe/util/hashable"
     autoload :Dates, "ry_safe/util/dates"
     autoload :NodeHandler, "ry_safe/util/node_handler"
-    autoload :Safeable, "ry_safe/util/safeable"
+    autoload :Visible, "ry_safe/util/visible"
     autoload :Cloneable, "ry_safe/util/cloneable"
     autoload :Register, "ry_safe/util/register"
     autoload :Presentable, "ry_safe/util/presentable"

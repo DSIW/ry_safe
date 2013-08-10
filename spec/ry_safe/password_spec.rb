@@ -15,14 +15,14 @@ describe Password do
   end
 
   it "should show password after setting safe" do
-    subject.safe!
+    subject.visible!
     subject.to_s.should == "123456"
   end
 
   it "should hide password after setting unsafe" do
-    subject.safe!
+    subject.visible!
     subject.to_s.should == "123456"
-    subject.unsafe!
+    subject.hidden!
     subject.to_s.should == "******"
   end
 
