@@ -341,7 +341,6 @@ describe Commands do
 
       its(:key) { should == "no" }
       it "should raise" do
-        expect { subject.command_class }.to raise_error Error::NoCommand
         expect { subject.command }.to raise_error Error::NoCommand
         expect { subject.call }.to raise_error Error::NoCommand
       end
@@ -380,8 +379,8 @@ describe Commands do
 
     describe "#to_hash" do
       it "should convert commands to hash with key command" do
-        one = stub(command: 'command_one', help_summary: "Description of command one")
-        two = stub(command: 'command_two', help_summary: "Description of command two")
+        one = stub(name: 'command_one', help_summary: "Description of command one")
+        two = stub(name: 'command_two', help_summary: "Description of command two")
         commands = [one, two]
 
         Commands::Commands.new(commands).to_hash.should == {
