@@ -6,6 +6,7 @@ module RySafe::Import
   class KeePassXImporter < Importer
     def import
       GroupNode.new(root, nil).import
+      Safe::Tree.root.refresh_parents
     end
 
     private
@@ -64,23 +65,25 @@ module RySafe::Import
 
   Group = Struct.new(:title, :parent) do
     def convert
-      dir = Safe::Dir.new(title || '--', parent)
+      dir = Safe::Dir.new(title && title.to_s || '--')
+      parent << dir if parent
       puts "#{"  "*dir.parents.length}#{dir.name}"
       dir.save
+      Safe::Tree.root << dir
       dir
     end
   end
 
   Entry = Struct.new(:title, :username, :password, :url, :comment, :creation, :lastaccess, :lastmod, :expire, :parent) do
     def convert
-      entry = Safe::Entry.new(title || '--', parent)
-      entry.username = username
-      entry.password = password
-      entry.password_confirmation = password
-      entry.comment = comment
-      entry.website = url
+      entry = Safe::Entry.new(title && title.to_s || "--")
+      entry.username = username.to_s
+      entry.password = password.to_s
+      entry.password_confirmation = password.to_s
+      entry.comment = comment.to_s
+      entry.website = url.to_s
       puts "#{"  "*entry.parents.length}#{entry.name}"
-      entry.save
+      parent << entry if parent
       entry
     end
   end
