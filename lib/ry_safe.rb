@@ -35,6 +35,11 @@ module RySafe
 
     autoload :DSL, "ry_safe/shell/command_dsl.rb"
     autoload :DSLCommands, "ry_safe/shell/dsl_commands.rb"
+    module DSL
+      autoload :CommandBuilder, "ry_safe/shell/dsl_commands.rb"
+      autoload :Argument, "ry_safe/shell/dsl_commands.rb"
+      autoload :Commands, "ry_safe/shell/dsl_commands.rb"
+    end
   end
 
   autoload :Path, "ry_safe/shell/path.rb"
