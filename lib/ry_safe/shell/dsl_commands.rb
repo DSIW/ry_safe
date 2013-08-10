@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'ostruct'
+
 class RySafe::Commands::DSLCommands
   extend Commands::DSL
 
