@@ -7,7 +7,7 @@ module RySafe::Safe
       raise ArgumentError, "name can't be blank." if name.nil? || name.to_s.strip.empty?
       super
 
-      @tags = []
+      @tags = Tags.new
     end
 
     def directory
@@ -33,6 +33,24 @@ module RySafe::Safe
 
     def valid?
       Validators::PasswordValidator.new(@password, @password_confirmation).valid?
+    end
+
+    def encode_with coder
+      super
+      coder['username'] = @username
+      coder['password'] = @password.inspect
+      coder['website'] = @website
+      coder['comment'] = @comment
+      coder['tags'] = @tags
+    end
+
+    def init_with coder
+      super
+      @username = coder['username']
+      @website = coder['website']
+      @comment = coder['comment']
+      @password = Password.new(coder['password'])
+      @tags = Tags.new(coder['tags'])
     end
   end
 end

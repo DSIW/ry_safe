@@ -69,4 +69,57 @@ describe Safe::Entry do
       subject.presenter.should be_a EntryPresenter
     end
   end
+
+  describe "#serialize" do
+    it "should serialize the right attributes" do
+      subject.username = "UserName"
+      subject.password = "_123456 "
+      subject.website = "http://github.com"
+      subject.comment = "This is a comment"
+      subject.tags = "a,b,c"
+
+      subject.serialize.should == <<-EOC
+--- !ruby/object:RySafe::Safe::Entry
+name: title
+username: UserName
+password: '_123456 '
+website: http://github.com
+comment: This is a comment
+tags: !ruby/array:RySafe::Safe::Tags
+- !ruby/struct:RySafe::Safe::Tag
+  name: a
+- !ruby/struct:RySafe::Safe::Tag
+  name: b
+- !ruby/struct:RySafe::Safe::Tag
+  name: c
+      EOC
+    end
+  end
+
+  describe "#deserialize" do
+    it "should deserialize the right attributes" do
+      new_obj = subject.deserialize <<-EOC
+--- !ruby/object:RySafe::Safe::Entry
+name: title
+username: UserName
+password: '_123456 '
+website: http://github.com
+comment: This is a comment
+tags: !ruby/array:RySafe::Safe::Tags
+- !ruby/struct:RySafe::Safe::Tag
+  name: a
+- !ruby/struct:RySafe::Safe::Tag
+  name: b
+- !ruby/struct:RySafe::Safe::Tag
+  name: c
+      EOC
+
+      new_obj.username.should == "UserName"
+      new_obj.password.should be_a Password
+      new_obj.password.inspect.should == "_123456 "
+      new_obj.website.should == "http://github.com"
+      new_obj.comment.should == "This is a comment"
+      new_obj.tags.map(&:name).should == ["a", "b", "c"]
+    end
+  end
 end
