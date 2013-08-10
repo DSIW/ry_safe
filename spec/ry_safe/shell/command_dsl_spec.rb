@@ -18,6 +18,11 @@ describe Commands::DSL do
       c.help_summary { "Help summary" }
     end
 
+    # should be overwritten by the following echo command
+    command :echo do |c|
+      c.action { |string| puts "Should never be called" }
+    end
+
     command :echo do |c|
       c.action { |*string| puts "Hello #{string[0]}" }
     end
@@ -76,13 +81,12 @@ describe Commands::DSL do
     AllCommands.commands.map(&:name).should == ["touch", "echo", "cp", "add", "add_with_helper", "multi_string"]
   end
 
-  it "should get name of command in yield variable" do
-    expect { |b| AllCommands.command(:touch, &b) }.to yield_with_args(Commands::DSL::CommandBuilder)
+  it "should set help_summary in command block" do
+    AllCommands.commands[:touch].help_summary.should == "Help summary"
   end
 
   it "should set help_summary in command block" do
-    touch.help_summary.should == "Help summary"
-    echo.help_summary.should == "Default summary"
+    echo.help_summary.should == Commands::DSL::CommandBuilder::DEFAULT_SUMMARY
   end
 
   it "should set action" do
@@ -105,7 +109,7 @@ describe Commands::DSL do
   end
 
   it "should call default action" do
-    STDOUT.should_receive(:puts).with("Default")
+    touch.action.should == Commands::DSL::CommandBuilder::DEFAULT_ACTION
     touch.call
   end
 
@@ -123,8 +127,4 @@ describe Commands::DSL do
     STDOUT.should_receive(:puts).with("111")
     multi_string.call("1", "3")
   end
-
-  #it "should convert builder to command" do
-    #cp.to_command.should == Commands::Command
-  #end
 end

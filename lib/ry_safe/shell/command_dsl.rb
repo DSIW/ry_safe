@@ -2,17 +2,18 @@
 
 module RySafe::Commands::DSL
   class CommandBuilder
+    DEFAULT_ACTION = lambda { |*arguments| puts "Default" }
+    DEFAULT_SUMMARY = "Default summary"
+
+    attr_reader :name
+    alias_method :command, :name
+
     def initialize(name)
       @name = name.to_s
-      @action = lambda { |*arguments| puts "Default" }
-      @help_summary = "Default summary"
+      @action = DEFAULT_ACTION
+      @help_summary = DEFAULT_SUMMARY
       @arguments = Hash.new { Argument.new }
     end
-
-    def name
-      @name
-    end
-    alias_method :command, :name
 
     def help_summary
       if block_given?
@@ -98,6 +99,12 @@ module RySafe::Commands::DSL
     def [](cmd)
       select { |command| command.name == cmd.to_s }.first
     end
+
+    def push(command)
+      delete_if { |c| c.name == command.name }
+      super
+    end
+    alias_method :<<, :push
   end
 
   def command(name)
