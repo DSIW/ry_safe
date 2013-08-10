@@ -12,7 +12,7 @@ module RySafe
       Safe::Node.create_from_path(path)
     end
 
-    def to_existing_node_in(root = Safe::Tree.current)
+    def to_existing_node_in(root = Safe::Tree.root)
       Safe::Node.from_path(path, in: root)
     end
 
