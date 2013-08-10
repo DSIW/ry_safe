@@ -71,7 +71,7 @@ module RySafe::Commands::DSL
 
     def initialize
       @manipulations = []
-      @value = 0
+      @value = nil
     end
 
     def apply_manipulations
