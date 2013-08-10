@@ -20,7 +20,15 @@ class RySafe::Commands::DSLCommands
   end
 
   command :cd do |c|
-    c.action { |path| Safe::Tree.current = Util::CommandHelper.relative_path_to_existing_node(path) }
+    c.argument(0) { |arg| Util::CommandHelper.relative_path_to_existing_node(arg || ".") }
+    c.action do |node|
+      case node
+      when Safe::Dir
+        Safe::Tree.current = node
+      else
+        puts "Node has to be a directory"
+      end
+    end
     c.help_summary { "Change current directory to the specified directory" }
   end
 
