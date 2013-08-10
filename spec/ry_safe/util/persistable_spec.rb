@@ -39,7 +39,6 @@ children:
     it "should serialize object" do
       subject.name = "ABC"
       subject.children = [1, 2, 3]
-
       subject.serialize.should == content
     end
   end
@@ -48,9 +47,7 @@ children:
     it "should serialize object and persist it" do
       subject.name = "ABC"
       subject.children = [1, 2, 3]
-
       Persistence::Tree.any_instance.should_receive(:write).with(content)
-
       subject.save
     end
   end
@@ -58,7 +55,6 @@ children:
   describe "#deserialize" do
     it "should deserialize string to object" do
       new_obj = subject.deserialize(content)
-
       new_obj.name.should == "ABC"
       new_obj.children.should == [1, 2, 3]
     end
@@ -69,7 +65,6 @@ children:
       subject.name = "ABC"
       subject.children = [1, 2, 3]
       Persistence::Tree.any_instance.should_receive(:read).and_return(content)
-
       subject.load
     end
   end
