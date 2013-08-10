@@ -7,7 +7,6 @@ describe Commands::DSLCommands do
 
   it "commands" do
     subject.commands.should be_a Array
-    subject.commands.should have(18).command
     subject.commands[:touch].name.should == 'touch'
     subject.commands[:help].name.should == 'help'
   end
