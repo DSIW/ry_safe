@@ -151,6 +151,22 @@ class RySafe::Commands::DSLCommands
     c.help_summary { "Import from KeePassX XML file" }
   end
 
+  command :save! do |c|
+    c.action do |path|
+      File.open(RySafe::Persistence::Tree.new.location, 'w') { |f| f.write(Safe::Tree.root.serialize) }
+      puts "Saved!"
+    end
+  end
+
+  command :load! do |c|
+    c.action do |path|
+      content = File.read(RySafe::Persistence::Tree.new.location)
+      new_root_dir = Safe::RootDir.new.deserialize(content)
+      Safe::Tree.root.from_other(new_root_dir)
+      puts "Loaded!"
+    end
+  end
+
   command :safe_passwords! do |c|
     c.action do
       Password.hidden!
