@@ -11,7 +11,7 @@ module RySafe::Safe
     end
 
     def current=(dir)
-      raise Error::NotInTree unless dir.parents.include? self
+      raise Error::NotInTree if Safe::Tree.root != dir && !dir.parents.include?(self)
       @current = dir
     end
 
