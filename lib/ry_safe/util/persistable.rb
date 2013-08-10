@@ -9,7 +9,11 @@ module RySafe::Util::Persistable
     RySafe::Persistence::Tree.new.write serialize
   end
 
+  def deserialize(yaml)
+    YAML.load(yaml)
+  end
+
   def load
-    YAML.load RySafe::Persistence::Tree.new.read
+    deserialize(RySafe::Persistence::Tree.new.read)
   end
 end
