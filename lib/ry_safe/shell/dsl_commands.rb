@@ -132,4 +132,18 @@ class RySafe::Commands::DSLCommands
     end
     c.help_summary { "Generate new passwords" }
   end
+
+  command :safe_passwords! do |c|
+    c.action do
+      Password.hidden!
+      puts "Passwords are hidden"
+    end
+  end
+
+  command :unsafe_passwords! do |c|
+    c.action do
+      Password.visible!
+      puts "Passwords are visible"
+    end
+  end
 end
