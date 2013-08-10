@@ -55,5 +55,10 @@ module RySafe
     autoload :Config, "ry_safe/persistence/config.rb"
   end
 
+  module Import
+    autoload :Importer, "ry_safe/import/importer.rb"
+    autoload :KeePassXImporter, "ry_safe/import/kee_pass_x_importer.rb"
+  end
+
   autoload :Main, "ry_safe/main.rb"
 end

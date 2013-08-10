@@ -33,4 +33,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rspec')
   gem.add_dependency('yard')
   gem.add_dependency('redcarpet')
+  gem.add_dependency('nori')
+  gem.add_dependency('nokogiri')
 end

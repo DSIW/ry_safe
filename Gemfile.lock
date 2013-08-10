@@ -3,6 +3,8 @@ PATH
   specs:
     ry_safe (0.0.1)
       methadone (~> 1.2.1)
+      nokogiri
+      nori
       redcarpet
       yard
 
@@ -50,7 +52,11 @@ GEM
     methadone (1.2.6)
       bundler
     method_source (0.8.1)
+    mini_portile (0.5.1)
     multi_json (1.7.5)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    nori (2.3.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
