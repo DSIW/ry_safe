@@ -52,7 +52,7 @@ describe Util::PresenterHelper do
 
   describe "#format_time" do
     it "should format YYYY-MM-DD HH:MM:SS" do
-      format_time(Time.new(2013,01,01,12,00,00)).should == "2013-01-01 12:00:00"
+      format_time(DateTime.new(2013,01,01,12,00,00)).should == "2013-01-01 12:00:00"
     end
   end
 

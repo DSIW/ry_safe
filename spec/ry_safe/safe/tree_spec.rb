@@ -42,6 +42,9 @@ describe Safe::Tree do
       subject.serialize.should == <<-EOC
 --- !ruby/object:RySafe::Safe::RootDir
 name: root
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: 
 children: []
 current: /root
       EOC

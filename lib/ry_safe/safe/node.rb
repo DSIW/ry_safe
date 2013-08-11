@@ -93,10 +93,16 @@ module RySafe::Safe
 
     def encode_with coder
       coder["name"] = @name
+      coder["created_at"] = Util::DateHelper.format_time(@created_at)
+      coder["modified_at"] = Util::DateHelper.format_time(@modified_at)
+      coder["destroyed_at"] = Util::DateHelper.format_time(@destroyed_at)
     end
 
     def init_with coder
       @name = coder["name"]
+      @created_at = Util::DateHelper.parse_time(coder["created_at"])
+      @modified_at = Util::DateHelper.parse_time(coder["modified_at"])
+      @destroyed_at = Util::DateHelper.parse_time(coder["destroyed_at"])
     end
 
     protected

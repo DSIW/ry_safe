@@ -92,16 +92,31 @@ describe Safe::RootDir do
       subject.serialize.should == <<-EOC
 --- !ruby/object:RySafe::Safe::RootDir
 name: root
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: 
 children:
 - !ruby/object:RySafe::Safe::Node
   name: Node
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
 - !ruby/object:RySafe::Safe::Dir
   name: Dir
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
   children:
   - !ruby/object:RySafe::Safe::Node
     name: DirNode
+    created_at: '2013-01-01T12:13:14'
+    modified_at: '2013-01-01T12:13:14'
+    destroyed_at: 
 - !ruby/object:RySafe::Safe::Entry
   name: title
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
   username: UserName
   password: '_123456 '
   website: 
@@ -120,13 +135,22 @@ name: root
 children:
 - !ruby/object:RySafe::Safe::Node
   name: Node
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
 - !ruby/object:RySafe::Safe::Dir
   name: Dir
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
   children:
   - !ruby/object:RySafe::Safe::Node
     name: DirNode
 - !ruby/object:RySafe::Safe::Entry
   name: title
+  created_at: '2013-01-01T12:13:14'
+  modified_at: '2013-01-01T12:13:14'
+  destroyed_at: 
   username: UserName
   password: '_123456 '
   website: 

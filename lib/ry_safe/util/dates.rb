@@ -19,6 +19,6 @@ module RySafe::Util::Dates
   protected
 
   def now
-    Time.now
+    DateTime.now
   end
 end

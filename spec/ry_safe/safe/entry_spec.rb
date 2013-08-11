@@ -81,6 +81,9 @@ describe Safe::Entry do
       subject.serialize.should == <<-EOC
 --- !ruby/object:RySafe::Safe::Entry
 name: title
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: 
 username: UserName
 password: '_123456 '
 website: http://github.com
@@ -101,6 +104,9 @@ tags: !ruby/array:RySafe::Safe::Tags
       new_obj = subject.deserialize <<-EOC
 --- !ruby/object:RySafe::Safe::Entry
 name: title
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: 
 username: UserName
 password: '_123456 '
 website: http://github.com

@@ -36,8 +36,8 @@ describe Safe::Node do
     end
 
     it "should set created_at and modified_at" do
-      subject.created_at.should be_a Time
-      subject.modified_at.should be_a Time
+      subject.created_at.should be_a DateTime
+      subject.modified_at.should be_a DateTime
     end
 
     it "should not set destroyed_at" do
@@ -243,10 +243,20 @@ describe Safe::Node do
   end
 
   describe "serialize" do
+    before do
+      time = DateTime.new(2013, 1, 1, 12, 13, 14)
+      subject.created_at = time
+      subject.modified_at = time
+      subject.destroyed_at = time
+    end
+
     it "should serialize the right attributes" do
       subject.serialize.should == <<-EOC
 --- !ruby/object:RySafe::Safe::Node
 name: NodeName
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: '2013-01-01T12:13:14'
       EOC
     end
   end
@@ -258,9 +268,16 @@ name: NodeName
       content = <<-EOC
 --- !ruby/object:RySafe::Safe::Node
 name: NodeName
+created_at: '2013-01-01T12:13:14'
+modified_at: '2013-01-01T12:13:14'
+destroyed_at: '2013-01-01T12:13:14'
       EOC
       deserialized = subject.deserialize(content)
       deserialized.name.should == "NodeName"
+      time = DateTime.new(2013, 1, 1, 12, 13, 14)
+      deserialized.created_at.should == time
+      deserialized.modified_at.should == time
+      deserialized.destroyed_at.should == time
     end
   end
 end

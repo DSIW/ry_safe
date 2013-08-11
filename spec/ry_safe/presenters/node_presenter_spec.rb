@@ -9,9 +9,9 @@ describe NodePresenter do
     {
       name: "NAME",
       to_s: "TO_S",
-      created_at: Time.new(2013,01,01,12,00,00),
-      modified_at: Time.new(2013,01,02,12,00,00),
-      destroyed_at: Time.new(2013,01,03,12,00,00),
+      created_at: DateTime.new(2013,01,01,12,00,00),
+      modified_at: DateTime.new(2013,01,02,12,00,00),
+      destroyed_at: DateTime.new(2013,01,03,12,00,00),
       path: "/root/path/to/name",
       recursive_size: 2,
     }

@@ -32,8 +32,8 @@ describe Util::Dates do
     end
   end
 
-  let(:stopped_time) { Time.new(2013, 01, 01, 00, 00) }
-  before { Time.stub(now: Time.new(2013, 01, 01, 00, 00)) }
+  let(:stopped_time) { DateTime.new(2013, 01, 01, 00, 00) }
+  before { DateTime.stub(now: DateTime.new(2013, 01, 01, 00, 00)) }
 
   subject { DatesObject.new(name) }
   let(:name) { "Name" }
@@ -46,7 +46,7 @@ describe Util::Dates do
 
   describe "setter" do
     it "should set time" do
-      time = Time.new(2013, 01, 02, 00, 00)
+      time = DateTime.new(2013, 01, 02, 00, 00)
 
       subject.created_at = time
       subject.modified_at = time
@@ -59,8 +59,8 @@ describe Util::Dates do
   end
 
   describe "#touch" do
-    let(:stopped_time) { Time.new(2013, 01, 02, 00, 00) }
-    before { Time.stub(now: Time.new(2013, 01, 02, 00, 00)) }
+    let(:stopped_time) { DateTime.new(2013, 01, 02, 00, 00) }
+    before { DateTime.stub(now: DateTime.new(2013, 01, 02, 00, 00)) }
 
     before { subject.update }
 
@@ -70,9 +70,9 @@ describe Util::Dates do
   end
 
   describe "#destroy" do
-    let(:stopped_time) { Time.new(2013, 01, 03, 00, 00) }
-    let(:destroy_time) { Time.new(2013, 01, 03, 00, 00) }
-    before { Time.stub(now: Time.new(2013, 01, 03, 00, 00)) }
+    let(:stopped_time) { DateTime.new(2013, 01, 03, 00, 00) }
+    let(:destroy_time) { DateTime.new(2013, 01, 03, 00, 00) }
+    before { DateTime.stub(now: DateTime.new(2013, 01, 03, 00, 00)) }
 
     before { subject.destroy }
 

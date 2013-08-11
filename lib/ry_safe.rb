@@ -15,6 +15,7 @@ module RySafe
     autoload :PresenterHelper, "ry_safe/util/presenter_helper"
     autoload :CommandHelper, "ry_safe/util/command_helper"
     autoload :Persistable, "ry_safe/util/persistable"
+    autoload :DateHelper, "ry_safe/util/date_helper"
   end
 
   module Validators
