@@ -22,12 +22,12 @@ describe Import::KeePassXImporter do
 
     first_group.should be_a Safe::Dir
     first_group.parent.should be root
-    first_group.name.should == "General"
+    first_group.name.should == "general"
     first_group.children.size.should == 1
 
     first_group.children[0].should be_a Safe::Entry
     first_group.children[0].parent.should be first_group
-    first_group.children[0].name.should == "Website1"
+    first_group.children[0].name.should == "website1"
     first_group.children[0].username.should == "username"
     first_group.children[0].password.should == Password.new("123456")
     first_group.children[0].website.should == "https://www.github.com/"
@@ -36,29 +36,41 @@ describe Import::KeePassXImporter do
 
     second_group.should be_a Safe::Dir
     second_group.parent.should be root
-    second_group.name.should == "WWW"
-    second_group.children.size.should == 4
+    second_group.name.should == "general_2"
+    second_group.children.size.should == 7
 
     second_group.children[0].should be_a Safe::Dir
     second_group.children[0].parent.should be second_group
-    second_group.children[0].name.should == "Productkeys"
+    second_group.children[0].name.should == "productkeys"
     second_group.children[0].children.size.should == 1
 
     second_group.children[0].children[0].should be_a Safe::Entry
     second_group.children[0].children[0].parent.should be second_group.children[0]
-    second_group.children[0].children[0].name.should == "GH"
+    second_group.children[0].children[0].name.should == "gh"
 
 
     second_group.children[1].should be_a Safe::Entry
     second_group.children[1].parent.should be second_group
-    second_group.children[1].name.should == "PC 1"
+    second_group.children[1].name.should == "pc_1"
 
     second_group.children[2].should be_a Safe::Entry
     second_group.children[2].parent.should be second_group
-    second_group.children[2].name.should == "--"
+    second_group.children[2].name.should == "no_name"
 
     second_group.children[3].should be_a Safe::Entry
     second_group.children[3].parent.should be second_group
-    second_group.children[3].name.should == "Public Access"
+    second_group.children[3].name.should == "public_access"
+
+    second_group.children[4].should be_a Safe::Entry
+    second_group.children[4].parent.should be second_group
+    second_group.children[4].name.should == "public_access_2"
+
+    second_group.children[5].should be_a Safe::Entry
+    second_group.children[5].parent.should be second_group
+    second_group.children[5].name.should == "public_access_3"
+
+    second_group.children[6].should be_a Safe::Entry
+    second_group.children[6].parent.should be second_group
+    second_group.children[6].name.should == "no_name_2"
   end
 end
