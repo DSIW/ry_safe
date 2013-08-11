@@ -153,16 +153,14 @@ class RySafe::Commands::DSLCommands
 
   command :save! do |c|
     c.action do |path|
-      File.open(RySafe::Persistence::Tree.new.location, 'w') { |f| f.write(Safe::Tree.root.serialize) }
+      RySafe::Persistence::Tree.new.save
       puts "Saved!"
     end
   end
 
   command :load! do |c|
     c.action do |path|
-      content = File.read(RySafe::Persistence::Tree.new.location)
-      new_root_dir = Safe::RootDir.new.deserialize(content)
-      Safe::Tree.root.from_other(new_root_dir)
+      RySafe::Persistence::Tree.new.load
       puts "Loaded!"
     end
   end

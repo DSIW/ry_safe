@@ -31,24 +31,11 @@ children:
     EOC
   end
 
-  before do
-    fake_home.prepare
-  end
-
   describe "#serialize" do
     it "should serialize object" do
       subject.name = "ABC"
       subject.children = [1, 2, 3]
       subject.serialize.should == content
-    end
-  end
-
-  describe "#save" do
-    it "should serialize object and persist it" do
-      subject.name = "ABC"
-      subject.children = [1, 2, 3]
-      Persistence::Tree.any_instance.should_receive(:write).with(content)
-      subject.save
     end
   end
 
@@ -60,15 +47,6 @@ children:
     end
   end
 
-  describe "#load" do
-    it "should deserialize object and convert it into a normal ruby object" do
-      subject.name = "ABC"
-      subject.children = [1, 2, 3]
-      Persistence::Tree.any_instance.should_receive(:read).and_return(content)
-      subject.load
-    end
-  end
-
   describe "#serialize and deserialize" do
     it "should get the old object" do
       serialized = subject.serialize
@@ -77,9 +55,5 @@ children:
       new_obj.name.should == subject.name
       new_obj.children.should == subject.children
     end
-  end
-
-  after do
-    fake_home.restore
   end
 end
