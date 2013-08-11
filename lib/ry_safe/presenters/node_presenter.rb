@@ -1,7 +1,7 @@
 module RySafe
   class NodePresenter < Presenter
     def path
-      helper.remove_root(model.path)
+      helper.colorize(helper.remove_root(model.path), :path)
     end
 
     def dates
