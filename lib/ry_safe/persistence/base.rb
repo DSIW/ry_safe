@@ -31,5 +31,13 @@ module RySafe::Persistence
     def read
       ::File.read(location)
     end
+
+    def save
+      # should be overwritten by subclass
+    end
+
+    def load
+      # should be overwritten by subclass
+    end
   end
 end
