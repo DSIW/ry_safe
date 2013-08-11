@@ -157,6 +157,6 @@ current: /root/Dir
   end
 
   describe "::from_other" do
-
+    pending "Not tested"
   end
 end
