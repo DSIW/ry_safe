@@ -4,9 +4,7 @@ module RySafe::Safe
     attr_reader :password, :password_confirmation, :tags
 
     def initialize(name, parent = nil)
-      raise ArgumentError, "name can't be blank." if name.nil? || name.to_s.strip.empty?
       super
-
       @tags = Tags.new
     end
 

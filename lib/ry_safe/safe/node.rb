@@ -14,7 +14,7 @@ module RySafe::Safe
 
     def initialize name, parent = nil
       super # for dates
-      raise ArgumentError if name.nil?
+      raise ArgumentError, "name can't be blank." if name.nil? || name.to_s.strip.empty?
       @name = name
       @parent = parent
     end

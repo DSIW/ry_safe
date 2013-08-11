@@ -21,6 +21,10 @@ describe Safe::Node do
       it "should raise an error" do
         expect { Safe::Node.new(nil, nil) }.to raise_error ArgumentError
       end
+
+      it "should raise an error" do
+        expect { Safe::Node.new("  \t \n", nil) }.to raise_error ArgumentError
+      end
     end
 
     context "without parent" do
@@ -248,7 +252,7 @@ name: NodeName
   end
 
   describe "#deserialize" do
-    subject { Safe::Node.new("") }
+    subject { Safe::Node.new("default") }
 
     it "should deserialize the right attributes" do
       content = <<-EOC
