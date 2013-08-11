@@ -38,4 +38,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('nori')
   gem.add_dependency('nokogiri')
   gem.add_dependency('highline')
+  gem.add_dependency('colorize')
 end
