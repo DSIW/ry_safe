@@ -1,5 +1,10 @@
 module RySafe::Persistence
   class History < File
+    def prepare
+      super
+      load
+    end
+
     def location
       "#{super}/history.yml"
     end

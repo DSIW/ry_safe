@@ -6,7 +6,6 @@ module RySafe
     end
 
     def prompt
-      RySafe::Persistence::History.new.load
       while line = Readline.readline(prompt_string, true) do
         begin
           eval_command(line)

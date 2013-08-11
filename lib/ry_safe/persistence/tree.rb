@@ -1,5 +1,10 @@
 module RySafe::Persistence
   class Tree < File
+    def prepare
+      super
+      load
+    end
+
     def location
       "#{super}/tree.yml"
     end
