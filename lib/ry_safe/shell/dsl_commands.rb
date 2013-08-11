@@ -9,8 +9,10 @@ class RySafe::Commands::DSLCommands
   end
 
   command :ls do |c|
-    c.argument(0) { |arg| Util::CommandHelper.relative_path_to_existing_node(arg || ".") }
-    c.action { |node| puts node.presenter.children }
+    c.action do |path|
+      node = Util::CommandHelper.relative_path_to_existing_node(path || ".")
+      puts node.presenter.children
+    end
     c.help_summary { "List all items in current directory" }
   end
 
@@ -20,8 +22,8 @@ class RySafe::Commands::DSLCommands
   end
 
   command :cd do |c|
-    c.argument(0) { |arg| Util::CommandHelper.relative_path_to_existing_node(arg || ".") }
-    c.action do |node|
+    c.action do |path|
+      node = Util::CommandHelper.relative_path_to_existing_node(path || "/")
       case node
       when Safe::Dir
         Safe::Tree.current = node
@@ -33,44 +35,54 @@ class RySafe::Commands::DSLCommands
   end
 
   command :cp do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.argument(1, :relative_path_to_existing_node)
-    c.action { |source, destination| Util::NodeHandler.copy(source, destination) }
+    c.action do |source_path, destination_path|
+      source = Util::CommandHelper.relative_path_to_existing_node(source_path)
+      destination = Util::CommandHelper.relative_path_to_existing_node(destination_path)
+      Util::NodeHandler.copy(source, destination)
+    end
     c.help_summary { "Copy item to another directory" }
   end
 
   command :mv do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.argument(1, :relative_path_to_existing_node)
-    c.action { |source, destination| Util::NodeHandler.move(source, destination) }
+    c.action do |source_path, destination_path|
+      source = Util::CommandHelper.relative_path_to_existing_node(source_path)
+      destination = Util::CommandHelper.relative_path_to_existing_node(destination_path)
+      Util::NodeHandler.move(source, destination)
+    end
     c.help_summary { "Move item to another directory" }
   end
 
   command :rm do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.action { |node| Util::NodeHandler.remove(node) }
+    c.action do |path|
+      node = Util::CommandHelper.relative_path_to_existing_node(path)
+      Util::NodeHandler.remove(node)
+    end
     c.help_summary { "Remove directory or entry" }
   end
 
   command :cat do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.action { |node| puts node.presenter.content }
+    c.action do |path|
+      node = Util::CommandHelper.relative_path_to_existing_node(path || ".")
+      puts node.presenter.content
+    end
     c.help_summary { "Show specified entry" }
   end
 
   command :set do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.argument(1) { |arg| splitted = arg.split('='); OpenStruct.new(key: splitted.first, value: splitted.last) }
-    c.action do |node, setting|
-      node.send("#{setting.key}=", setting.value)
+    c.action do |path, setting|
+      node = Util::CommandHelper.relative_path_to_existing_node(path)
+      key, value = setting.split('=')
+      node.send("#{key}=", value)
       puts "Saved"
     end
     c.help_summary { "Set option to specified entry" }
   end
 
   command :get do |c|
-    c.argument(0, :relative_path_to_existing_node)
-    c.action { |node, attribute| puts node.send(attribute)}
+    c.action do |path, attribute|
+      node = Util::CommandHelper.relative_path_to_existing_node(path)
+      puts node.send(attribute)
+    end
     c.help_summary {"Read option from specified entry"}
   end
 
@@ -85,9 +97,9 @@ class RySafe::Commands::DSLCommands
   end
 
   command :rename do |c|
-    c.argument(0, :relative_path_to_existing_node)
     c.action do |path, new_name|
-      path.name = new_name
+      node = Util::CommandHelper.relative_path_to_existing_node(path)
+      node.name = new_name
       puts "Renamed to #{new_name}"
     end
     c.help_summary { "Rename current entry oder directory" }
@@ -136,9 +148,9 @@ class RySafe::Commands::DSLCommands
   end
 
   command :gen_passwords do |c|
-    c.argument(0) { |arg| arg.to_i }
-    c.argument(1) { |arg| arg.to_i }
     c.action do |length, count, *options|
+      length = length.to_i
+      count = count.to_i
       options = options.map { |option| option.split('=') }
         .reduce({}) do |hash, (option, value)|
           hash.merge(option.to_sym => value)

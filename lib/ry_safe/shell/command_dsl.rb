@@ -32,9 +32,9 @@ module RySafe::Commands::DSL
     end
 
     def call(*arguments)
-      arguments.each_with_index { |arg, index| set_argument_value(index, arg) }
-      args = @arguments.map { |index, arg| arg.value }
-      @action.call(*args)
+      #arguments.each_with_index { |arg, index| set_argument_value(index, arg) }
+      #args = @arguments.map { |index, arg| arg.value }
+      @action.call(*arguments)
     end
 
     def argument(index, helper_function = nil)
