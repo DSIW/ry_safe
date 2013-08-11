@@ -44,6 +44,20 @@ describe Util::Dates do
   its(:modified_at) { should == stopped_time }
   its(:destroyed_at) { should be_nil }
 
+  describe "setter" do
+    it "should set time" do
+      time = Time.new(2013, 01, 02, 00, 00)
+
+      subject.created_at = time
+      subject.modified_at = time
+      subject.destroyed_at = time
+
+      subject.created_at.should == time
+      subject.modified_at.should == time
+      subject.destroyed_at.should == time
+    end
+  end
+
   describe "#touch" do
     let(:stopped_time) { Time.new(2013, 01, 02, 00, 00) }
     before { Time.stub(now: Time.new(2013, 01, 02, 00, 00)) }
