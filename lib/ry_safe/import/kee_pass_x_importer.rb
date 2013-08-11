@@ -116,7 +116,7 @@ module RySafe::Import
         entry.username = @username.to_s
         entry.password = @password.to_s
         entry.password_confirmation = @password.to_s
-        entry.comment = @comment.to_s
+        entry.comment = @comment.to_s.gsub("<br></br>", "\n")
         entry.website = @url.to_s
         entry.created_at = @creation
         entry.modified_at = @lastmod
