@@ -30,34 +30,14 @@ module RySafe::Commands
   end
 
   #class Alias < Base
-    #def command
-      #"alias"
-    #end
-
     #def action
-      #Command::AliasSave.aliases << ""
-    #end
-
-    #def setting
-      #arguments[0].split('=')
-    #end
-
-    #def new
-      #setting[0]
-    #end
-
-    #def old
-      #setting[1]
+      #Commands::Dispatcher.new(@arguments).call
     #end
   #end
 
   #class Aliases < Hash
     #def <<(new, old)
-      #self.add new, Dispatcher.new(old).command
-    #end
-
-    #def call(new)
-      #self[new].call
+      #add(new, Alias.new(old).name)
     #end
   #end
 
