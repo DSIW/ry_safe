@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require "pathname"
-
 module RySafe
   class Path < Struct.new(:path)
     def to_s

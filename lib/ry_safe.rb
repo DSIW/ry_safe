@@ -1,3 +1,8 @@
+require 'readline'
+require 'shellwords'
+require 'ostruct'
+require "pathname"
+
 module RySafe
   # Autoloadings
   autoload :Error, "ry_safe/error"
