@@ -36,7 +36,9 @@ module RySafe
     end
 
     def cleanpath
-      if path.start_with?("/root")
+      if path == "/"
+        "/root"
+      elsif path.start_with?("/root")
         path
       elsif path.start_with?("/")
         "/root#{path}"

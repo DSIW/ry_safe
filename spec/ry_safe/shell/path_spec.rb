@@ -66,6 +66,11 @@ describe RelativePath do
       its(:path) { should == "/pwd/path/to" }
     end
 
+    context "is /" do
+      let(:relative_path) { "/" }
+      its(:path) { should == "/root" }
+    end
+
     context "starting with /" do
       let(:relative_path) { "/path/to" }
       its(:path) { should == "/root/path/to" }
