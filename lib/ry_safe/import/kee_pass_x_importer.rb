@@ -62,6 +62,25 @@ module RySafe::Import
     end
   end
 
+  module ConvertionHelper
+    module_function
+
+    def try_convertion(title, number = 1, &block)
+      title = (title.nil? || title.to_s.strip.empty?) ? 'no_name' : title.to_s
+      title = title.downcase.gsub(/ /, '_')
+      new_title = [title, number == 1 ? nil : number].compact.join('_')
+
+      node, parent = block.call(new_title)
+      target = parent || Safe::Tree.root
+      begin
+        target << node
+        node
+      rescue Error::AlreadyExist => e
+        try_convertion(title, number + 1, &block)
+      end
+    end
+  end
+
   class Group
     attr_accessor :title, :parent
     def initialize(title, parent)
@@ -70,21 +89,9 @@ module RySafe::Import
     end
 
     def convert
-      try_convertion_with
-    end
-
-    def try_convertion_with(number = 1)
-      @title = (@title.nil? || @title.to_s.strip.empty?) ? 'no_name' : @title.to_s
-      @title = @title.downcase.gsub(/ /, '_')
-      dir_title = [@title, number == 1 ? nil : number].compact.join('_')
-      puts "#{number}: #{dir_title}"
-      dir = Safe::Dir.new(dir_title)
-      target = parent || Safe::Tree.root
-      begin
-        target << dir
-        dir
-      rescue Error::AlreadyExist => e
-        try_convertion_with(number + 1)
+      ConvertionHelper.try_convertion(@title) do |new_title|
+        dir = Safe::Dir.new(new_title)
+        [dir, @parent]
       end
     end
   end
@@ -105,27 +112,14 @@ module RySafe::Import
     end
 
     def convert
-      try_convertion_with
-    end
-
-    def try_convertion_with(number = 1)
-      @title = (@title.nil? || @title.to_s.strip.empty?) ? 'no_name' : @title.to_s
-      @title = @title.downcase.gsub(/ /, '_')
-      dir_title = [@title, number == 1 ? nil : number].compact.join('_')
-      puts "#{number}: #{dir_title}"
-      entry = Safe::Entry.new(dir_title)
-      entry.username = username.to_s
-      entry.password = password.to_s
-      entry.password_confirmation = password.to_s
-      entry.comment = comment.to_s
-      entry.website = url.to_s
-
-      target = parent || Safe::Tree.root
-      begin
-        target << entry if parent
-        entry
-      rescue Error::AlreadyExist => e
-        try_convertion_with(number + 1)
+      ConvertionHelper.try_convertion(@title) do |new_title|
+        entry = Safe::Entry.new(new_title)
+        entry.username = @username.to_s
+        entry.password = @password.to_s
+        entry.password_confirmation = @password.to_s
+        entry.comment = @comment.to_s
+        entry.website = @url.to_s
+        [entry, @parent]
       end
     end
   end
