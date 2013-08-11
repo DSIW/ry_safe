@@ -83,7 +83,7 @@ module RySafe::Safe
 
     def init_with coder
       super
-      @children = coder["children"]
+      @children = coder["children"].to_set
     end
 
     def deserialize(content)

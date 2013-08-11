@@ -344,6 +344,7 @@ children:
       EOC
 
       new_obj.name.should == "NodeName"
+      new_obj.instance_variable_get(:@children).should be_a Set
       new_obj.children.size.should == 3
       new_obj.children[0].parent.should be new_obj
       new_obj.children[0].should be_a Safe::Node
