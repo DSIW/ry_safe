@@ -36,8 +36,10 @@ module RySafe
     end
 
     def cleanpath
-      if path.start_with?("/")
+      if path.start_with?("/root")
         path
+      elsif path.start_with?("/")
+        "/root#{path}"
       else
         absolute_path = File.join(@pwd, path)
         Pathname.new(absolute_path).cleanpath.to_s
