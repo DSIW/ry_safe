@@ -65,18 +65,18 @@ module RySafe::Import
   module ConvertionHelper
     module_function
 
-    def try_convertion(title, number = 1, &block)
+    def try_convertion(title, parent, number = 1, &block)
       title = (title.nil? || title.to_s.strip.empty?) ? 'no_name' : title.to_s
       title = title.downcase.gsub(/ /, '_')
       new_title = [title, number == 1 ? nil : number].compact.join('_')
 
-      node, parent = block.call(new_title)
+      node = block.call(new_title)
       target = parent || Safe::Tree.root
       begin
         target << node
         node
       rescue Error::AlreadyExist => e
-        try_convertion(title, number + 1, &block)
+        try_convertion(title, parent, number + 1, &block)
       end
     end
   end
@@ -89,9 +89,8 @@ module RySafe::Import
     end
 
     def convert
-      ConvertionHelper.try_convertion(@title) do |new_title|
-        dir = Safe::Dir.new(new_title)
-        [dir, @parent]
+      ConvertionHelper.try_convertion(@title, @parent) do |new_title|
+        Safe::Dir.new(new_title)
       end
     end
   end
@@ -112,14 +111,14 @@ module RySafe::Import
     end
 
     def convert
-      ConvertionHelper.try_convertion(@title) do |new_title|
+      ConvertionHelper.try_convertion(@title, @parent) do |new_title|
         entry = Safe::Entry.new(new_title)
         entry.username = @username.to_s
         entry.password = @password.to_s
         entry.password_confirmation = @password.to_s
         entry.comment = @comment.to_s
         entry.website = @url.to_s
-        [entry, @parent]
+        entry
       end
     end
   end
