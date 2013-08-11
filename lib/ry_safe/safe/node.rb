@@ -78,7 +78,7 @@ module RySafe::Safe
     end
 
     def === pattern
-      name === pattern
+      pattern === name
     end
 
     # required for Set in Safe::Dir

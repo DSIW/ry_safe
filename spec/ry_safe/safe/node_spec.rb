@@ -208,6 +208,10 @@ describe Safe::Node do
   describe "#===" do
     it "should compare name with pattern" do
       (subject === "NodeName").should be_true
+      (subject === /NodeName/i).should be_true
+      (subject === /nodename/i).should be_true
+      (subject === /node/i).should be_true
+      (subject === /name/i).should be_true
       (subject === "Parent").should be_false
     end
   end
