@@ -5,7 +5,7 @@ module RySafe
     end
 
     def recursive_size
-      model.recursive_size.to_s.rjust(2)
+      model.recursive_size.to_s.rjust(3)
     end
 
     def children_size

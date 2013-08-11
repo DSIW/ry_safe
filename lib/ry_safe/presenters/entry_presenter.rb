@@ -14,9 +14,5 @@ tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment || "--"}
       HEREDOC
     end
-
-    def recursive_size
-      "".rjust(2)
-    end
   end
 end

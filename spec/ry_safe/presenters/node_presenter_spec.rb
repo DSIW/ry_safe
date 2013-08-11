@@ -35,7 +35,7 @@ describe NodePresenter do
     its(:destroyed_at) { should == "--" }
   end
 
-  its(:recursive_size) { should == "  " }
+  its(:recursive_size) { should == "   " }
 
-  its(:to_s) { should == "2013-01-02 12:00:00    NAME" }
+  its(:to_s) { should == "2013-01-02 12:00:00     NAME" }
 end

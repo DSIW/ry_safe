@@ -22,7 +22,7 @@ describe DirPresenter do
   end
 
   its(:name) { should == "DIR/" }
-  its(:recursive_size) { should == " 3" }
+  its(:recursive_size) { should == "  3" }
   its(:children_size) { should == "4 items" }
   its(:children) do
     string = <<-STRING

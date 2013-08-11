@@ -22,7 +22,7 @@ module RySafe
     end
 
     def recursive_size
-      "".rjust(2)
+      "".rjust(3)
     end
 
     def to_s

@@ -27,6 +27,4 @@ tags:                  Tag1, Tag2, Tag3
 comment:               Comment
     STRING
   end
-
-  its(:recursive_size) { should == "  " }
 end
