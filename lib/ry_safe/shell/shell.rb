@@ -9,12 +9,17 @@ module RySafe
     end
 
     def prompt
+      RySafe::Persistence::History.new.load
       while line = Readline.readline(prompt_string, true) do
         begin
           eval_command(line)
+          Readline::HISTORY.pop if line =~ /^\s*$/ || line =~ /^exit$/ || Readline::HISTORY.to_a[-2] == line
         rescue StandardError => e
+          Readline::HISTORY.pop
           puts e.message
           puts e.backtrace.inspect
+        ensure
+          RySafe::Persistence::History.new.save
         end
       end
     end
