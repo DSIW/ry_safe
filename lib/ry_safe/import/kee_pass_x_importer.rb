@@ -5,14 +5,13 @@ require "nori"
 module RySafe::Import
   class KeePassXImporter < Importer
     def import
-      GroupNode.new(root, nil).import
-      Safe::Tree.root.refresh_parents
+      root.each { |child| GroupNode.new(child, nil).import }
     end
 
     private
 
     def root
-      file_to_hash[:database]
+      file_to_hash[:database][:group]
     end
 
     def file_to_hash
@@ -24,8 +23,8 @@ module RySafe::Import
   GroupNode = Struct.new(:hash, :parent) do
     def import
       convert
-      import_entries(to_array(hash[:entry])) if hash[:entry]
       import_groups(to_array(hash[:group])) if hash[:group]
+      import_entries(to_array(hash[:entry])) if hash[:entry]
     end
 
     def import_entries(entries)
@@ -66,9 +65,7 @@ module RySafe::Import
   Group = Struct.new(:title, :parent) do
     def convert
       dir = Safe::Dir.new(title && title.to_s || '--')
-      parent << dir if parent
-      puts "#{"  "*dir.parents.length}#{dir.name}"
-      Safe::Tree.root << dir
+      (parent || Safe::Tree.root) << dir
       dir
     end
   end
@@ -81,7 +78,6 @@ module RySafe::Import
       entry.password_confirmation = password.to_s
       entry.comment = comment.to_s
       entry.website = url.to_s
-      puts "#{"  "*entry.parents.length}#{entry.name}"
       parent << entry if parent
       entry
     end
