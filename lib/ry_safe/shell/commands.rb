@@ -20,10 +20,6 @@ module RySafe::Commands
       raise "No action in Command::Base"
     end
 
-    def human_readable_command
-      command[0].upcase + command[1..-1]
-    end
-
     def self.help_summary
       nil
     end
