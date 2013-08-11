@@ -10,7 +10,7 @@ describe EntryPresenter do
     entry.password_confirmation = "Password"
     entry.website = "http://localhost"
     entry.tags = "Tag1,Tag2,Tag3"
-    entry.comment = "Comment"
+    entry.comment = "Comment\nIt's OK"
   end
 
   its(:content) do
@@ -25,6 +25,7 @@ valid:                 true
 website:               http://localhost
 tags:                  Tag1, Tag2, Tag3
 comment:               Comment
+                       It's OK
     STRING
   end
 end
