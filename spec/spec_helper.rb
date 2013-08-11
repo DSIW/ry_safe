@@ -7,9 +7,19 @@ require 'rspec'
 require 'ry_safe'
 require 'ostruct'
 require 'fake_home'
+require 'timecop'
 
 RSpec.configure do |config|
   include RySafe
+
+  config.before do
+    time = Time.local(2013, 1, 1, 12, 13, 14)
+    Timecop.freeze(time)
+  end
+
+  config.after do
+    Timecop.return
+  end
 
   # Returns the full path to the +name+ fixture file.
   def fixture(name)

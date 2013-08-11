@@ -86,6 +86,7 @@ GEM
     simplecov-html (0.7.1)
     slop (3.4.5)
     thor (0.18.1)
+    timecop (0.5.9.1)
     version (1.0.0)
     yard (0.8.7)
 
@@ -104,4 +105,5 @@ DEPENDENCIES
   rspec
   ry_safe!
   simplecov
+  timecop
   version
