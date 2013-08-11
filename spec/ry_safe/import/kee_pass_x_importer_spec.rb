@@ -32,6 +32,8 @@ describe Import::KeePassXImporter do
     first_group.children[0].password.should == Password.new("123456")
     first_group.children[0].website.should == "https://www.github.com/"
     first_group.children[0].comment.should == "Comment"
+    first_group.children[0].created_at.should == DateTime.new(2011, 3, 5, 14, 28, 4)
+    first_group.children[0].modified_at.should == DateTime.new(2011, 9, 4, 14, 39, 2)
 
 
     second_group.should be_a Safe::Dir

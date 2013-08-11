@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module RySafe::Util::Dates
-  attr_reader :created_at, :modified_at, :destroyed_at
+  attr_accessor :created_at, :modified_at, :destroyed_at
 
   def initialize(*args, &block)
     @created_at = now

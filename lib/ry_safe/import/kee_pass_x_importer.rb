@@ -118,6 +118,8 @@ module RySafe::Import
         entry.password_confirmation = @password.to_s
         entry.comment = @comment.to_s
         entry.website = @url.to_s
+        entry.created_at = @creation
+        entry.modified_at = @lastmod
         entry
       end
     end
