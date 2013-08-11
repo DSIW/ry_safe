@@ -5,10 +5,10 @@ module RySafe::Commands
     extend Util::Register
     include Util::CommandHelper
 
-    attr_reader :command, :arguments
+    attr_reader :name, :arguments
 
     def initialize(*args)
-      @command = command || args.shift
+      @name = name || args.shift
       @arguments = args
     end
 
@@ -28,8 +28,8 @@ module RySafe::Commands
       nil
     end
 
-    def self.command
-      new.command
+    def self.name
+      new.name
     end
   end
 
