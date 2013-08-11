@@ -2,7 +2,7 @@
 
 ## Start shell under development
 
-    $ ruby -e 'require "ry_safe"; include RySafe; Shell.new.prompt'
+    $ ruby -e 'require "ry_safe"; include RySafe; Main.new'
 
 TODO: Write a gem description
 
