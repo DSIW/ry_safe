@@ -13,9 +13,9 @@ module RySafe
         rescue StandardError => e
           Readline::HISTORY.pop
           puts e.message
-          puts e.backtrace.inspect
         ensure
           RySafe::Persistence::History.new.save
+          #puts e.backtrace.inspect
         end
       end
     end
