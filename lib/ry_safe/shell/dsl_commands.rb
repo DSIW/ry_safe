@@ -93,6 +93,14 @@ class RySafe::Commands::DSLCommands
     c.help_summary { "Rename current entry oder directory" }
   end
 
+  command :find do |c|
+    c.action do |pattern|
+      found_nodes = Safe::Tree.root.find(Regexp.new(pattern, true))
+      puts found_nodes.map { |node| node.presenter.path }.join("\n")
+    end
+    c.help_summary { "Search through all nodes and find title which matches the given pattern" }
+  end
+
   command :exit do |c|
     c.action { exit }
     c.help_summary { "Exit RySafe console" }
