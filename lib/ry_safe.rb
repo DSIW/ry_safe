@@ -2,6 +2,7 @@ require 'readline'
 require 'shellwords'
 require 'ostruct'
 require "pathname"
+require "highline"
 
 module RySafe
   # Autoloadings
