@@ -37,23 +37,6 @@ describe Safe::Entry do
       subject.password.should == Password.new("123456")
     end
 
-    it "should set and get password confirmation" do
-      subject.password_confirmation = "123456"
-      subject.password_confirmation.should == Password.new("123456")
-    end
-
-    it "should be valid if password and password confirmation are equals" do
-      subject.password = "123456"
-      subject.password_confirmation = "123456"
-      subject.should be_valid
-    end
-
-    it "should not be valid if password and password confirmation are equals" do
-      subject.password = "123456"
-      subject.password_confirmation = "12345"
-      subject.should_not be_valid
-    end
-
     it "should set and get comment" do
       subject.comment = "comment"
       subject.comment.should == "comment"
