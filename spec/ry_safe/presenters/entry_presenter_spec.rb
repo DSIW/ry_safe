@@ -7,7 +7,6 @@ describe EntryPresenter do
   before do
     entry.username = "Username"
     entry.password = "Password"
-    entry.password_confirmation = "Password"
     entry.website = "http://localhost"
     entry.tags = "Tag1,Tag2,Tag3"
     entry.comment = "Comment\nIt's OK"
@@ -20,8 +19,6 @@ title:                 Title
 =======================================
 username:              Username
 password:              ********
-password_confirmation: ********
-valid:                 true
 website:               http://localhost
 tags:                  Tag1, Tag2, Tag3
 comment:               Comment

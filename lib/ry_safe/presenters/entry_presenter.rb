@@ -7,7 +7,6 @@ title:                 #{model.name || "--"}
 =======================================
 username:              #{model.username || "--"}
 password:              #{model.password || "--"}
-valid:                 #{model.valid?}
 website:               #{model.website || "--"}
 tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment.gsub("\n", "\n#{" "*23}") || "--"}
