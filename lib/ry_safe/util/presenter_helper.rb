@@ -47,5 +47,13 @@ module RySafe::Util
     def remove_root(string)
       string.sub("/root", "/").sub("//", "/")
     end
+
+    def capitalize(string)
+      string[0].upcase + string[1..-1]
+    end
+
+    def present?(obj)
+      obj && obj.is_a?(String) ? !obj.empty? : obj
+    end
   end
 end

@@ -14,13 +14,6 @@ module RySafe::Safe
       to_root_dir.serialize
     end
 
-    def from_other(other)
-      @name = other.name
-      @current = other.current
-      @children = other.children
-      self
-    end
-
     class << self
       extend Forwardable
 

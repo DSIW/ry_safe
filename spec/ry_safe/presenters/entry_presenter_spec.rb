@@ -6,8 +6,7 @@ describe EntryPresenter do
 
   before do
     entry.username = "Username"
-    entry.password = "Password"
-    entry.password_confirmation = "Password"
+    entry.password = "Password "
     entry.website = "http://localhost"
     entry.tags = "Tag1,Tag2,Tag3"
     entry.comment = "Comment\nIt's OK"
@@ -17,15 +16,29 @@ describe EntryPresenter do
     should == <<-STRING
 dir:                   /parent
 title:                 Title
-=======================================
 username:              Username
-password:              ********
-password_confirmation: ********
-valid:                 true
+password:              *********
 website:               http://localhost
 tags:                  Tag1, Tag2, Tag3
 comment:               Comment
                        It's OK
     STRING
+  end
+
+  context "with visible passwords" do
+    before { Password.visible! }
+
+    its(:content) do
+      should == <<-STRING
+dir:                   /parent
+title:                 Title
+username:              Username
+password:              'Password '
+website:               http://localhost
+tags:                  Tag1, Tag2, Tag3
+comment:               Comment
+                       It's OK
+      STRING
+    end
   end
 end

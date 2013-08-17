@@ -1,7 +1,7 @@
 module RySafe::Safe
   class Entry < Node
     attr_accessor :website, :username, :comment
-    attr_reader :password, :password_confirmation, :tags
+    attr_reader :password, :tags
 
     def initialize(name, parent = nil)
       super
@@ -21,16 +21,8 @@ module RySafe::Safe
       @password = Password.new(password)
     end
 
-    def password_confirmation=(password)
-      @password_confirmation = Password.new(password)
-    end
-
     def tags=(string)
       @tags = Tags.from_string(string)
-    end
-
-    def valid?
-      Validators::PasswordValidator.new(@password, @password_confirmation).valid?
     end
 
     def encode_with coder

@@ -180,7 +180,26 @@ current: /root/Dir
     end
   end
 
-  describe "::from_other" do
-    pending "Not tested"
+  describe "#from_other" do
+    it "should" do
+      other = Safe::RootDir.new
+
+      dir = Safe::Dir.new("Dir")
+      de = Safe::Dir.new("DirEntry")
+      de << dir
+      other << dir
+
+      entry = Safe::Entry.new("Entry")
+      other << entry
+
+      current_node = dir
+      other.current = current_node
+
+      subject.from_other(other)
+
+      subject.name.should == "root"
+      subject.current.should be current_node
+      subject.children.should == [dir, entry]
+    end
   end
 end

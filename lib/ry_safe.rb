@@ -2,6 +2,7 @@ require 'readline'
 require 'shellwords'
 require 'ostruct'
 require "pathname"
+require "highline"
 
 module RySafe
   # Autoloadings
@@ -59,6 +60,17 @@ module RySafe
   autoload :DirPresenter, "ry_safe/presenters/dir_presenter.rb"
   autoload :RootDirPresenter, "ry_safe/presenters/root_dir_presenter.rb"
   autoload :TreePresenter, "ry_safe/presenters/tree_presenter.rb"
+  autoload :PasswordPresenter, "ry_safe/presenters/password_presenter.rb"
+
+  module View
+    autoload :Viewer, "ry_safe/view/viewer.rb"
+    autoload :Editor, "ry_safe/view/editor.rb"
+    autoload :EntryEditor, "ry_safe/view/entry_editor.rb"
+    module Helper
+      autoload :Question, "ry_safe/view/helper/question.rb"
+      autoload :PasswordQuestion, "ry_safe/view/helper/password_question.rb"
+    end
+  end
 
   module Persistence
     autoload :Base, "ry_safe/persistence/base.rb"

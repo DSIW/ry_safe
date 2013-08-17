@@ -1,12 +1,11 @@
 module RySafe
   class Password
     include Comparable
+    include Util::Presentable
 
     class << self
       include Util::Visible
     end
-
-    HIDE_CHAR = '*'
 
     attr_reader :password
 
@@ -23,11 +22,7 @@ module RySafe
     end
 
     def to_s
-      if self.class.visible?
-        @password
-      else
-        HIDE_CHAR*@password.length
-      end
+      presenter.to_s
     end
 
     def inspect

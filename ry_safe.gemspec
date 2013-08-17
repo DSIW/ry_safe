@@ -23,7 +23,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency('methadone', '~>1.2.1')
   gem.add_development_dependency('simplecov')
   gem.add_development_dependency('version')
-  #gem.add_development_dependency('pry')
+  gem.add_development_dependency('pry')
+  gem.add_development_dependency('pry-debugger')
   #gem.add_development_dependency('plymouth')
   gem.add_development_dependency('fuubar')
   gem.add_development_dependency('guard')
@@ -36,4 +37,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('redcarpet')
   gem.add_dependency('nori')
   gem.add_dependency('nokogiri')
+  gem.add_dependency('highline')
 end

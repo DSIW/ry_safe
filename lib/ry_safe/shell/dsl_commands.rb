@@ -4,8 +4,20 @@ class RySafe::Commands::DSLCommands
   extend Commands::DSL
 
   command :touch do |c|
-    c.action { |path| Safe::Tree.current << Safe::Entry.new(path) }
+    c.action do |path|
+      node = Safe::Entry.new(path)
+      Safe::Tree.current << node
+      View::EntryEditor.new(node).new
+    end
     c.help_summary { "Create an new entry in current directory" }
+  end
+
+  command :edit do |c|
+    c.action do |path|
+      entry = Util::CommandHelper.relative_path_to_existing_node(path)
+      View::EntryEditor.new(entry).edit
+    end
+    c.help_summary { "Edit an attribute of entry" }
   end
 
   command :ls do |c|
