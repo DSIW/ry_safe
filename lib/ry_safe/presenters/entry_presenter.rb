@@ -6,7 +6,7 @@ dir:                   #{model.directory || "--"}
 title:                 #{model.name || "--"}
 =======================================
 username:              #{model.username || "--"}
-password:              #{model.password || "--"}
+password:              #{model.password.to_s || "--"}
 website:               #{model.website || "--"}
 tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment.gsub("\n", "\n#{" "*23}") || "--"}
