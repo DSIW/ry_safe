@@ -2,11 +2,14 @@
 
 module RySafe
   class NodeAutocompletion
-    def initialize(string)
-      @string = string
+    PATH_APPEND_CHAR = '/'
+
+    def initialize
+      Readline.completion_append_character = PATH_APPEND_CHAR
     end
 
-    def suggestions
+    def call(string)
+      @string = string
       nodes
     end
 

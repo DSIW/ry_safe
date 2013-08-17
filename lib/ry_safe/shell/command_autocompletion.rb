@@ -2,11 +2,12 @@
 
 module RySafe
   class CommandAutocompletion
-    def initialize(string)
-      @string = string
+    def initialize
+      Readline.completion_append_character = Autocompletion::ARGUMENT_APPEND_CHAR
     end
 
-    def suggestions
+    def call(string)
+      @string = string
       filtered_commands
     end
 

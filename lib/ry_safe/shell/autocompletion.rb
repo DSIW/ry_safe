@@ -2,15 +2,15 @@
 
 module RySafe
   class Autocompletion
-    APPEND_CHAR = ' '
+    ARGUMENT_APPEND_CHAR = ' '
 
-    def initialize(line, string)
+    def initialize(line)
       @line = line
-      @string = string
+      Readline.completion_append_character = ARGUMENT_APPEND_CHAR
     end
 
-    def suggestions
-      autocompletion_class.new(@string).suggestions
+    def call(string)
+      autocompletion_class.new.call(string)
     end
 
     private
@@ -23,12 +23,12 @@ module RySafe
       words.size == 1
     end
 
-    def end_with_append_char?
-      @line.end_with?(APPEND_CHAR)
+    def end_with?(char)
+      @line.end_with?(char)
     end
 
     def autocompletion_class
-      if one_word? && !end_with_append_char?
+      if one_word? && !end_with?(ARGUMENT_APPEND_CHAR)
         CommandAutocompletion
       else
         NodeAutocompletion

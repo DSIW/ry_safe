@@ -1,12 +1,7 @@
 module RySafe
   class Shell
     def initialize
-      Readline.completion_append_character = Autocompletion::APPEND_CHAR
-
-      Readline.completion_proc = lambda do |string|
-        line = Readline.line_buffer
-        Autocompletion.new(line, string).suggestions
-      end
+      Readline.completion_proc = lambda { |string | Autocompletion.new(Readline.line_buffer).call(string) }
     end
 
     def prompt
