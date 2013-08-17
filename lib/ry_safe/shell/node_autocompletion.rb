@@ -10,22 +10,50 @@ module RySafe
       nodes
     end
 
-    private
+    protected
 
     def nodes
-      escaped_children.grep(regex_string)
+      Filters.new(current_children).filter(path.filename).names.escape.join(dirname == "/" ? "" : dirname)
     end
 
     def current_children
-      Safe::Tree.current.children
+      node && node.children || []
     end
 
-    def escaped_children
-      current_children.map { |item| item.name.gsub(" ", '\ ') }
+    def node
+      Util::CommandHelper.relative_path_to_existing_node(dirname || ".")
     end
 
-    def regex_string
-      /^#{Regexp.escape(@string)}/
+    def dirname
+      path.dirname
+    end
+
+    def path
+       Path.new(@string)
+    end
+
+    class Filters < Array
+      def filter(word)
+        word && this(select { |child| child.name =~ /^#{word}/i }) || self
+      end
+
+      def names
+        this map { |child| child.name }
+      end
+
+      def escape
+        this map { |name| name.gsub(' ', '\ ') }
+      end
+
+      def join(dirname)
+        this map { |child| [dirname, child].compact.join('/') }
+      end
+
+      private
+
+      def this(collection)
+        self.class.new(collection)
+      end
     end
   end
 end
