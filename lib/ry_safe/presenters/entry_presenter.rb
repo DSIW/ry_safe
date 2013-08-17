@@ -4,9 +4,8 @@ module RySafe
       <<-HEREDOC
 dir:                   #{model.directory || "--"}
 title:                 #{model.name || "--"}
-=======================================
 username:              #{model.username || "--"}
-password:              #{model.password.to_s || "--"}
+password:              #{model.password || "--"}
 website:               #{model.website || "--"}
 tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment.gsub("\n", "\n#{" "*23}") || "--"}

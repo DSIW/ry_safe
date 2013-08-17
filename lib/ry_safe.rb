@@ -60,6 +60,7 @@ module RySafe
   autoload :DirPresenter, "ry_safe/presenters/dir_presenter.rb"
   autoload :RootDirPresenter, "ry_safe/presenters/root_dir_presenter.rb"
   autoload :TreePresenter, "ry_safe/presenters/tree_presenter.rb"
+  autoload :PasswordPresenter, "ry_safe/presenters/password_presenter.rb"
 
   module View
     autoload :Viewer, "ry_safe/view/viewer.rb"
