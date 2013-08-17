@@ -1,7 +1,12 @@
 module RySafe
   class Shell
     def initialize
-      init_readline
+      Readline.completion_append_character = Autocompletion::APPEND_CHAR
+
+      Readline.completion_proc = lambda do |string|
+        line = Readline.line_buffer
+        Autocompletion.new(line, string).suggestions
+      end
     end
 
     def prompt
@@ -25,17 +30,6 @@ module RySafe
 
     def eval_command line
       Commands::Dispatcher.new(line).call
-    end
-
-    protected
-
-    def init_readline
-      Readline.completion_append_character = Autocompletion::APPEND_CHAR
-
-      Readline.completion_proc = lambda do |string|
-        line = Readline.line_buffer
-        Autocompletion.new(line, string).suggestions
-      end
     end
   end
 end
