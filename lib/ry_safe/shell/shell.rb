@@ -1,7 +1,6 @@
 module RySafe
   class Shell
     def initialize
-      @completions = Commands::Dispatcher.commands
       init_readline
     end
 
@@ -31,15 +30,11 @@ module RySafe
     protected
 
     def init_readline
-      Readline.completion_append_character = " "
+      Readline.completion_append_character = Autocompletion::APPEND_CHAR
 
       Readline.completion_proc = lambda do |string|
         line = Readline.line_buffer
-        if Shellwords.split(line).size == 1 && !line.end_with?(' ')
-          @completions.grep(/^#{Regexp.escape(string)}/)
-        else
-          Safe::Tree.current.children.map{ |item| item.name.gsub(" ", '\ ') }.grep(/^#{Regexp.escape(string)}/)
-        end
+        Autocompletion.new(line, string).suggestions
       end
     end
   end
