@@ -1,9 +1,16 @@
 # encoding: utf-8
 
-#require 'colorize'
-
 module RySafe::Util
   module PresenterHelper
+    COLORS = {
+      website: :green,
+      username: :green,
+      dirname: :cyan,
+      path: :yellow,
+      password: lambda { |*_| Password.hidden? ? :green : :red },
+      boolean: lambda { |*string| string == "true" ? :green : :red },
+    }
+
     def colorize(string, color, condition)
       string = string.to_s
       string = string.colorize(color) if condition
@@ -54,6 +61,15 @@ module RySafe::Util
 
     def present?(obj)
       obj && obj.is_a?(String) ? !obj.empty? : obj
+    end
+
+    def colorize(string, color = nil)
+      string = string.to_s
+
+      color = COLORS[color]
+      color = color.respond_to?(:call) ? color.call(string) : color
+
+      string.colorize(color)
     end
   end
 end

@@ -3,6 +3,7 @@ require 'shellwords'
 require 'ostruct'
 require "pathname"
 require "highline"
+require "colorize"
 
 module RySafe
   # Autoloadings

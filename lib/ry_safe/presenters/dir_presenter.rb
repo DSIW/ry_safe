@@ -1,7 +1,7 @@
 module RySafe
   class DirPresenter < NodePresenter
     def name
-      "#{super}/"
+      "#{helper.colorize(super, :dirname)}/"
     end
 
     def recursive_size

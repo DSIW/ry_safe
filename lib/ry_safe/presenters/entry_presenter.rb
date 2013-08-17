@@ -1,12 +1,16 @@
 module RySafe
   class EntryPresenter < NodePresenter
+    def name
+      helper.colorize(super, :name)
+    end
+
     def content
       <<-HEREDOC
-dir:                   #{model.directory || "--"}
-title:                 #{model.name || "--"}
-username:              #{model.username || "--"}
-password:              #{model.password || "--"}
-website:               #{model.website || "--"}
+dir:                   #{helper.colorize(model.directory, :directory) || "--"}
+title:                 #{helper.colorize(model.name, :title) || "--"}
+username:              #{helper.colorize(model.username, :username) || "--"}
+password:              #{helper.colorize(model.password, :password) || "--"}
+website:               #{helper.colorize(model.website, :website) || "--"}
 tags:                  #{model.tags.map(&:name).join(', ') || "--"}
 comment:               #{model.comment.gsub("\n", "\n#{" "*23}") || "--"}
       HEREDOC
