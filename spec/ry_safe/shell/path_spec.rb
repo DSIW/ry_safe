@@ -3,14 +3,33 @@
 require "spec_helper"
 
 describe Path do
-  subject { Path.new("/path/to/file") }
+  subject { Path.new(path) }
+  let(:path) { "/path/to/file" }
+
+  its(:dirname) { should == "/path/to" }
+  its(:filename) { should == "file" }
 
   its(:to_s) { should == "/path/to/file" }
   its(:path) { should == "/path/to/file" }
 
-  it "should raise exceptions for absolute and relative" do
-    expect { subject.absolute? }.to raise_error StandardError, /not implemented/i
-    expect { subject.relative? }.to raise_error StandardError, /not implemented/i
+  describe "#absolute?" do
+    pending "Not tested"
+  end
+
+  describe "#relative?" do
+    pending "Not tested"
+  end
+
+  describe "#root?" do
+    pending "Not tested"
+  end
+
+  describe "#empty?" do
+    pending "Not tested"
+  end
+
+  describe "#relative_directory?" do
+    pending "Not tested"
   end
 
   describe "#to_node" do
@@ -30,6 +49,54 @@ describe Path do
     subject { Path.new("/root/dir").to_existing_node_in(root) }
 
     it { should be dir }
+  end
+
+  context "path == ''" do
+    let(:path) { "" }
+    its(:dirname) { should == nil }
+    its(:filename) { should == nil }
+  end
+
+  context "path == /" do
+    let(:path) { "/" }
+    its(:dirname) { should == "/" }
+    its(:filename) { should == nil }
+  end
+
+  context "path == /file" do
+    let(:path) { "/file" }
+    its(:dirname) { should == "/" }
+    its(:filename) { should == "file" }
+  end
+
+  context "path == .." do
+    let(:path) { ".." }
+    its(:dirname) { should == ".." }
+    its(:filename) { should == nil }
+  end
+
+  context "path == ../" do
+    let(:path) { "../" }
+    its(:dirname) { should == ".." }
+    its(:filename) { should == nil }
+  end
+
+  context "path == ../../" do
+    let(:path) { "../../" }
+    its(:dirname) { should == "../.." }
+    its(:filename) { should == nil }
+  end
+
+  context "path == ." do
+    let(:path) { "." }
+    its(:dirname) { should == "." }
+    its(:filename) { should == nil }
+  end
+
+  context "path == test" do
+    let(:path) { "test" }
+    its(:dirname) { should == nil }
+    its(:filename) { should == "test" }
   end
 end
 
