@@ -2,10 +2,8 @@
 
 module RySafe
   class NodeAutocompletion
-    PATH_APPEND_CHAR = '/'
-
     def initialize
-      Readline.completion_append_character = PATH_APPEND_CHAR
+      Readline.completion_append_character = Autocompletion::ARGUMENT_APPEND_CHAR
     end
 
     def call(string)

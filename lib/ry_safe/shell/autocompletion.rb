@@ -3,6 +3,7 @@
 module RySafe
   class Autocompletion
     ARGUMENT_APPEND_CHAR = ' '
+    DIR_AUTOCOMPLETION_COMMANDS = %w(cd)
 
     def initialize(line)
       @line = line
@@ -23,6 +24,10 @@ module RySafe
       words.size == 1
     end
 
+    def command
+      words.first
+    end
+
     def end_with?(char)
       @line.end_with?(char)
     end
@@ -31,7 +36,11 @@ module RySafe
       if one_word? && !end_with?(ARGUMENT_APPEND_CHAR)
         CommandAutocompletion
       else
-        NodeAutocompletion
+        if DIR_AUTOCOMPLETION_COMMANDS.include? command
+          DirAutocompletion
+        else
+          EntryAutocompletion
+        end
       end
     end
   end
