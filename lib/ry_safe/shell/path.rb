@@ -2,6 +2,38 @@
 
 module RySafe
   class Path < Struct.new(:path)
+    def dirname
+      if root?
+        "/"
+      elsif absolute? && path.chars.select { |char| char == '/' }.size == 1
+        "/"
+      elsif empty? || splitted.size == 1 && !relative_directory?
+        nil
+      else
+        (relative_directory? ? splitted : splitted[0..-2]).join('/')
+      end
+    end
+
+    def filename
+      if empty? || relative_directory?
+        nil
+      else
+        splitted.last
+      end
+    end
+
+    def empty?
+      path == ""
+    end
+
+    def root?
+      path == "/"
+    end
+
+    def relative_directory?
+      splitted.last =~ /^\./
+    end
+
     def to_s
       path
     end
@@ -15,11 +47,17 @@ module RySafe
     end
 
     def absolute?
-      raise "Not implemented by Path."
+      path.start_with?("/")
     end
 
     def relative?
       !absolute?
+    end
+
+    private
+
+    def splitted
+      path.split('/')
     end
   end
 

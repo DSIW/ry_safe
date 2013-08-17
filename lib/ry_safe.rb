@@ -30,6 +30,11 @@ module RySafe
   end
 
   autoload :Path, "ry_safe/path"
+  autoload :Autocompletion, "ry_safe/shell/autocompletion"
+  autoload :CommandAutocompletion, "ry_safe/shell/command_autocompletion"
+  autoload :NodeAutocompletion, "ry_safe/shell/node_autocompletion"
+  autoload :DirAutocompletion, "ry_safe/shell/dir_autocompletion"
+  autoload :EntryAutocompletion, "ry_safe/shell/entry_autocompletion"
   autoload :Shell, "ry_safe/shell/shell"
   autoload :Password, "ry_safe/password"
   autoload :PasswordGenerator, "ry_safe/password_generator"
